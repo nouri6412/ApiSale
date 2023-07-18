@@ -35,7 +35,22 @@ app.use("/inquiry", inquiryRoutes);
 app.use("/helper", helperRoutes);
 
 app.get('/', function (req, res) {
-    res.send('Hello Pazar');
+    res.send({
+        routes:[
+            {
+                route:'invoice',
+                description:'ارسال صورتحساب'
+            },
+            {
+                route:'inquiry',
+                description:'استعلام صورتحساب'
+            },
+            {
+                route:'helper',
+                description:'توابع کمکی مثل گرفتن اطلاعات کداقتصادی - اطلاعات کاربرو..'
+            }
+        ]
+    });
 });
 
 var server = app.listen(config.app.port, function () {
