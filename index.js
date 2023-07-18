@@ -19,6 +19,8 @@ var app = express();
 app.use(express.json());
 
 var invoiceRoutes = require("./routes/invoice");
+var inquiryRoutes = require("./routes/inquiry");
+var helperRoutes = require("./routes/helper");
 
 const cors = require('cors');
 
@@ -27,6 +29,8 @@ app.use(cors({
 }));
 
 app.use("/invoice", invoiceRoutes);
+app.use("/inquiry", inquiryRoutes);
+app.use("/helper", helperRoutes);
 
 
 app.get('/', function (req, res) {

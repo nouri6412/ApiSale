@@ -8,7 +8,7 @@ router.get("/", middleware.action, async (req, res) => {
     return res.json({ state: true, message: "this is invoice controller" });
 });
 
-router.post("/send_invoice", middleware.action, async (req, res) => {
+router.post("/send_invoices", middleware.action, async (req, res) => {
 
     const dbConnect = dbo.getDb();
     try {
