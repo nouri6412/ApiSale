@@ -9,7 +9,7 @@ router.get("/", middleware.action, async (req, res) => {
     return res.json({
         methods:[
             {
-                route:'send_invoice',
+                method:'send_invoice',
                 description:'تابع ارسال صورتحساب'
             }
         ]
