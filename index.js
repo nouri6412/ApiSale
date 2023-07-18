@@ -2,6 +2,9 @@ var express = require('express');
 
 const config = require('./config');
 
+//
+// ذخیره لاگ کنسول در فایل
+//
 var fs = require('fs');
 var util = require('util');
 
@@ -13,14 +16,13 @@ console.log = function (d) { //
     log_stdout.write(util.format(d) + '\n');
 };
 
-
 var app = express();
 
 app.use(express.json());
 
-var invoiceRoutes = require("./routes/invoice");
-var inquiryRoutes = require("./routes/inquiry");
-var helperRoutes = require("./routes/helper");
+var invoiceRoutes = require("./routes/invoice"); //invoice controller  (ارسال و کنترل صورتحساب)
+var inquiryRoutes = require("./routes/inquiry"); //inquiry controller  (استعلام صورتحساب)
+var helperRoutes = require("./routes/helper");   //helper controller   (توابع کمکی مثل گرفتن اطلاعات کداقتصادی - اطلاعات کاربرو...)
 
 const cors = require('cors');
 
@@ -32,11 +34,9 @@ app.use("/invoice", invoiceRoutes);
 app.use("/inquiry", inquiryRoutes);
 app.use("/helper", helperRoutes);
 
-
 app.get('/', function (req, res) {
     res.send('Hello Pazar');
 });
-
 
 var server = app.listen(config.app.port, function () {
     var host = server.address().address
