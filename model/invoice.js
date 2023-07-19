@@ -309,7 +309,7 @@ const body = {
     }
 };
 
-const payment = {
+const payments = {
     Iinn: {
         required: false,
         title: 'Iinn'
@@ -348,4 +348,4 @@ const payment = {
     }
 };
 
-module.exports = { header, body, payment };
+module.exports = { header, body, payments };

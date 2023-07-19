@@ -17,8 +17,8 @@ router.get("/", middleware.action, async (req, res) => {
 });
 
 router.post("/send_invoice", middleware.action, async (req, res) => {
-
     try {
+        
         const {
             init_params, invoice } = req.body;
 
@@ -31,7 +31,7 @@ router.post("/send_invoice", middleware.action, async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        return res.json({ status: false, message: 'error in data' });
+        return res.json({ status: false, message: 'error in compile' });
     }
 });
 
