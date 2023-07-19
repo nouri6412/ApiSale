@@ -5,6 +5,8 @@ var router = express.Router({ mergeParams: true });
 var middleware = require("../middleware");
 var validation = require("../validation/invoice");
 
+var signatory = require("../utils/signatory");
+
 router.get("/", middleware.action, async (req, res) => {
     return res.json({
         methods:[
@@ -23,9 +25,13 @@ router.post("/send_invoice", middleware.action, async (req, res) => {
             init_params, invoice } = req.body;
 
         var init_validation = validation.init( init_params, invoice);
-        if (!init_validation.status) {
-            return res.json(init_validation);
-        }
+        // if (!init_validation.status) {
+        //     return res.json(init_validation);
+        // }
+
+        var str=signatory.signatory(invoice);
+
+        console.log(str);
 
         return res.json({ status: true, data: { init_params: init_params, invoice: invoice } });
     }
