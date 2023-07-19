@@ -33,6 +33,7 @@ function normalize(json) {
                     if(ordered[props[x]][y][sub_props[i]])
                     {
                         val =ordered[props[x]][y][sub_props[i]];
+                        val= val.replaceAll("#","##");
                     }
 
                     normalize_str = normalize_str + sep + val;
@@ -49,6 +50,7 @@ function normalize(json) {
                 if(ordered[props[x]][sub_props[i]])
                 {
                     val =ordered[props[x]][sub_props[i]];
+                    val= val.replaceAll("#","##");
                 }
                
                 normalize_str = normalize_str + sep + val;
