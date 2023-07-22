@@ -29,9 +29,9 @@ router.post("/send_invoice", middleware.action, async (req, res) => {
         //     return res.json(init_validation);
         // }
 
-        var str=signatory.signatory(invoice);
+        var str=signatory.signatory(init_params,invoice);
 
-        console.log(str);
+      //  console.log(str);
 
         return res.json({ status: true, data: { init_params: init_params, invoice: invoice } });
     }
