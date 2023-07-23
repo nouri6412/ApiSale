@@ -66,7 +66,7 @@ function normalize(json) {
 function sign(normalize_str,privateKey)
 {
    // console.log(normalize_str);
-    //console.log(privateKey);
+    console.log(privateKey);
     const verifiableData = normalize_str;
 
     // The signature method takes the data we want to sign, the
@@ -76,28 +76,10 @@ function sign(normalize_str,privateKey)
     //   key: privateKey,
     //   padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
     // });
+    var pk= privateKey.split(String.raw`\n`).join('\n');
 
-   //const signature = crypto.sign('sha256', Buffer.from(verifiableData), privateKey).toString("base64"); 
-   const message = 'This is a message to be signed';
-
-   // Create a sign object using the 'RSA-SHA256' algorithm
-   const sign = crypto.createSign('RSA-SHA256');
+   const signature = crypto.sign('sha256', Buffer.from(verifiableData), privateKey).toString("base64"); 
    
-   // Update the sign object with the message to be signed
-   sign.update(message);
-   
-   // Generate the private key
-   const privateKey1 = '-----BEGIN RSA PRIVATE KEY-----\n' +
-                      'MIIEpAIBAAKCAQEA6DgHBlcjg+zUvkVq3R5jFcq0f0mvj8YtfHr5r5f5x5j5v5r5\n' +
-                      'f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5\n' +
-                      'x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5\n' +
-                      'j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5\n' +
-                      'v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5\n' +
-                      'r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5\n' +
-                      '-----END RSA PRIVATE KEY-----\n';
-   
-   // Sign the message using the private key
-   const signature = sign.sign(privateKey1, 'hex');
 
    console.log(signature); 
 

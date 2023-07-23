@@ -25,6 +25,16 @@ J9MPqVITINiv/uwknKZaDksrVY0V3mQEuCUZ8BXPAoGAeQJl0vDfgzQS5Jmwuwj6
 MYcDR/ROIhYcvIl9v80wHBaDIItb6XT4cM5YRJE6J9YbiV+QfAGf3tDahBO4Gcbx
 h7ey7Uks87zsLHiMnp9MnNVO+ND0IbHkOwgJBhT2IXZpWI6H5eZEVkn+lxSlxdes
 z0X/+sJExHYZLGoHGVpq9Ws=`;
+
+const fs = require('fs');
+
+try {
+   pk = fs.readFileSync('pk.txt', 'utf8');
+
+} catch (err) {
+  console.error(err);
+}
+//console.log(pk);
 axios.post('http://localhost:8181/invoice/send_invoice', {init_params:{client_id:'A1211P',private_key:pk},invoice:{
     header:{
         bb:'b_h',
