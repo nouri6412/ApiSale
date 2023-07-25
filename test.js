@@ -1,20 +1,4 @@
 const axios = require('axios');
-axios.post('https://crm.tci.ir/EnterpriseApplicationIntegration/api/AddInventoryObject', {
-    UserInfo: '{ Username: "GIS_USER", Secret: "GIS@60com" }',
-    ItemCode: 50013400, 
-    Customparams: '{id: 18173,SHASKAMZONEID: null,LANCODE: 18173,COUNTYID: "1000003754",PLANNAME: "ZShahr019",TECHPLANNAME: "23SHARD13",STATE: 1,HPCOUNT: null,ORGENCOUNT: null,MASKOONICOUNT: null,TEJARICOUNT: null}'
-})
-    .then(response => {
-        console.log(response.data);
-
-    })
-    .catch(error => {
-          console.log(error)
-    })
-    .finally(() => {
-
-    });
-return;
 
 var pk = `MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCnr3BW13pLxmP+
 NQaxioyyr5IoVsekCOLXqOJAlGDKTlkVOUgSUzjKGybxWrQqMz6kDkjT/trPQxqD
