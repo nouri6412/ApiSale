@@ -36,7 +36,7 @@ try {
     console.error(err);
 }
 //console.log(pk);
-axios.post('http://localhost:8181/project/send_invoice', {
+axios.post('http://torgay.ir/project/send_invoice', {
     init_params: { client_id: 'A1211P', private_key: pk }, invoice: {
         header: {
             bb: 'b_h',
