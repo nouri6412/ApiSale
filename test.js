@@ -1,5 +1,22 @@
 const axios = require('axios');
-var pk=`MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCnr3BW13pLxmP+
+axios.post('https://crm.tci.ir/EnterpriseApplicationIntegration/api/AddInventoryObject', {
+    UserInfo: '{ Username: "GIS_USER", Secret: "GIS@60com" }',
+    ItemCode: 50013400, 
+    Customparams: '{id: 18173,SHASKAMZONEID: null,LANCODE: 18173,COUNTYID: "1000003754",PLANNAME: "ZShahr019",TECHPLANNAME: "23SHARD13",STATE: 1,HPCOUNT: null,ORGENCOUNT: null,MASKOONICOUNT: null,TEJARICOUNT: null}'
+})
+    .then(response => {
+        console.log(response.data);
+
+    })
+    .catch(error => {
+          console.log(error)
+    })
+    .finally(() => {
+
+    });
+return;
+
+var pk = `MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCnr3BW13pLxmP+
 NQaxioyyr5IoVsekCOLXqOJAlGDKTlkVOUgSUzjKGybxWrQqMz6kDkjT/trPQxqD
 6HJDM9j+csZzhTcDy5zjFl5Akt5810Y9heCZYzicb16Pt6sDpwkbPO9BmL8jvuiU
 rGbyC9GwiwYiLasyJyI/Zk3HnQJx861NyZuLlxpGCUobi1qNVvhwsObgHSH/WxbD
@@ -29,30 +46,32 @@ z0X/+sJExHYZLGoHGVpq9Ws=`;
 const fs = require('fs');
 
 try {
-   pk = fs.readFileSync('pk.txt', 'utf8');
+    pk = fs.readFileSync('pk.txt', 'utf8');
 
 } catch (err) {
-  console.error(err);
+    console.error(err);
 }
 //console.log(pk);
-axios.post('https://torgay.ir/project/send_invoice', {init_params:{client_id:'A1211P',private_key:pk},invoice:{
-    header:{
-        bb:'b_h',
-        aa:'a#h',
-        za:'z_h'
-    },body:[
-        {
-            cc:'c_b',
-            aa:'a#b',
-            za:'z_b'
-        },
-        {
-            cc:'c1_b',
-            aa:'a1#b',
-            za:'z1_b'
-        }
-    ],payments:[]
-}})
+axios.post('https://torgay.ir/project/send_invoice', {
+    init_params: { client_id: 'A1211P', private_key: pk }, invoice: {
+        header: {
+            bb: 'b_h',
+            aa: 'a#h',
+            za: 'z_h'
+        }, body: [
+            {
+                cc: 'c_b',
+                aa: 'a#b',
+                za: 'z_b'
+            },
+            {
+                cc: 'c1_b',
+                aa: 'a1#b',
+                za: 'z1_b'
+            }
+        ], payments: []
+    }
+})
     .then(response => {
         console.log(response.data);
 
