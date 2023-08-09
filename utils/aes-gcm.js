@@ -12,7 +12,7 @@ const aes256gcm = (key) => {
     // demonstration but a poor way to achieve this in practice.
     //
     // See: e.g. https://csrc.nist.gov/publications/detail/sp/800-38d/final
-    const iv = new Buffer(crypto.randomBytes(32), 'utf8');
+    const iv =  Buffer.from(crypto.randomBytes(32), 'utf8');
     const cipher = crypto.createCipheriv(ALGO, key, iv);
 
     // Hint: Larger inputs (it's GCM, after all!) should use the stream API
@@ -36,7 +36,7 @@ const aes256gcm = (key) => {
   };
 };
 
-const KEY = new Buffer(crypto.randomBytes(32), 'utf8');
+const KEY = Buffer.from(crypto.randomBytes(32), 'utf8');
 
 const aesCipher = aes256gcm(KEY);
 
