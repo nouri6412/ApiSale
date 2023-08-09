@@ -12,7 +12,8 @@ router.get("/", middleware.action, async (req, res) => {
         methods:[
             {
                 method:'send_invoice',
-                description:'تابع ارسال صورتحساب'
+                description:'تابع ارسال صورتحساب',
+                type:'post'
             }
         ]
     });
