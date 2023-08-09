@@ -60,138 +60,7 @@ function normalize(json) {
 
     return normalize_str;
 }
-
-function sign(normalize_str, privateKey) {
-
-
-    var crypto = require("crypto");
-    var Token = require("jsonwebtoken");
-
-
-    // 2. Sign verify using the generated PEM keys
-
-
-    var payload = "some payload";
-    //const signed = Token.sign(payload, privateKey, { algorithm: "RS256", keyid: "1" });
-
-    const signed = Token.sign(payload, privateKey);
-
-    //  const verified = Token.verify(signed, publicKey2, { algorithms: "RS256", complete: true });
-    //console.log(verified.payload);
-
-    return signed.toString('base64');
-    // console.log(normalize_str);
-    // console.log(privateKey);
-
-    const fs = require('fs');
-
-    // var pk='';
-
-    // try {
-    //     pk = fs.readFileSync('pk.txt', 'utf8');
-
-    // } catch (err) {
-    //     console.error(err);
-    // }
-
-    // console.log(pk);
-
-    // Create a private key
-    const { privateKey1, publicKey } = crypto.generateKeyPairSync('rsa', {
-        modulusLength: 2048,
-    });
-
-    //console.log(privateKey1);
-
-    // Convert string to buffer 
-    const data = Buffer.from("I Love GeeksForGeeks");
-
-    // Sign the data ad returned signature in buffer 
-    const sign = crypto.sign("SHA256", data, privateKey);
-
-    // Convert returned buffer to base64
-    var signature = sign.toString('base64');
-
-    console.log(signature);
-
-    return signature;
-
-    return;
-
-    const verifiableData = normalize_str;
-
-    // The signature method takes the data we want to sign, the
-    // hashing algorithm, and the padding scheme, and generates
-    // a signature in the form of bytes
-    var signature = crypto.sign("sha256", Buffer.from(verifiableData), {
-        key: privateKey,
-        padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
-    });
-    //     var pk= privateKey.split(String.raw`\n`).join('\n');
-
-    //    const signature = crypto.sign('sha256', Buffer.from(verifiableData), privateKey).toString("base64"); 
-
-
-    console.log(signature);
-
-    return privateKey;
-}
-
-function sign1(normalize_str, privateKey1) {
-    const crypto = require('crypto');
-
-    const message = 'This is a message to be signed';
-
-    // Create a sign object using the 'RSA-SHA256' algorithm
-    const sign = crypto.createSign('RSA-SHA256');
-
-    // Update the sign object with the message to be signed
-    sign.update(message);
-
-    // Generate the private key
-    const privateKey = '-----BEGIN RSA PRIVATE KEY-----\n' +
-        'MIIEpAIBAAKCAQEA6DgHBlcjg+zUvkVq3R5jFcq0f0mvj8YtfHr5r5f5x5j5v5r5\n' +
-        'f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5\n' +
-        'x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5\n' +
-        'j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5\n' +
-        'v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5\n' +
-        'r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5f5x5j5v5r5\n' +
-        '-----END RSA PRIVATE KEY-----\n';
-
-
-    // Sign the message using the private key
-    const signature = sign.sign(privateKey, 'hex');
-    console.log(signature);
-    return signature.toString('base64');
-}
-
-function sign2(normalize_str, privateKey1) {
-
-    const crypto = require('crypto');
-    const buffer = require('buffer');
-
-    // Create a private key
-    const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
-        modulusLength: 2048,
-    });
-
-    console.log(privateKey);
-
-    // Convert string to buffer 
-    const data = Buffer.from("I Love GeeksForGeeks");
-
-    // Sign the data and returned signature in buffer 
-    const sign = crypto.sign("SHA256", data, privateKey);
-
-    // Convert returned buffer to base64
-    const signature = sign.toString('base64');
-
-    // Printing the signature 
-    console.log(`Signature:\n\n ${signature}`);
-    return signature.toString('base64');
-}
-
-async function sign3(normalize_str, privateKey1) {
+async function sign_backup(normalize_str, privateKey1) {
 
     const crypto = require('crypto');
     const buffer = require('buffer');
@@ -229,8 +98,67 @@ async function sign3(normalize_str, privateKey1) {
     return signature.toString('base64');
 }
 
+function str2ab(str) {
+    const buf = new ArrayBuffer(str.length);
+    const bufView = new Uint8Array(buf);
+    for (let i = 0, strLen = str.length; i < strLen; i++) {
+      bufView[i] = str.charCodeAt(i);
+    }
+    return buf;
+  }
+
+async function sign(normalize_str, pem) {
+
+    const crypto = require('crypto');
+    const buffer = require('buffer');
+
+    // Create a private key
+    const options = {
+        name: 'RSASSA-PKCS1-v1_5',
+        modulusLength: 2048,
+        publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+        hash: { name: 'SHA-256' }
+    };
+
+    const pemContents=pem;
+    //console.log(pemContents);
+    // base64 decode the string to get the binary data
+    const binaryDerString = atob(pemContents);
+
+    // convert from a binary string to an ArrayBuffer
+    const binaryDer = str2ab(binaryDerString);
+
+    const privateKey=await crypto.subtle.importKey(
+        "pkcs8",
+        binaryDer,
+        {
+          name: "RSASSA-PKCS1-v1_5",
+          hash: "SHA-256",
+        },
+        true,
+        ["sign"],
+      );
+      
+    console.log(privateKey);
+
+
+
+    // Convert string to buffer 
+    const data = Buffer.from(normalize_str);
+
+    // Sign the data and returned signature in buffer 
+    const sign = crypto.sign("SHA256", data, privateKey);
+
+    // Convert returned buffer to base64
+    const signature = sign.toString('base64');
+
+    // Printing the signature 
+    console.log(`Signature:\n\n ${signature}`);
+    return signature.toString('base64');
+}
+
 middlewareObj.signatory = function (init_params, invoice) {
-    return sign3(normalize(invoice), init_params.private_key);
+    return sign(normalize(invoice), init_params.private_key);
 };
 
 module.exports = middlewareObj;
