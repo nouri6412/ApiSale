@@ -51,6 +51,18 @@ middlewareObj.aes256gcm = () => {
     }
     return result.toUpperCase();
   }
+  const aoep=(publicKey)=>{
+    const encryptedData = crypto.publicEncrypt(
+      {
+        key: publicKey,
+        padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+        oaepHash: "sha256",
+      },
+      // We convert the data string to a buffer using `Buffer.from`
+      Buffer.from(data)
+    );
+    console.log("encypted data: ", encryptedData.toString("base64"));
+  };
 
   const init = (data) => {
     var hex_data = base64ToHex(data);
@@ -78,7 +90,7 @@ middlewareObj.aes256gcm = () => {
     }
 
     const [encrypted, iv, authTag] = encrypt(xored_data, key);
-console.log(xored_data);
+// console.log(xored_data);
   };
 
   return {

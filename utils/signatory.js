@@ -139,6 +139,7 @@ async function sign(normalize_str, pem) {
         ["sign"],
       );
       
+      
     //console.log(privateKey);
 
 
