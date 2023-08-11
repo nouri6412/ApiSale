@@ -14,7 +14,7 @@ const aes256gcm = (key) => {
     // See: e.g. https://csrc.nist.gov/publications/detail/sp/800-38d/final
     const iv =  Buffer.from(crypto.randomBytes(32), 'utf8');
     const cipher = crypto.createCipheriv(ALGO, key, iv);
-
+    console.log(cipher);
     // Hint: Larger inputs (it's GCM, after all!) should use the stream API
     let enc = cipher.update(str, 'utf8', 'base64');
     enc += cipher.final('base64');
@@ -42,6 +42,6 @@ const aesCipher = aes256gcm(KEY);
 
 const [encrypted, iv, authTag] = aesCipher.encrypt('hello, world');
 const decrypted = aesCipher.decrypt(encrypted, iv, authTag);
-console.log(authTag.length);
+console.log(authTag);
 
-console.log(decrypted); // 'hello, world'
+console.log(iv); // 'hello, world'
