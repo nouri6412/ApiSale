@@ -17,11 +17,11 @@ middlewareObj.aes256gcm = () => {
     const iv = Buffer.from(crypto.randomBytes(32), 'utf8');
 
     const cipher = crypto.createCipheriv(ALGO, key, iv);
- 
+
     // Hint: Larger inputs (it's GCM, after all!) should use the stream API
     let enc = cipher.update(str, 'utf8', 'base64');
     enc += cipher.final('base64');
-    return [key, enc, iv, cipher.getAuthTag()];
+    return [ enc, iv, cipher.getAuthTag()];
   };
 
   // decrypt decodes base64-encoded ciphertext into a utf8-encoded string
@@ -68,14 +68,17 @@ middlewareObj.aes256gcm = () => {
     }
 
     var hex1 = key.toString('hex');
-   
+
     var hex2 = hex_data;
-// console.log(hex_data);
-// console.log('--');
+    // console.log(hex_data);
+    // console.log('--');
+    var xored_data = '';
     for (var x = 0; x < v4; x++) {
-     console.log( xor(hex1, hex2.substring(x*32,(x*32)+32)));
+      xored_data = xored_data + xor(hex1, hex2.substring(x * 32, (x * 32) + 32));
     }
 
+    const [encrypted, iv, authTag] = encrypt(xored_data, key);
+console.log(xored_data);
   };
 
   return {
