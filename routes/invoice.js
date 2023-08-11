@@ -5,6 +5,9 @@ var router = express.Router({ mergeParams: true });
 var middleware = require("../middleware");
 var validation = require("../validation/invoice");
 
+
+var aes256gcm = require("../utils/aes-gcm");
+
 var signatory = require("../utils/signatory");
 
 router.get("/", middleware.action, async (req, res) => {
@@ -30,8 +33,9 @@ router.post("/send_invoice", middleware.action, async (req, res) => {
         //     return res.json(init_validation);
         // }
 
-        var str=signatory.signatory(init_params,invoice);
-
+        var str=await signatory.signatory(init_params,invoice);
+     
+            aes256gcm.aes256gcm().init(str);
       //  console.log(str);
 
         return res.json({ status: true, data: { init_params: init_params, invoice: invoice } });

@@ -139,7 +139,7 @@ async function sign(normalize_str, pem) {
         ["sign"],
       );
       
-    console.log(privateKey);
+    //console.log(privateKey);
 
 
 
@@ -153,7 +153,7 @@ async function sign(normalize_str, pem) {
     const signature = sign.toString('base64');
 
     // Printing the signature 
-    console.log(`Signature:\n\n ${signature}`);
+    //console.log(`Signature:\n\n ${signature}`);
     return signature.toString('base64');
 }
 
