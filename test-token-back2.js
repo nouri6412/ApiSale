@@ -1,11 +1,11 @@
 function str2ab(str) {
-    const buf = new ArrayBuffer(str.length);
-    const bufView = new Uint8Array(buf);
-    for (let i = 0, strLen = str.length; i < strLen; i++) {
-      bufView[i] = str.charCodeAt(i);
-    }
-    return buf;
+  const buf = new ArrayBuffer(str.length);
+  const bufView = new Uint8Array(buf);
+  for (let i = 0, strLen = str.length; i < strLen; i++) {
+    bufView[i] = str.charCodeAt(i);
   }
+  return buf;
+}
 
 
 const axios = require('axios');
@@ -20,9 +20,9 @@ const agent = new https.Agent({
   rejectUnauthorized: false
 });
 
-const test=async ()=>{
+const test = async () => {
 
-const pem=`MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCnr3BW13pLxmP+
+  const pem = `MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCnr3BW13pLxmP+
 NQaxioyyr5IoVsekCOLXqOJAlGDKTlkVOUgSUzjKGybxWrQqMz6kDkjT/trPQxqD
 6HJDM9j+csZzhTcDy5zjFl5Akt5810Y9heCZYzicb16Pt6sDpwkbPO9BmL8jvuiU
 rGbyC9GwiwYiLasyJyI/Zk3HnQJx861NyZuLlxpGCUobi1qNVvhwsObgHSH/WxbD
@@ -49,64 +49,63 @@ MYcDR/ROIhYcvIl9v80wHBaDIItb6XT4cM5YRJE6J9YbiV+QfAGf3tDahBO4Gcbx
 h7ey7Uks87zsLHiMnp9MnNVO+ND0IbHkOwgJBhT2IXZpWI6H5eZEVkn+lxSlxdes
 z0X/+sJExHYZLGoHGVpq9Ws=`;
 
-var timest = Date.now();
-var GUID=crypto.randomUUID();
+  var timest = Date.now();
+  var GUID = crypto.randomUUID();
 
 
-var str = await signatory.signatory({private_key:pem}, {
-  time: 1,
-  packet: {
+  var str = await signatory.signatory({ private_key: pem }, {
+    packet: {
       uid: null,
       packetType: "GET_TOKEN",
       retry: false,
       data: { username: "A1211P" },
       encryptionKeyId: null,
-      symmetricKey: "",
+      symmetricKey: null,
       iv: null,
       fiscalId: "A1211P",
-      dataSignature: null
-  },
-  signatureKeyId: null,
-  requestTraceId: GUID,
-  timestamp: timest
-});
-let signed = str;
-console.log(str);
-
-axios.post('https://tp.tax.gov.ir/req/api/self-tsp/sync/GET_TOKEN', {
-    time: 1,
-    packet: {
-        uid: null,
-        packetType: "GET_TOKEN",
-        retry: false,
-        data: { username: "A1211P" },
-        encryptionKeyId: null,
-        symmetricKey: "",
-        iv: null,
-        fiscalId: "A1211P",
-        dataSignature: null
+      dataSignature: null,
+      signatureKeyId: null
     },
-    signature:signed,
-    signatureKeyId: null
+    signatureKeyId: null,
+    requestTraceId: GUID,
+    timestamp: timest
+  });
+  let signed = str;
+  console.log(str);
 
-}, {
+  axios.post('https://tp.tax.gov.ir/req/api/self-tsp/sync/GET_TOKEN', {
+    packet: {
+      uid: null,
+      packetType: "GET_TOKEN",
+      retry: false,
+      data: { username: "A1211P" },
+      encryptionKeyId: null,
+      symmetricKey: null,
+      iv: null,
+      fiscalId: "A1211P",
+      dataSignature: null,
+      signatureKeyId: null
+    },
+    signature: signed,
+    signatureKeyId: null
+  }, {
     headers: {
       requestTraceId: GUID,
       timestamp: timest
       // 'Content-Type': 'application/json; charset=utf-8'
     }
     // httpsAgent: agent,
-})
+  })
     .then(response => {
-        console.log(response.data);
+      console.log(response.data);
     })
     .catch(error => {
       if (error.response) {
         console.log(error.response.data);
-    }
-    else {
+      }
+      else {
         console.log(error);
-    }
+      }
     })
     .finally(() => {
 
