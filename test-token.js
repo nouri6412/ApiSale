@@ -8,8 +8,8 @@ const crypto = require('crypto');
 var timest = Date.now();
 console.log(timest);
 
-const agent = new https.Agent({  
-  rejectUnauthorized: false
+const agent = new https.Agent({
+    rejectUnauthorized: false
 });
 
 
@@ -26,14 +26,15 @@ axios.post('https://tp.tax.gov.ir/req/api/self-tsp/sync/GET_TOKEN', {
         fiscalId: "A161XE",
         dataSignature: null
     },
-    signature: "woEQFvDLXZxDGaZajfA2Vyo8h4Cd2LE5jXq+rf477CbZ7VllaHXCBn8deo4fmeYwWZS3B6x9BG/ipQ8kPli2vlcQjqKtgs7DMNR2gttqfzPlO5+WTRk5FEZ1F4yApYySeTu09gys8HX7BNWjUZz3EEarIWs+Te9jLDbEg7xQNXIsOWlmvpUNM6znSiwjYiYimqaXL509jZVES4hJHNNGHtgZ+qcDxgdS8AqmMTHzvjz5o/Eww9/mW4UOc78mP48ce6SDDtmLlPOppx1bqHrZTVrx5ac6zn6otWRWMutUNAS3DgbwEwebUlCBoFhlg8ZfjhUAyQT2m4Y/KysfQVp31w==",
-signatureKeyId : null
+    signature: "SsF31ROXaK07uWMTF99EZWR7Vbtw48J6cwnTvXjGFfvOXw4sUPYP7cM2yVpB6uk4y0BFlLrTNVE+wM2dLgIXF5rv98Srm01tu2meqbUPuzC/3bhXRxHJL7TugYn6tT8uBC2KzdVsbY7/Ybeoa8ExwDMldRySKClyURZK2o3GbytRGSl15wMRd/yiCAqgm41fDkKW3D76ISTvR6N5JU/v0MWTeISSIpHNueZFC1Ebj2MNi4SvQRoITCqqw2bqBfuBeAaKgORANgzmLgF+vjs8RzUXAoaoYvywfBedh0dD9M96A2l/MejVzETf0bsgCiBkB6Ixc5Yxcnq7UNA2+GG5jQ==",
+    signatureKeyId: null
 
 }, {
     headers: {
         'requestTraceId': crypto.randomUUID(),
         'timestamp': timest,
-        'Content-Type': 'application/json; charset=utf-8'
+        'Content-Type': 'application/json; charset=utf-8',
+        'Accept-Encoding':null
     },
     httpsAgent: agent,
 })
@@ -41,15 +42,13 @@ signatureKeyId : null
         console.log(response.data);
     })
     .catch(error => {
-        if(error.response)
-        {
+        if (error.response) {
             console.log(error.response.data);
         }
-        else
-        {
+        else {
             console.log(error);
         }
-       
+
     })
     .finally(() => {
 
