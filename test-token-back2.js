@@ -52,6 +52,8 @@ z0X/+sJExHYZLGoHGVpq9Ws=`;
   var timest = Date.now();
   var GUID = crypto.randomUUID();
 
+  console.log(timest+'          '+GUID);
+
 
   var str = await signatory.signatory({ private_key: pem }, {
     packet: {
