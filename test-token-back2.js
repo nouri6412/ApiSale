@@ -50,6 +50,8 @@ h7ey7Uks87zsLHiMnp9MnNVO+ND0IbHkOwgJBhT2IXZpWI6H5eZEVkn+lxSlxdes
 z0X/+sJExHYZLGoHGVpq9Ws=`;
 
 var timest = Date.now();
+var GUID=crypto.randomUUID();
+
 
 var str = await signatory.signatory({private_key:pem}, {
   time: 1,
@@ -65,7 +67,7 @@ var str = await signatory.signatory({private_key:pem}, {
       dataSignature: null
   },
   signatureKeyId: null,
-  requestTraceId: crypto.randomUUID(),
+  requestTraceId: GUID,
   timestamp: timest
 });
 let signed = str;
@@ -89,11 +91,11 @@ axios.post('https://tp.tax.gov.ir/req/api/self-tsp/sync/GET_TOKEN', {
 
 }, {
     headers: {
-      'requestTraceId': crypto.randomUUID(),
-      'timestamp': timest,
-      'Content-Type': 'application/json; charset=utf-8'
-    },
-    httpsAgent: agent,
+      requestTraceId: GUID,
+      timestamp: timest
+      // 'Content-Type': 'application/json; charset=utf-8'
+    }
+    // httpsAgent: agent,
 })
     .then(response => {
         console.log(response.data);

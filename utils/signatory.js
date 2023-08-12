@@ -66,7 +66,7 @@ let sep = '';
 function sub_normalize(json)
 {
     var ordered = sort_json(json);
-    
+    //console.log(ordered);
     var props = Object.keys(ordered);
     for (var x = 0; x < props.length; x++) {
         
@@ -86,6 +86,10 @@ function sub_normalize(json)
                 val = val.replaceAll("#", "##");
                }
            }
+        if(ordered[props[x]]==false)
+        {
+            val = ordered[props[x]];
+        }
 
            normalize_str = normalize_str + sep + val;
            sep = '#';
