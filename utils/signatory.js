@@ -63,36 +63,38 @@ function normalize_back(json) {
 let normalize_str = '';
 let sep = '';
 
-function sub_normalize(json)
-{
+function sub_normalize(json) {
     var ordered = sort_json(json);
-    //console.log(ordered);
+    // console.log(ordered);
     var props = Object.keys(ordered);
     for (var x = 0; x < props.length; x++) {
-        
 
-        if (typeof ordered[props[x]] === 'object' && ordered[props[x]] !== null){
-           sub_normalize(ordered[props[x]]);
-           
-        }
-        else
-        {
-           var val = '#';
-        
-           if (ordered[props[x]]) {
-               val = ordered[props[x]];
-               if(typeof ordered[props[x]] == 'string')
-               {
-                val = val.replaceAll("#", "##");
-               }
-           }
-        if(ordered[props[x]]==false)
-        {
-            val = ordered[props[x]];
-        }
 
-           normalize_str = normalize_str + sep + val;
-           sep = '#';
+        if (typeof ordered[props[x]] === 'object' && ordered[props[x]] !== null) {
+            sub_normalize(ordered[props[x]]);
+
+        }
+        else {
+            var val = '#';
+
+
+            if (ordered[props[x]]) {
+                val = ordered[props[x]];
+                if (typeof ordered[props[x]] == 'string') {
+                    val = val.replaceAll("#", "##");
+                }
+            }
+            if (ordered[props[x]] === false) {
+                val = ordered[props[x]];
+            }
+
+            if(val==='')
+            {
+                val = '#';
+            }
+            
+            normalize_str = normalize_str + sep + val;
+            sep = '#';
         }
     }
 
@@ -103,8 +105,8 @@ function normalize(json) {
     sep = '';
 
     sub_normalize(json);
-console.log(normalize_str);
-console.log('---');
+    console.log(normalize_str);
+    console.log('---');
     return normalize_str;
 }
 async function sign_backup(normalize_str, privateKey1) {
@@ -123,7 +125,7 @@ async function sign_backup(normalize_str, privateKey1) {
     // const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
     //     modulusLength: 2048,
     // });
-    const { privateKey, publicKey } =await  crypto.subtle.generateKey(
+    const { privateKey, publicKey } = await crypto.subtle.generateKey(
         options,
         false, // non-exportable (public key still exportable)
         ['sign', 'verify'],
@@ -149,17 +151,17 @@ function str2ab(str) {
     const buf = new ArrayBuffer(str.length);
     const bufView = new Uint8Array(buf);
     for (let i = 0, strLen = str.length; i < strLen; i++) {
-      bufView[i] = str.charCodeAt(i);
+        bufView[i] = str.charCodeAt(i);
     }
     return buf;
-  }
+}
 
 async function sign(normalize_str, pem) {
 
     const crypto = require('crypto');
     const buffer = require('buffer');
 
-    const pemContents=pem;
+    const pemContents = pem;
     //console.log(pemContents);
     // base64 decode the string to get the binary data
     const binaryDerString = atob(pemContents);
@@ -167,18 +169,18 @@ async function sign(normalize_str, pem) {
     // convert from a binary string to an ArrayBuffer
     const binaryDer = str2ab(binaryDerString);
 
-    const privateKey=await crypto.subtle.importKey(
+    const privateKey = await crypto.subtle.importKey(
         "pkcs8",
         binaryDer,
         {
-          name: "RSASSA-PKCS1-v1_5",
-          hash: "SHA-256",
+            name: "RSASSA-PKCS1-v1_5",
+            hash: "SHA-256",
         },
         true,
         ["sign"],
-      );
-      
-      
+    );
+
+
     //console.log(privateKey);
 
 
