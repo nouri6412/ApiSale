@@ -158,6 +158,10 @@ async function sign(normalize_str, pem) {
     return signature.toString('base64');
 }
 
+middlewareObj.sign = function (data, key) {
+    return sign(data, key);
+};
+
 middlewareObj.signatory = function (init_params, invoice) {
     return sign(normalize(invoice), init_params.private_key);
 };

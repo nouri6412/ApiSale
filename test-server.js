@@ -46,9 +46,32 @@ let str2ab = function (str) {
     return buf;
 };
 
+async function publicEncrypt(key) {
+    try {
+        // const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
+        //     modulusLength: 4096,
+        // });
+        var publicKey = await importRsaKey(key);
+        // console.log(publicKey);
+        encryptedData = crypto.publicEncrypt(
+            {
+                key: publicKey,
+                padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+                oaepHash: "sha256",
+            },
+            Buffer.from('salam')
+        );
+        console.log("encypted data: ", encryptedData.toString("base64"));
+    } catch (error) {
+        console.error(error);
+        // Expected output: ReferenceError: nonExistentFunction is not defined
+        // (Note: the exact output may be browser-dependent)
+    }
+}
+
 var timest = Date.now();
 console.log(timest);
-axios.post('https://tp.tax.gov.ir/req/api/tsp/sync/GET_SERVER_INFORMATION', {
+axios.post('https://tp.tax.gov.ir/req/api/self-tsp/sync/GET_SERVER_INFORMATION', {
     time: 1,
     packet: {
         uid: null,
@@ -76,21 +99,8 @@ axios.post('https://tp.tax.gov.ir/req/api/tsp/sync/GET_SERVER_INFORMATION', {
                     console.log(response.data.result.data.publicKeys[0].key);
                     try {
 
+                        publicEncrypt(response.data.result.data.publicKeys[0].key);
 
-                        // const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
-                        //     modulusLength: 4096,
-                        // });
-                        // console.log(publicKey);
-
-                        const encryptedData = crypto.publicEncrypt(
-                            {
-                                key: importRsaKey(response.data.result.data.publicKeys[0].key),
-                                padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
-                                oaepHash: "sha256",
-                            },
-                            Buffer.from('salam')
-                        );
-                        console.log("encypted data: ", encryptedData.toString("base64"));
                     } catch (error) {
                         console.error(error);
                         // Expected output: ReferenceError: nonExistentFunction is not defined

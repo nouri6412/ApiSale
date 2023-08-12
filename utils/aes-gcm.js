@@ -21,7 +21,7 @@ middlewareObj.aes256gcm = () => {
     // Hint: Larger inputs (it's GCM, after all!) should use the stream API
     let enc = cipher.update(str, 'utf8', 'base64');
     enc += cipher.final('base64');
-    return [ enc, iv, cipher.getAuthTag()];
+    return [enc, iv, cipher.getAuthTag()];
   };
 
   // decrypt decodes base64-encoded ciphertext into a utf8-encoded string
@@ -51,7 +51,7 @@ middlewareObj.aes256gcm = () => {
     }
     return result.toUpperCase();
   }
-  const aoep=(publicKey)=>{
+  const aoep = (publicKey) => {
     const encryptedData = crypto.publicEncrypt(
       {
         key: publicKey,
@@ -61,10 +61,10 @@ middlewareObj.aes256gcm = () => {
       // We convert the data string to a buffer using `Buffer.from`
       Buffer.from(data)
     );
-    console.log("encypted data: ", encryptedData.toString("base64"));
+  //  console.log("encypted data: ", encryptedData.toString("base64"));
   };
 
-  const init = (data) => {
+  const init =async (data) => {
     var hex_data = base64ToHex(data);
     // hex_data='0101'+hex_data;
 
@@ -82,15 +82,14 @@ middlewareObj.aes256gcm = () => {
     var hex1 = key.toString('hex');
 
     var hex2 = hex_data;
-    // console.log(hex_data);
-    // console.log('--');
     var xored_data = '';
     for (var x = 0; x < v4; x++) {
       xored_data = xored_data + xor(hex1, hex2.substring(x * 32, (x * 32) + 32));
     }
 
     const [encrypted, iv, authTag] = encrypt(xored_data, key);
-// console.log(xored_data);
+    return { encrypted, iv, authTag,key };
+
   };
 
   return {
