@@ -14,18 +14,15 @@ const fs = require('fs');
 const crypto = require('crypto');
 var signatory = require("./utils/signatory");
 const buffer = require('buffer');
+const https = require('https');
+
+const agent = new https.Agent({
+  rejectUnauthorized: false
+});
 
 const test=async ()=>{
 
-// Create a private key
-const options = {
-    name: 'RSASSA-PKCS1-v1_5',
-    modulusLength: 2048,
-    publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
-    hash: { name: 'SHA-256' }
-};
-
-const pemContents=`MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCnr3BW13pLxmP+
+const pem=`MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCnr3BW13pLxmP+
 NQaxioyyr5IoVsekCOLXqOJAlGDKTlkVOUgSUzjKGybxWrQqMz6kDkjT/trPQxqD
 6HJDM9j+csZzhTcDy5zjFl5Akt5810Y9heCZYzicb16Pt6sDpwkbPO9BmL8jvuiU
 rGbyC9GwiwYiLasyJyI/Zk3HnQJx861NyZuLlxpGCUobi1qNVvhwsObgHSH/WxbD
@@ -52,38 +49,28 @@ MYcDR/ROIhYcvIl9v80wHBaDIItb6XT4cM5YRJE6J9YbiV+QfAGf3tDahBO4Gcbx
 h7ey7Uks87zsLHiMnp9MnNVO+ND0IbHkOwgJBhT2IXZpWI6H5eZEVkn+lxSlxdes
 z0X/+sJExHYZLGoHGVpq9Ws=`;
 
-
-//console.log(pemContents);
-// base64 decode the string to get the binary data
-const binaryDerString = atob(pemContents);
-
-// convert from a binary string to an ArrayBuffer
-const binaryDer = str2ab(binaryDerString);
-
-const privateKey=async function(binaryDer){ 
-  return  await crypto.subtle.importKey(
-    "pkcs8",
-    binaryDer,
-    {
-      name: "RSASSA-PKCS1-v1_5",
-      hash: "SHA-256",
-    },
-    true,
-    ["sign"],
-  );
-}
-
-  let sign = crypto.createSign('SHA256');
-
-  var pk=await privateKey(binaryDer);
-  console.log(pk);
-  
-let signed = sign.sign(pk);
-console.log(signed.toString('base64'));
-
 var timest = Date.now();
 
-console.log(timest);
+var str = await signatory.signatory({private_key:pem}, {
+  time: 1,
+  packet: {
+      uid: null,
+      packetType: "GET_TOKEN",
+      retry: false,
+      data: { username: "A1211P" },
+      encryptionKeyId: null,
+      symmetricKey: "",
+      iv: null,
+      fiscalId: "A1211P",
+      dataSignature: null
+  },
+  signatureKeyId: null,
+  requestTraceId: crypto.randomUUID(),
+  timestamp: timest
+});
+let signed = str;
+console.log(str);
+
 axios.post('https://tp.tax.gov.ir/req/api/self-tsp/sync/GET_TOKEN', {
     time: 1,
     packet: {
@@ -91,26 +78,33 @@ axios.post('https://tp.tax.gov.ir/req/api/self-tsp/sync/GET_TOKEN', {
         packetType: "GET_TOKEN",
         retry: false,
         data: { username: "A1211P" },
-        encryptionKeyId: "",
+        encryptionKeyId: null,
         symmetricKey: "",
-        iv: "",
-        fiscalId: "",
-        dataSignature: ""
+        iv: null,
+        fiscalId: "A1211P",
+        dataSignature: null
     },
-    signature:signed.toString('base64')
+    signature:signed,
+    signatureKeyId: null
 
 }, {
     headers: {
-        'requestTraceId': timest,
-        'timestamp': timest,
-        'Content-Type': 'application/json'
-    }
+      'requestTraceId': crypto.randomUUID(),
+      'timestamp': timest,
+      'Content-Type': 'application/json; charset=utf-8'
+    },
+    httpsAgent: agent,
 })
     .then(response => {
         console.log(response.data);
     })
     .catch(error => {
-          console.log(error)
+      if (error.response) {
+        console.log(error.response.data);
+    }
+    else {
+        console.log(error);
+    }
     })
     .finally(() => {
 

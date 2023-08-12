@@ -12,8 +12,7 @@ function sort_json(json) {
 
     return ordered;
 }
-
-function normalize(json) {
+function normalize_back(json) {
 
     var normalize_str = '';
 
@@ -58,6 +57,50 @@ function normalize(json) {
         }
     }
 
+    return normalize_str;
+}
+
+let normalize_str = '';
+let sep = '';
+
+function sub_normalize(json)
+{
+    var ordered = sort_json(json);
+    
+    var props = Object.keys(ordered);
+    for (var x = 0; x < props.length; x++) {
+        
+
+        if (typeof ordered[props[x]] === 'object' && ordered[props[x]] !== null){
+           sub_normalize(ordered[props[x]]);
+           
+        }
+        else
+        {
+           var val = '#';
+        
+           if (ordered[props[x]]) {
+               val = ordered[props[x]];
+               if(typeof ordered[props[x]] == 'string')
+               {
+                val = val.replaceAll("#", "##");
+               }
+           }
+
+           normalize_str = normalize_str + sep + val;
+           sep = '#';
+        }
+    }
+
+}
+function normalize(json) {
+
+    normalize_str = '';
+    sep = '';
+
+    sub_normalize(json);
+console.log(normalize_str);
+console.log('---');
     return normalize_str;
 }
 async function sign_backup(normalize_str, privateKey1) {
@@ -111,14 +154,6 @@ async function sign(normalize_str, pem) {
 
     const crypto = require('crypto');
     const buffer = require('buffer');
-
-    // Create a private key
-    const options = {
-        name: 'RSASSA-PKCS1-v1_5',
-        modulusLength: 2048,
-        publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
-        hash: { name: 'SHA-256' }
-    };
 
     const pemContents=pem;
     //console.log(pemContents);
