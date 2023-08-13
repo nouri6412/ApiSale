@@ -199,12 +199,35 @@ async function sign(normalize_str, pem) {
     return signature.toString('base64');
 }
 
+async function sign_v1(normalize_str, pem) {
+
+    const crypto = require('crypto');
+
+    const fs = require('fs');
+    var pk='';
+    try {
+          pk = fs.readFileSync('keys/fa.key', 'utf8');
+    
+    } catch (err) {
+        console.error(err);
+    }
+    
+    var signature = crypto.createSign("SHA256").update(normalize_str).sign(pk);
+    console.log(signature.toString('base64'));
+
+    return signature.toString('base64');
+}
+
 middlewareObj.sign = function (data, key) {
     return sign(data, key);
 };
 
 middlewareObj.signatory = function (init_params, invoice) {
     return sign(normalize(invoice), init_params.private_key);
+};
+
+middlewareObj.signatory_v1 = function (init_params, invoice) {
+    return sign_v1(normalize(invoice), init_params.private_key);
 };
 
 module.exports = middlewareObj;
