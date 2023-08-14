@@ -180,6 +180,29 @@ async function sign_v1(normalize_str, pem) {
     return signature.toString('base64');
 }
 
+async function sign_v2(normalize_str, pem) {
+
+    const crypto = require('crypto');
+
+    const fs = require('fs');
+    var pk='';
+    try {
+          pk = fs.readFileSync('keys/fa.key', 'utf8');
+    
+    } catch (err) {
+        console.error(err);
+    }
+    var signature = crypto.createSign("SHA256", {
+        name: 'RSASSA-PKCS1-v1_5',
+        modulusLength:"2048",
+        publicExponent:new Uint8Array([1, 0, 1]),
+        hash:"SHA-256",
+    }).update(normalize_str).sign(pk);
+
+
+    return signature.toString('base64');
+}
+
 middlewareObj.sign = function (data, key) {
     return sign(data, key);
 };
