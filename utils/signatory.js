@@ -174,7 +174,7 @@ async function sign_v1(normalize_str, pem) {
     } catch (err) {
         console.error(err);
     }
-    var signature = crypto.createSign("RSA-SHA256").update(normalize_str).sign(pk);
+    var signature = crypto.createSign("SHA256").update(normalize_str).sign(pk);
 
 
     return signature.toString('base64');
