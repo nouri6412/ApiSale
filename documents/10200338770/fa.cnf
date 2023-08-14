@@ -1,0 +1,11 @@
+[req]
+prompt= no
+distinguished_name= dn
+[dn]
+CN= Azar Abad Ejra [Stamp]
+serialNumber= 10200338770
+O= Non-Governmental
+3.OU= آذر آباد اجرا		
+2.OU= آذر آباد اجرا			
+1.OU= آذر آباد اجرا			
+C= IR
