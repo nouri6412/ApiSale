@@ -65,7 +65,7 @@ let sep = '';
 
 function sub_normalize(json) {
     var ordered = sort_json(json);
-    // console.log(ordered);
+     console.log(ordered);
     var props = Object.keys(ordered);
     for (var x = 0; x < props.length; x++) {
 
@@ -108,43 +108,6 @@ function normalize(json) {
     console.log(normalize_str);
     console.log('---');
     return normalize_str;
-}
-async function sign_backup(normalize_str, privateKey1) {
-
-    const crypto = require('crypto');
-    const buffer = require('buffer');
-
-    // Create a private key
-    const options = {
-        name: 'RSASSA-PKCS1-v1_5',
-        modulusLength: 2048,
-        publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
-        hash: { name: 'SHA-256' }
-    };
-
-    // const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
-    //     modulusLength: 2048,
-    // });
-    const { privateKey, publicKey } = await crypto.subtle.generateKey(
-        options,
-        false, // non-exportable (public key still exportable)
-        ['sign', 'verify'],
-    );
-
-    console.log(privateKey);
-
-    // Convert string to buffer 
-    const data = Buffer.from(normalize_str);
-
-    // Sign the data and returned signature in buffer 
-    const sign = crypto.sign("SHA256", data, privateKey);
-
-    // Convert returned buffer to base64
-    const signature = sign.toString('base64');
-
-    // Printing the signature 
-    console.log(`Signature:\n\n ${signature}`);
-    return signature.toString('base64');
 }
 
 function str2ab(str) {
@@ -211,8 +174,7 @@ async function sign_v1(normalize_str, pem) {
     } catch (err) {
         console.error(err);
     }
-    
-    var signature = crypto.createSign("SHA256").update(normalize_str).sign(pk);
+    var signature = crypto.createSign("RSA-SHA256").update(normalize_str).sign(pk);
     console.log(signature.toString('base64'));
 
     return signature.toString('base64');

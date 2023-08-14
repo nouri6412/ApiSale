@@ -27,23 +27,20 @@ const test = async () => {
   var timest = Date.now();
   var GUID = crypto.randomUUID();
 
-  console.log(timest+'          '+GUID);
-
 
   var str = await signatory.signatory_v1({ private_key: pem }, {
+    time: 1,
     packet: {
       uid: null,
       packetType: "GET_TOKEN",
       retry: false,
-      data: { username: "A1211P" },
+      data: { username: "A14P7E" },
       encryptionKeyId: null,
       symmetricKey: null,
       iv: null,
-      fiscalId: "A1211P",
-      dataSignature: null,
-      signatureKeyId: null
+      fiscalId: "",
+      dataSignature: null
     },
-    signatureKeyId: null,
     requestTraceId: GUID,
     timestamp: timest
   });
@@ -51,20 +48,19 @@ const test = async () => {
   console.log(str);
 
   axios.post('https://tp.tax.gov.ir/req/api/self-tsp/sync/GET_TOKEN', {
+    time: 1,
     packet: {
       uid: null,
       packetType: "GET_TOKEN",
       retry: false,
-      data: { username: "A1211P" },
+      data: { username: "A14P7E" },
       encryptionKeyId: null,
       symmetricKey: null,
       iv: null,
-      fiscalId: "A1211P",
-      dataSignature: null,
-      signatureKeyId: null
+      fiscalId: "",
+      dataSignature: null
     },
-    signature: signed,
-    signatureKeyId: null
+    signature: signed
   }, {
     headers: {
       requestTraceId: GUID,
