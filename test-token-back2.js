@@ -26,50 +26,50 @@ const test = async () => {
 
   var timest = Date.now();
   var GUID = crypto.randomUUID();
+  var GUID_uid = crypto.randomUUID();
 
 
   var str = await signatory.signatory_v1({ private_key: pem }, {
-    "packet": {
-      "uid": "bc8ff813-6d01-48ea-b044-fe5e22b60460",
-      "packetType": "GET_TOKEN",
-      "retry": false,
-      "data": {
-         "username": "A14P7E"
+    packet: {
+      uid: GUID_uid,
+      packetType: "GET_TOKEN",
+      retry: false,
+      data: {
+         username: "A14P7E"
       },
-      "encryptionKeyId": null,
-      "symmetricKey": null,
-      "iv": null,
-      "fiscalId": "A14P7E",
-      "dataSignature": null,
-      "signatureKeyId": null
-    },
-    "requestTraceId": GUID,
-    "timestamp": timest
+      encryptionKeyId: null,
+      symmetricKey: null,
+      iv: null,
+      fiscalId: "A14P7E",
+      dataSignature: null,
+      requestTraceId: GUID,
+      timestamp: timest,
+    }
   });
   let signed = str;
   console.log(str);
 
   axios.post('https://tp.tax.gov.ir/req/api/self-tsp/sync/GET_TOKEN', {
-    "packet": {
-      "uid": "bc8ff813-6d01-48ea-b044-fe5e22b60460",
-      "packetType": "GET_TOKEN",
-      "retry": false,
-      "data": {
-         "username": "A14P7E"
+    packet: {
+      uid: GUID_uid,
+      packetType: "GET_TOKEN",
+      retry: false,
+      data: {
+         username: "A14P7E"
       },
-      "encryptionKeyId": null,
-      "symmetricKey": null,
-      "iv": null,
-      "fiscalId": "A14P7E",
-      "dataSignature": null,
-      "signatureKeyId": null
+      encryptionKeyId: null,
+      symmetricKey: null,
+      iv: null,
+      fiscalId: "A14P7E",
+      dataSignature: null,
+      signatureKeyId: null
     },
-    "signatureKeyId": null,
-    "signature": signed
+    signatureKeyId: null,
+    signature: signed
   }, {
     headers: {
-      "requestTraceId": GUID,
-      "timestamp": timest
+      requestTraceId: GUID,
+      timestamp: timest
       // 'Content-Type': 'application/json; charset=utf-8'
     },
      httpsAgent: agent,
@@ -91,3 +91,5 @@ const test = async () => {
 };
 
 test();
+
+"A14P7E#####A14P7E###GET_TOKEN#83df245a-96aa-44ce-885c-840d079c72fb#false###1691999269049#9ef6c215-89f5-4bd8-aa9a-4135dc76bb38##"
