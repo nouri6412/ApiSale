@@ -224,7 +224,7 @@ middlewareObj.send_invoice = async function (token, data, client_id, callback, e
         packet: {
             uid: GUID_uid,
             packetType: "INVOICE.V01",
-            retry: false,
+            retry: true,
             data: data,
             encryptionKeyId: null,
             symmetricKey: null,
