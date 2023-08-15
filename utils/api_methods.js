@@ -171,7 +171,8 @@ middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback,
         headers: {
             requestTraceId: GUID,
             timestamp: timest,
-            Authorization: 'Bearer ' + token
+            Authorization: `Bearer ${token}`
+
             // 'Content-Type': 'application/json; charset=utf-8'
         },
         httpsAgent: agent,
