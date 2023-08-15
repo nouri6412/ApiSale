@@ -127,4 +127,136 @@ middlewareObj.get_token = async function (client_id, callback, error_callbak) {
         });
 };
 
+middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback, error_callbak) {
+    const pem = ``;
+
+    var timest = Date.now();
+    var GUID = crypto.randomUUID();
+    var GUID_uid = crypto.randomUUID();
+
+
+    var str = await signatory.signatory_v1({ private_key: pem }, {
+        packet: {
+            uid: GUID_uid,
+            packetType: "INQUIRY_BY_UID",
+            retry: false,
+            data: data,
+            encryptionKeyId: null,
+            symmetricKey: null,
+            iv: null,
+            fiscalId: client_id,
+            dataSignature: null,
+            requestTraceId: GUID,
+            timestamp: timest
+        }
+    });
+    let signed = str;
+
+    axios.post(config.app.url_api + 'api/self-tsp/async/INQUIRY_BY_UID', {
+        packet: {
+            uid: GUID_uid,
+            packetType: "INQUIRY_BY_UID",
+            retry: false,
+            data: data,
+            encryptionKeyId: null,
+            symmetricKey: null,
+            iv: null,
+            fiscalId: client_id,
+            dataSignature: null,
+            signatureKeyId: null
+        },
+        signatureKeyId: null,
+        signature: signed
+    }, {
+        headers: {
+            requestTraceId: GUID,
+            timestamp: timest,
+            Authorization: 'Bearer ' + token
+            // 'Content-Type': 'application/json; charset=utf-8'
+        },
+        httpsAgent: agent,
+    })
+        .then(response => {
+            callback(response);
+        })
+        .catch(error => {
+            if (error.response) {
+                error_callbak(error.response.data);
+            }
+            else {
+                error_callbak(error);
+            }
+        })
+        .finally(() => {
+
+        });
+};
+
+
+middlewareObj.send_invoice = async function (token, data, client_id, callback, error_callbak) {
+    const pem = ``;
+
+    var timest = Date.now();
+    var GUID = crypto.randomUUID();
+    var GUID_uid = crypto.randomUUID();
+
+
+    var str = await signatory.signatory_v2({ private_key: pem }, {
+        packet: {
+            uid: GUID_uid,
+            packetType: "INVOICE.V01",
+            retry: false,
+            data: data,
+            encryptionKeyId: null,
+            symmetricKey: null,
+            iv: null,
+            fiscalId: client_id,
+            dataSignature: null,
+            requestTraceId: GUID,
+            timestamp: timest,
+            Authorization: 'Bearer ' + token
+        }
+    });
+    let signed = str;
+
+    axios.post(config.app.url_api + 'api/self-tsp/async/normal-enqueue', {
+        packet: {
+            uid: GUID_uid,
+            packetType: "INVOICE.V01",
+            retry: false,
+            data: data,
+            encryptionKeyId: null,
+            symmetricKey: null,
+            iv: null,
+            fiscalId: client_id,
+            dataSignature: null,
+            signatureKeyId: null
+        },
+        signatureKeyId: null,
+        signature: signed
+    }, {
+        headers: {
+            requestTraceId: GUID,
+            timestamp: timest,
+            Authorization: 'Bearer ' + token
+            // 'Content-Type': 'application/json; charset=utf-8'
+        },
+        httpsAgent: agent,
+    })
+        .then(response => {
+            callback(response.data);
+        })
+        .catch(error => {
+            if (error.response) {
+                error_callbak(error.response.data);
+            }
+            else {
+                error_callbak(error);
+            }
+        })
+        .finally(() => {
+
+        });
+};
+
 module.exports = middlewareObj;

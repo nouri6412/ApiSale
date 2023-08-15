@@ -105,8 +105,9 @@ function normalize(json) {
     sep = '';
 
     sub_normalize(json);
-    // console.log(normalize_str);
-    // console.log('---');
+    console.log('---');
+     console.log(normalize_str);
+     console.log('---');
     return normalize_str;
 }
 
