@@ -116,9 +116,16 @@ middlewareObj.get_token = async function (client_id, callback, error_callbak) {
         })
         .catch(error => {
             if (error.response) {
-                error_callbak(error.response.data);
+                if (error.response.data) {
+                    error_callbak(error.response.data);
+                }
+                else {
+                    error_callbak(error.response);
+                }
+
             }
             else {
+
                 error_callbak(error);
             }
         })
@@ -156,7 +163,7 @@ middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback,
         packet: {
             uid: GUID_uid,
             packetType: "INQUIRY_BY_UID",
-            retry: true,
+            retry: false,
             data: data,
             encryptionKeyId: null,
             symmetricKey: null,
@@ -171,9 +178,7 @@ middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback,
         headers: {
             requestTraceId: GUID,
             timestamp: timest,
-            Authorization: `Bearer ${token}`,
-
-             'Content-Type': 'application/json; charset=utf-8'
+            Authorization: `Bearer ${token}`
         },
         httpsAgent: agent,
     })
@@ -182,9 +187,16 @@ middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback,
         })
         .catch(error => {
             if (error.response) {
-                error_callbak(error.response.data);
+                if (error.response.data) {
+                    error_callbak(error.response.data);
+                }
+                else {
+                    error_callbak(error.response);
+                }
+
             }
             else {
+
                 error_callbak(error);
             }
         })

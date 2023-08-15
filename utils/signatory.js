@@ -65,7 +65,7 @@ let sep = '';
 
 function sub_normalize(json) {
     var ordered = sort_json(json);
- 
+//  console.log(ordered);
     var props = Object.keys(ordered);
     for (var x = 0; x < props.length; x++) {
 
