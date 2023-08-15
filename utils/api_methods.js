@@ -156,7 +156,7 @@ middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback,
         packet: {
             uid: GUID_uid,
             packetType: "INQUIRY_BY_UID",
-            retry: false,
+            retry: true,
             data: data,
             encryptionKeyId: null,
             symmetricKey: null,
@@ -224,7 +224,7 @@ middlewareObj.send_invoice = async function (token, data, client_id, callback, e
         packet: {
             uid: GUID_uid,
             packetType: "INVOICE.V01",
-            retry: true,
+            retry: false,
             data: data,
             encryptionKeyId: null,
             symmetricKey: null,
