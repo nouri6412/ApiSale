@@ -8,7 +8,9 @@ const https = require('https');
 var middlewareObj = {};
 
 const agent = new https.Agent({
-    rejectUnauthorized: false
+    rejectUnauthorized: false,
+    maxVersion: "TLSv1.2",
+    minVersion: "TLSv1.2"
 });
 
 
@@ -186,7 +188,8 @@ middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback,
             timestamp: 1692174474899,
             "Content-Type": "application/json; charset=utf-8"
             // Cookie: "cookiesession1=678B28BF262447627C0114EAD08C457D"
-        }
+        },
+         httpsAgent: agent
     })
         .then(response => {
             callback(response);
