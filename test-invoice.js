@@ -23,17 +23,17 @@ var invoice_inquiry = [
 _api.get_token("A14P7E", function (token) {
   console.log( token);
 
-  _api.inquiry_by_uid(token, invoice_inquiry, "A14P7E", function (response) {
-    console.log(response);
-  }, function (error) {
-    //console.log(error);
-  });
-
-  // _api.send_invoice(token, invoice_data, "A14P7E", function (response) {
+  // _api.inquiry_by_uid(token, invoice_inquiry, "A14P7E", function (response) {
   //   console.log(response);
   // }, function (error) {
-  //   console.log(error);
+  //   //console.log(error);
   // });
+
+  _api.send_invoice(token, invoice_data, "A14P7E", function (response) {
+    console.log(response);
+  }, function (error) {
+    console.log(error);
+  });
 },
   function (error) {
     console.log(error);

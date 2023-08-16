@@ -225,7 +225,7 @@ middlewareObj.send_invoice = async function (token, data, client_id, callback, e
     var GUID_uid = crypto.randomUUID();
 
 
-    var str = await signatory.signatory_v2({ private_key: pem }, {
+    var str = await signatory.signatory_v4({ private_key: pem }, {
         packet: {
             uid: GUID_uid,
             packetType: "INVOICE.V01",
@@ -238,27 +238,46 @@ middlewareObj.send_invoice = async function (token, data, client_id, callback, e
             dataSignature: null,
             requestTraceId: GUID,
             timestamp: timest,
-            Authorization: 'Bearer ' + token
+            Authorization: `${token}`
         }
     });
     let signed = str;
 
-    axios.post(config.app.url_api + 'api/self-tsp/async/normal-enqueue', {
-        packet: {
-            uid: GUID_uid,
-            packetType: "INVOICE.V01",
-            retry: false,
-            data: data,
-            encryptionKeyId: null,
-            symmetricKey: null,
-            iv: null,
-            fiscalId: client_id,
-            dataSignature: null,
-            signatureKeyId: null
-        },
-        signatureKeyId: null,
-        signature: signed
-    }, {
+    axios.post(config.app.url_api + 'api/self-tsp/async/normal-enqueue', 
+    // {
+    //     packet: {
+    //         uid: GUID_uid,
+    //         packetType: "INVOICE.V01",
+    //         retry: false,
+    //         data: data,
+    //         encryptionKeyId: null,
+    //         symmetricKey: null,
+    //         iv: null,
+    //         fiscalId: client_id,
+    //         dataSignature: null,
+    //         signatureKeyId: null
+    //     },
+    //     signatureKeyId: null,
+    //     signature: signed
+    // }
+    {
+        "packets" : [
+           {
+              "data" : data,
+              "dataSignature" : "oDkP3yp0XTh+SZ8tCEpHI4YWH5ffW0OQMqfysvLrOj2uY+sevMsoObYCEf1LJA8sgxT7gQpbyLwHA6tIxrSgVL2Kt3CtfEW4+ljjEWvlgF8ddxyJ8bBa0ll0g0TnFihKvCs/nX8bUEVX2SIwi1vNUszPRpFWF438iGJzhOI/8ByoHKtEzOrL622DL/yvDwbqXND6flozUwlD1VadbuLNmj5Y4ufppORBLBI8duMZU+skaErpj8gaoelj3lfx0etNQi8JZ/qhgyHznNDKig31B89u3eDm15MVU1aCC4m0YO9ppjieY9cifZ7kficALFBq3yM84n8tQnD3p/qgvB7QQQ==",
+              "encryptionKeyId" : null,
+              "fiscalId" : "A14P7E",
+              "iv" : null,
+              "packetType" : "INVOICE.V01",
+              "retry" : false,
+              "signatureKeyId" : null,
+              "symmetricKey" :null,
+              "uid" : GUID_uid
+           }
+        ],
+        "signature" : signed,
+        "signatureKeyId" : null
+     }, {
         headers: {
             requestTraceId: GUID,
             timestamp: timest,
