@@ -11,8 +11,7 @@ const agent = new https.Agent({
     rejectUnauthorized: false
 });
 
-
-middlewareObj.enc = async function (callback,error_callbak) {
+middlewareObj.enc = async function (callback) {
     var timest = Date.now();
 
     await axios.post(config.app.url_api + 'api/self-tsp/sync/GET_SERVER_INFORMATION', {
@@ -35,25 +34,7 @@ middlewareObj.enc = async function (callback,error_callbak) {
             'Content-Type': 'application/json'
         }
     })
-        .then(response => {
-
-            if (response.data.result) {
-                if (response.data.result.data) {
-                    if (response.data.result.data.token) {
-                        callback(response.data.result.data.token);
-                    }
-                    else {
-                        error_callbak(response.data);
-                    }
-                }
-                else {
-                    error_callbak(response.data);
-                }
-            }
-            else {
-                error_callbak(response.data);
-            }
-        })
+        .then(callback)
         .catch(error => {
             console.log(error)
         })
@@ -157,11 +138,11 @@ middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback,
     const pem = ``;
 
     var timest = Date.now();
-    var GUID = crypto.randomUUID();
-    var GUID_uid = crypto.randomUUID();
+    var GUID =await crypto.randomUUID();
+    var GUID_uid =await crypto.randomUUID();
 
 
-    var str = await signatory.signatory_v1({ private_key: pem }, {
+    var str = await signatory.signatory_v3({ private_key: pem }, {
         packet: {
             uid: GUID_uid,
             packetType: "INQUIRY_BY_UID",
@@ -173,20 +154,42 @@ middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback,
             fiscalId: client_id,
             dataSignature: null,
             requestTraceId: GUID,
-            timestamp: timest
+            timestamp: timest,
+            Authorization: `${token}`
         }
     });
     let signed = str;
 
-    axios.post(config.app.url_api + 'api/self-tsp/async/INQUIRY_BY_UID', {"packet":{"uid":"55c6fc10-7860-49f9-9914-594e6a53e45c","packetType":"INQUIRY_BY_UID","retry":false,"data":[{"uid":"31d8eeb5-230d-4148-8d14-03f819167634","fiscalId":"A14P7E"}],"encryptionKeyId":null,"symmetricKey":null,"iv":null,"fiscalId":"A14P7E","dataSignature":null,"signatureKeyId":null},"signature":"zBN4/fhLhxzbmQgXcGf03P68u2UwfE0/LZGNak1eSaGVdfNfJjHm76R0yqLH3Lw8wrCsWM6Qh/KCizcmgrm7wV/Ui6plNK0LisfAqUwc9IOW5ZCfIl\u002BU\u002BLvvkjFgQGhSrYlHJsVnQDH9Co2E4mObwpw35LvV1Ntbj872mgC0UFXVB2GUvQM1kxAlJAoYTDGDODZxrOI/bir4OKMkGdCQ0D1dYf\u002BQAABjVK1Q2o7rSGNsMl6f59SZ3LWqQyavlURxDnk/NWfSB8BTl\u002BTah7FrLkE0O7h4MpKyJWIZcE52wsIY0cCvAd333qOj99/etUVGNQgzVwtdsdQlHKMpX6ZSow==","signatureKeyId":null}, {
+    axios.post(config.app.url_api + 'api/self-tsp/async/INQUIRY_BY_UID', {
+        packet: {
+            uid: GUID_uid,
+            packetType: "INQUIRY_BY_UID",
+            retry: false,
+            data: data,
+            encryptionKeyId: null,
+            symmetricKey: null,
+            iv: null,
+            fiscalId: client_id,
+            dataSignature: null,
+            signatureKeyId: null
+        },
+        signatureKeyId: null,
+        signature: signed
+    }, {
         headers: {
             Accept: "application/json",
-            Authorization: "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJBMTRQN0UiLCJ0b2tlbklkIjoiNzhlMjc2OTYtMmM5Ni00NGFiLTkyZWQtMTNlM2YwYmI4M2RlIiwiY3JlYXRlRGF0ZSI6MTY5MjE3NDQ3MzQwMiwiY2xpZW50VHlwZSI6Ik1FTU9SWSIsInRheHBheWVySWQiOiIxMDIwMDMzODc3MCIsInN1YiI6IkExNFA3RSIsImV4cCI6MTY5MjE4ODg3MywiaXNzIjoiVEFYIE9yZ2FuaXphdGlvbiJ9.d40aO9uhhcQHbZd-YeXfxCfwY612H6y4O_uT8BV2TxGn1ckgP-7zIKOb97vqTtCZUK-ykSQZCStCTlgozCRqcA",
-            requestTraceId: "18c9e408-8753-43fc-b022-30292e574ee8",
-            timestamp: 1692174474899,
-            "Content-Type": "application/json; charset=utf-8"
-            // Cookie: "cookiesession1=678B28BF262447627C0114EAD08C457D"
-        }
+             requestTraceId: GUID,
+             timestamp: timest,
+            Authorization: `Bearer ${token}`,
+          //  Cookie: "cookiesession1=678B28BFBD49F3D669961A979D65A206"
+  
+        //     , Authorization: "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJBMTRQN0UiLCJ0b2tlbklkIjoiNWUyNTZmZWMtYTRlZC00NWFlLWEyZmEtZmNhOTJlYjM2ODU0IiwiY3JlYXRlRGF0ZSI6MTY5MjE2NTcxNzIxNCwiY2xpZW50VHlwZSI6Ik1FTU9SWSIsInRheHBheWVySWQiOiIxMDIwMDMzODc3MCIsInN1YiI6IkExNFA3RSIsImV4cCI6MTY5MjE4MDExNywiaXNzIjoiVEFYIE9yZ2FuaXphdGlvbiJ9.Zq9OFPJv9G8x4Y3nsLTkzbzJNX7KI4O8PoJRcvygpqqcPSTRQAP85YUcRUnmETiNnuwLWYWpozvwV0Ko-xp1ow"
+        //     , requestTraceId: "aa5ebdf8-13a7-443a-9b5a-12457ff1a8ab"
+        //     , timestamp: 1692165718385
+        //     , "Content-Type": "application/json; charset=utf-8"
+        //  ,Cookie: "cookiesession1=678B28BFBD49F3D669961A979D65A206"
+        },
+        httpsAgent: agent,
     })
         .then(response => {
             callback(response);

@@ -65,7 +65,7 @@ let sep = '';
 
 function sub_normalize(json) {
     var ordered = sort_json(json);
-//  console.log(ordered);
+  console.log(ordered);
     var props = Object.keys(ordered);
     for (var x = 0; x < props.length; x++) {
 
@@ -218,6 +218,10 @@ middlewareObj.signatory_v1 = function (init_params, invoice) {
 
 middlewareObj.signatory_v2 = function (init_params, invoice) {
     return sign_v2(normalize(invoice), init_params.private_key);
+};
+
+middlewareObj.signatory_v3 = function (init_params, invoice) {
+    return sign_v1(normalize(invoice)+"#", init_params.private_key);
 };
 
 module.exports = middlewareObj;
