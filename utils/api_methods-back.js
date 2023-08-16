@@ -100,6 +100,8 @@ middlewareObj.get_token = async function (client_id, callback, error_callbak) {
             if (response.data.result) {
                 if (response.data.result.data) {
                     if (response.data.result.data.token) {
+                        console.log(response.data.result.data.token);
+                        console.log('---------------------------');
                         callback(response.data.result.data.token);
                     }
                     else {
@@ -189,7 +191,7 @@ middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback,
         //     , "Content-Type": "application/json; charset=utf-8"
         //  ,Cookie: "cookiesession1=678B28BFBD49F3D669961A979D65A206"
         },
-        httpsAgent: agent,
+        // httpsAgent: agent,
     })
         .then(response => {
             callback(response);
