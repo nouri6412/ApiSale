@@ -75,7 +75,7 @@ middlewareObj.get_token = async function (client_id, callback, error_callbak) {
     });
     let signed = str;
 
-    axios.post(config.app.url_api + 'api/self-tsp/sync/GET_TOKEN', {
+    axios.post('https://tp.tax.gov.ir/req/api/self-tsp/sync/GET_TOKEN', {
         packet: {
             uid: GUID_uid,
             packetType: "GET_TOKEN",
@@ -141,7 +141,7 @@ middlewareObj.get_token = async function (client_id, callback, error_callbak) {
         });
 };
 
-middlewareObj.inquiry_by_uid = async function (token, data, client_id, cookie, callback, error_callbak) {
+middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback, error_callbak) {
     const pem = ``;
 
     var timest = Date.now();
