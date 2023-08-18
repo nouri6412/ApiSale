@@ -1,20 +1,18 @@
 const config = require('../config');
-const axios = require('axios');
+const fetch = require('node-fetch');
 const fs = require('fs');
 const crypto = require('crypto');
 var signatory = require("./signatory");
 const https = require('https');
 
+
 var middlewareObj = {};
+
 
 const agent = new https.Agent({
     rejectUnauthorized: false
 });
 
-const axiosCookieJarSupport = require('axios-cookiejar-support').default;
-const tough = require('tough-cookie');
-
-// axiosCookieJarSupport(axios);
 
 middlewareObj.enc = async function (callback) {
     var timest = Date.now();
@@ -49,6 +47,9 @@ middlewareObj.enc = async function (callback) {
 };
 
 middlewareObj.get_token = async function (client_id, callback, error_callbak) {
+
+
+
     const pem = ``;
 
     var timest = Date.now();
@@ -75,56 +76,59 @@ middlewareObj.get_token = async function (client_id, callback, error_callbak) {
     });
     let signed = str;
 
-    axios.post(config.app.url_api + 'api/self-tsp/sync/GET_TOKEN', {
-        packet: {
-            uid: GUID_uid,
-            packetType: "GET_TOKEN",
-            retry: false,
-            data: {
-                username: client_id
+    fetch(config.app.url_api + 'api/self-tsp/sync/GET_TOKEN', {
+        method: 'POST',
+        body: JSON.stringify({
+            packet: {
+                uid: GUID_uid,
+                packetType: "GET_TOKEN",
+                retry: false,
+                data: {
+                    username: client_id
+                },
+                encryptionKeyId: null,
+                symmetricKey: null,
+                iv: null,
+                fiscalId: client_id,
+                dataSignature: null,
+                signatureKeyId: null
             },
-            encryptionKeyId: null,
-            symmetricKey: null,
-            iv: null,
-            fiscalId: client_id,
-            dataSignature: null,
-            signatureKeyId: null
-        },
-        signatureKeyId: null,
-        signature: signed
-    }, {
+            signatureKeyId: null,
+            signature: signed
+        }),
         headers: {
             requestTraceId: GUID,
             timestamp: timest,
-            // 'Content-Type': 'application/json; charset=utf-8'
+            'Content-type': 'application/json; charset=UTF-8',
         },
-        withCredentials: true,
-        httpsAgent: agent,
     })
-        .then(response => {
-            if (response.data.result) {
-                if (response.data.result.data) {
-                    if (response.data.result.data.token) {
-                        console.log(response.data.result.data.token);
+        // Parse JSON data
+        .then(async(res) => {
+            var response=await res.json();
+            console.log('-----------------------');
+            if (response.result) {
+                if (response.result.data) {
+                    if (response.result.data.token) {
+                        console.log(response.result.data.token);
                         console.log('---------------------------');
-                        callback(response.data.result.data.token, response.headers['set-cookie']);
+                        callback(response.result.data.token);
                     }
                     else {
-                        error_callbak(response.data);
+                        error_callbak(response);
                     }
                 }
                 else {
-                    error_callbak(response.data);
+                    error_callbak(response);
                 }
             }
             else {
-                error_callbak(response.data);
+                error_callbak(response);
             }
         })
         .catch(error => {
             if (error.response) {
-                if (error.response.data) {
-                    error_callbak(error.response.data);
+                if (error.response) {
+                    error_callbak(error.response);
                 }
                 else {
                     error_callbak(error.response);
@@ -136,12 +140,9 @@ middlewareObj.get_token = async function (client_id, callback, error_callbak) {
                 error_callbak(error);
             }
         })
-        .finally(() => {
-
-        });
 };
 
-middlewareObj.inquiry_by_uid = async function (token, data, client_id, cookie, callback, error_callbak) {
+middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback, error_callbak) {
     const pem = ``;
 
     var timest = Date.now();
@@ -166,39 +167,44 @@ middlewareObj.inquiry_by_uid = async function (token, data, client_id, cookie, c
         }
     });
     let signed = str;
-
-    axios.post('https://tp.tax.gov.ir/req/api/self-tsp/sync/INQUIRY_BY_UID', {
-        packet: {
-            uid: GUID_uid,
-            packetType: "INQUIRY_BY_UID",
-            retry: false,
-            data: data,
-            encryptionKeyId: null,
-            symmetricKey: null,
-            iv: null,
-            fiscalId: client_id,
-            dataSignature: null,
-            signatureKeyId: null
-        },
-        signatureKeyId: null,
-        signature: signed
-    }, {
+    fetch('https://tp.tax.gov.ir/req/api/self-tsp/sync/INQUIRY_BY_UID', {
+        method: 'POST',
+        body: JSON.stringify({
+            packet: {
+                uid: GUID_uid,
+                packetType: "INQUIRY_BY_UID",
+                retry: false,
+                data: data,
+                encryptionKeyId: null,
+                symmetricKey: null,
+                iv: null,
+                fiscalId: client_id,
+                dataSignature: null,
+                signatureKeyId: null
+            },
+            signatureKeyId: null,
+            signature: signed
+        }),
         headers: {
-            Accept: "application/json",
+            'Content-type': 'application/json; charset=UTF-8',
             requestTraceId: GUID,
             timestamp: timest,
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
         },
-        withCredentials: true,
-        httpsAgent: agent,
     })
-        .then(response => {
-            callback(response);
-        })
+        // Parse JSON data
+        .then(async(res) =>{
+          try{
+            callback(await res.json());
+          }catch(err){
+            callback(res);
+          };
+            
+        } )
         .catch(error => {
             if (error.response) {
-                if (error.response.data) {
-                    error_callbak(error.response.data);
+                if (error.response) {
+                    error_callbak(error.response);
                 }
                 else {
                     error_callbak(error.response);
@@ -210,9 +216,6 @@ middlewareObj.inquiry_by_uid = async function (token, data, client_id, cookie, c
                 error_callbak(error);
             }
         })
-        .finally(() => {
-
-        });
 };
 
 
@@ -286,11 +289,11 @@ middlewareObj.send_invoice = async function (token, data, client_id, callback, e
         httpsAgent: agent,
     })
         .then(response => {
-            callback(response.data);
+            callback(response);
         })
         .catch(error => {
             if (error.response) {
-                error_callbak(error.response.data);
+                error_callbak(error.response);
             }
             else {
                 error_callbak(error);
