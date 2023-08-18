@@ -5,6 +5,10 @@ var invoice_inquiry = [
   {
     "fiscalId": "A14P7E",
     "uid": "9d6b38b6-d584-4838-a9b8-e32110832148"
+  },
+  {
+    "fiscalId": "A14P7E",
+    "uid": "9d6b38b6-d584-4838-a9b8-e32110832147"
   }
 ];
 
