@@ -11,9 +11,6 @@ const agent = new https.Agent({
     rejectUnauthorized: false
 });
 
-const axiosCookieJarSupport = require('axios-cookiejar-support').default;
-const tough = require('tough-cookie');
-
 // axiosCookieJarSupport(axios);
 
 middlewareObj.enc = async function (callback) {
@@ -189,8 +186,7 @@ middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback,
             timestamp: timest,
             Authorization: `Bearer ${token}`
         },
-        withCredentials: true,
-        httpsAgent: agent,
+        withCredentials: true
     })
         .then(response => {
             callback(response);
