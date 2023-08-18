@@ -102,8 +102,8 @@ middlewareObj.get_token = async function (client_id, callback, error_callbak) {
             if (response.data.result) {
                 if (response.data.result.data) {
                     if (response.data.result.data.token) {
-                      //  console.log(response.data.result.data.token);
-                       // console.log('---------------------------');
+                        //  console.log(response.data.result.data.token);
+                        // console.log('---------------------------');
                         callback(response.data.result.data.token, response.headers['set-cookie']);
                     }
                     else {
@@ -219,8 +219,9 @@ middlewareObj.send_invoice = async function (token, data, client_id, callback, e
     var GUID = crypto.randomUUID();
     var GUID_uid = crypto.randomUUID();
 
+    var invoice_str = await signatory.signatory_v4({ private_key: pem },  data);
 
-    var str = await signatory.signatory_v4({ private_key: pem }, {
+    var str = await signatory.signatory_v3({ private_key: pem }, {
         packet: {
             uid: GUID_uid,
             packetType: "INVOICE.V01",
@@ -230,7 +231,7 @@ middlewareObj.send_invoice = async function (token, data, client_id, callback, e
             symmetricKey: null,
             iv: null,
             fiscalId: client_id,
-            dataSignature: null,
+            dataSignature: invoice_str,
             requestTraceId: GUID,
             timestamp: timest,
             Authorization: `${token}`
@@ -238,57 +239,45 @@ middlewareObj.send_invoice = async function (token, data, client_id, callback, e
     });
     let signed = str;
 
-    axios.post(config.app.url_api + 'api/self-tsp/async/normal-enqueue',
-        // {
-        //     packet: {
-        //         uid: GUID_uid,
-        //         packetType: "INVOICE.V01",
-        //         retry: false,
-        //         data: data,
-        //         encryptionKeyId: null,
-        //         symmetricKey: null,
-        //         iv: null,
-        //         fiscalId: client_id,
-        //         dataSignature: null,
-        //         signatureKeyId: null
-        //     },
-        //     signatureKeyId: null,
-        //     signature: signed
-        // }
+    axios.post('https://tp.tax.gov.ir/req/api/self-tsp/async/normal-enqueue',
         {
-            "packets": [
-                {
-                    "data": data,
-                    "dataSignature": "oDkP3yp0XTh+SZ8tCEpHI4YWH5ffW0OQMqfysvLrOj2uY+sevMsoObYCEf1LJA8sgxT7gQpbyLwHA6tIxrSgVL2Kt3CtfEW4+ljjEWvlgF8ddxyJ8bBa0ll0g0TnFihKvCs/nX8bUEVX2SIwi1vNUszPRpFWF438iGJzhOI/8ByoHKtEzOrL622DL/yvDwbqXND6flozUwlD1VadbuLNmj5Y4ufppORBLBI8duMZU+skaErpj8gaoelj3lfx0etNQi8JZ/qhgyHznNDKig31B89u3eDm15MVU1aCC4m0YO9ppjieY9cifZ7kficALFBq3yM84n8tQnD3p/qgvB7QQQ==",
-                    "encryptionKeyId": null,
-                    "fiscalId": "A14P7E",
-                    "iv": null,
-                    "packetType": "INVOICE.V01",
-                    "retry": false,
-                    "signatureKeyId": null,
-                    "symmetricKey": null,
-                    "uid": GUID_uid
-                }
-            ],
-            "signature": signed,
-            "signatureKeyId": null
+            packets: [{
+                uid: GUID_uid,
+                packetType: "INVOICE.V01",
+                retry: false,
+                data: data,
+                encryptionKeyId: null,
+                symmetricKey: null,
+                iv: null,
+                fiscalId: client_id,
+                dataSignature: invoice_str,
+                signatureKeyId: null
+            }],
+            signatureKeyId: null,
+            signature: signed
         }, {
         headers: {
             requestTraceId: GUID,
             timestamp: timest,
-            Authorization: 'Bearer ' + token
-            // 'Content-Type': 'application/json; charset=utf-8'
+            Authorization: `Bearer ${token}`
         },
-        httpsAgent: agent,
+        withCredentials: true
     })
         .then(response => {
             callback(response.data);
         })
         .catch(error => {
             if (error.response) {
-                error_callbak(error.response.data);
+                if (error.response.data) {
+                    error_callbak(error.response.data);
+                }
+                else {
+                    error_callbak(error.response);
+                }
+
             }
             else {
+
                 error_callbak(error);
             }
         })
