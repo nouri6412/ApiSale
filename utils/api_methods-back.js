@@ -102,8 +102,8 @@ middlewareObj.get_token = async function (client_id, callback, error_callbak) {
             if (response.data.result) {
                 if (response.data.result.data) {
                     if (response.data.result.data.token) {
-                        console.log(response.data.result.data.token);
-                        console.log('---------------------------');
+                      //  console.log(response.data.result.data.token);
+                       // console.log('---------------------------');
                         callback(response.data.result.data.token, response.headers['set-cookie']);
                     }
                     else {

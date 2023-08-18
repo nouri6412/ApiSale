@@ -221,7 +221,7 @@ middlewareObj.signatory_v2 = function (init_params, invoice) {
 };
 
 middlewareObj.signatory_v3 = function (init_params, invoice) {
-    return sign_v1(normalize(invoice)+"#", init_params.private_key);
+    return sign_v1(normalize(invoice), init_params.private_key);
 };
 
 middlewareObj.signatory_v4 = function (init_params, invoice) {

@@ -28,9 +28,9 @@ var invoice_inquiry = [
 // });
 // return;
 _api.get_token("A14P7E", function (token,cookie) {
-  //console.log( token);
+  //console.log('token is '+ token);
   _api.inquiry_by_uid(token, invoice_inquiry, "A14P7E", function (response) {
-    console.log(response);
+    console.log(response.data.result.data);
   }, function (error) {
     console.log(error);
   });
