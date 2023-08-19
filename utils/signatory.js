@@ -168,14 +168,15 @@ async function sign(normalize_str, pem) {
     return signature.toString('base64');
 }
 
-async function sign_v1(normalize_str, pem) {
+async function sign_v1(normalize_str, client_id) {
 
     const crypto = require('crypto');
 
     const fs = require('fs');
     var pk = '';
+   
     try {
-        pk = fs.readFileSync('keys/fa.key', 'utf8');
+        pk = fs.readFileSync(`keys/${client_id}.key`, 'utf8');
 
     } catch (err) {
         console.error(err);
@@ -186,14 +187,14 @@ async function sign_v1(normalize_str, pem) {
     return signature.toString('base64');
 }
 
-async function sign_v2(normalize_str, pem) {
+async function sign_v2(normalize_str, client_id) {
 
     const crypto = require('crypto');
 
     const fs = require('fs');
     var pk = '';
     try {
-        pk = fs.readFileSync('keys/fa.key', 'utf8');
+        pk = fs.readFileSync(`keys/${client_id}.key`, 'utf8');
 
     } catch (err) {
         console.error(err);
@@ -214,23 +215,23 @@ middlewareObj.sign = function (data, key) {
 };
 
 middlewareObj.signatory = function (init_params, invoice) {
-    return sign(normalize(invoice), init_params.private_key);
+    return sign(normalize(invoice), init_params.client_id);
 };
 
 middlewareObj.signatory_v1 = function (init_params, invoice) {
-    return sign_v1(normalize(invoice), init_params.private_key);
+    return sign_v1(normalize(invoice), init_params.client_id);
 };
 
 middlewareObj.signatory_v2 = function (init_params, invoice) {
-    return sign_v2(normalize(invoice), init_params.private_key);
+    return sign_v2(normalize(invoice), init_params.client_id);
 };
 
 middlewareObj.signatory_v3 = function (init_params, invoice) {
-    return sign_v1(normalize(invoice), init_params.private_key);
+    return sign_v1(normalize(invoice), init_params.client_id);
 };
 
 middlewareObj.signatory_v4 = function (init_params, invoice) {
-    return sign_v1(normalize(invoice), init_params.private_key);
+    return sign_v1(normalize(invoice), init_params.client_id);
 };
 
 module.exports = middlewareObj;

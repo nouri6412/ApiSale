@@ -9,6 +9,24 @@ middlewareObj.get_token = function (client_id) {
     }
 };
 
+middlewareObj.GET_FISCAL_INFORMATION = function (client_id) {
+    if (client_id) {
+        return { status: true };
+    }
+    else {
+        return { status: false, code: 2, message: ' حافظه مالیاتی معتبر نیست', data: {}, help: { client_id: '...' } };
+    }
+};
+
+middlewareObj.GET_ECONOMIC_CODE_INFORMATION = function (economicCode) {
+    if (economicCode) {
+        return { status: true };
+    }
+    else {
+        return { status: false, code: 2, message: '  شماره اقتصادی معتبر نیست', data: {}, help: { client_id: '...' } };
+    }
+};
+
 middlewareObj.send_invoice = function (inputs, invoices) {
 
     var status = true;

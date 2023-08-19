@@ -1,6 +1,6 @@
 var _api = require("./utils/api_methods");
 
-_api.get_serveer_information(function (response) {
+_api.GET_ECONOMIC_CODE_INFORMATION( "10200338770", function (response) {
   console.log(response);
 }, function (error) {
   console.log(error);

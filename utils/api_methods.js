@@ -57,15 +57,157 @@ middlewareObj.get_serveer_information = async function (callback, error_callbak)
         });
 };
 
+middlewareObj.GET_ECONOMIC_CODE_INFORMATION = async function ( economicCode, callback, error_callbak) {
+
+    var timest = Date.now();
+    var GUID = await crypto.randomUUID();
+    var GUID_uid = await crypto.randomUUID();
+
+
+    axios.post('https://tp.tax.gov.ir/req/api/self-tsp/sync/GET_ECONOMIC_CODE_INFORMATION', {
+        packet: {
+            uid: GUID_uid,
+            packetType: "GET_ECONOMIC_CODE_INFORMATION",
+            retry: false,
+            data: {economicCode:economicCode},
+            encryptionKeyId: null,
+            symmetricKey: null,
+            iv: null,
+            fiscalId: null,
+            dataSignature: null,
+            signatureKeyId: null
+        },
+        signatureKeyId: null
+    }, {
+        headers: {
+            Accept: "application/json",
+            requestTraceId: GUID,
+            timestamp: timest
+        }
+    })
+        .then(response => {
+            if (response.data.result) {
+                if (response.data.result.data) {
+                    callback(response.data.result.data);
+                }
+                else {
+                    error_callbak(response.data.result);
+                }
+            }
+            else {
+                error_callbak(response.data);
+            }
+        })
+        .catch(error => {
+            if (error.response) {
+                if (error.response.data) {
+                    error_callbak(error.response.data);
+                }
+                else {
+                    error_callbak(error.response);
+                }
+
+            }
+            else {
+
+                error_callbak(error);
+            }
+        })
+        .finally(() => {
+
+        });
+};
+
+middlewareObj.GET_FISCAL_INFORMATION = async function (token, client_id, callback, error_callbak) {
+
+    var timest = Date.now();
+    var GUID = await crypto.randomUUID();
+    var GUID_uid = await crypto.randomUUID();
+
+
+    var str = await signatory.signatory_v3({ client_id: client_id }, {
+        packet: {
+            uid: GUID_uid,
+            packetType: "GET_FISCAL_INFORMATION",
+            retry: false,
+            data: null,
+            encryptionKeyId: null,
+            symmetricKey: null,
+            iv: null,
+            fiscalId: client_id,
+            dataSignature: null,
+            requestTraceId: GUID,
+            timestamp: timest,
+            Authorization: `${token}`
+        }
+    });
+    let signed = str;
+
+    axios.post('https://tp.tax.gov.ir/req/api/self-tsp/sync/GET_FISCAL_INFORMATION', {
+        packet: {
+            uid: GUID_uid,
+            packetType: "GET_FISCAL_INFORMATION",
+            retry: false,
+            data: null,
+            encryptionKeyId: null,
+            symmetricKey: null,
+            iv: null,
+            fiscalId: client_id,
+            dataSignature: null,
+            signatureKeyId: null
+        },
+        signatureKeyId: null,
+        signature: signed
+    }, {
+        headers: {
+            Accept: "application/json",
+            requestTraceId: GUID,
+            timestamp: timest,
+            Authorization: `Bearer ${token}`
+        },
+        withCredentials: true
+    })
+        .then(response => {
+            if (response.data.result) {
+                if (response.data.result.data) {
+                    callback(response.data.result.data);
+                }
+                else {
+                    error_callbak(response.data.result);
+                }
+            }
+            else {
+                error_callbak(response.data);
+            }
+        })
+        .catch(error => {
+            if (error.response) {
+                if (error.response.data) {
+                    error_callbak(error.response.data);
+                }
+                else {
+                    error_callbak(error.response);
+                }
+
+            }
+            else {
+
+                error_callbak(error);
+            }
+        })
+        .finally(() => {
+
+        });
+};
+
 middlewareObj.get_token = async function (client_id, callback, error_callbak) {
-    const pem = ``;
 
     var timest = Date.now();
     var GUID = crypto.randomUUID();
     var GUID_uid = crypto.randomUUID();
 
 
-    var str = await signatory.signatory_v1({ private_key: pem }, {
+    var str = await signatory.signatory_v1({ client_id: client_id }, {
         packet: {
             uid: GUID_uid,
             packetType: "GET_TOKEN",
@@ -149,14 +291,13 @@ middlewareObj.get_token = async function (client_id, callback, error_callbak) {
 };
 
 middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback, error_callbak) {
-    const pem = ``;
 
     var timest = Date.now();
     var GUID = await crypto.randomUUID();
     var GUID_uid = await crypto.randomUUID();
 
 
-    var str = await signatory.signatory_v3({ private_key: pem }, {
+    var str = await signatory.signatory_v3({ client_id: client_id }, {
         packet: {
             uid: GUID_uid,
             packetType: "INQUIRY_BY_UID",
@@ -223,7 +364,6 @@ middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback,
 
 
 middlewareObj.send_invoice = async function (token, data, client_id, callback, error_callbak) {
-    const pem = ``;
 
     var timest = Date.now();
     var GUID = crypto.randomUUID();
@@ -234,7 +374,7 @@ middlewareObj.send_invoice = async function (token, data, client_id, callback, e
 
     for (var x = 0; x < data.length; x++) {
         var GUID_uid = crypto.randomUUID();
-        var invoice_str = await signatory.signatory_v4({ private_key: pem }, data[x]);
+        var invoice_str = await signatory.signatory_v4({ client_id: client_id }, data[x]);
         pakets[pakets.length] = {
             uid: GUID_uid,
             packetType: "INVOICE.V01",
@@ -260,7 +400,7 @@ middlewareObj.send_invoice = async function (token, data, client_id, callback, e
         };
     }
 
-    var str = await signatory.signatory_v3({ private_key: pem }, {
+    var str = await signatory.signatory_v3({ client_id: client_id }, {
         packets: pakets,
         requestTraceId: GUID,
         timestamp: timest,
