@@ -65,7 +65,7 @@ let sep = '';
 
 function sub_normalize(json) {
     var ordered = sort_json(json);
-  //console.log(ordered);
+    //console.log(ordered);
     var props = Object.keys(ordered);
     for (var x = 0; x < props.length; x++) {
 
@@ -88,11 +88,10 @@ function sub_normalize(json) {
                 val = ordered[props[x]];
             }
 
-            if(val==='')
-            {
+            if (val === '') {
                 val = '#';
             }
-            
+
             normalize_str = normalize_str + sep + val;
             sep = '#';
         }
@@ -103,11 +102,17 @@ function normalize(json) {
 
     normalize_str = '';
     sep = '';
-
+//     var text = JSON.stringify(json);
+//     console.log(json);
+//     text= text.replaceAll('.0,', ".010101,");
+// console.log(text);
+//     var json_1 = JSON.parse(text);
+    //console.log(json_1);
     sub_normalize(json);
     console.log('---');
-     console.log(normalize_str);
-     console.log('---');
+    // var normalize_str_1 = normalize_str.replaceAll('.010101', ".0");
+    console.log(normalize_str);
+    console.log('---');
     return normalize_str;
 }
 
@@ -168,10 +173,10 @@ async function sign_v1(normalize_str, pem) {
     const crypto = require('crypto');
 
     const fs = require('fs');
-    var pk='';
+    var pk = '';
     try {
-          pk = fs.readFileSync('keys/fa.key', 'utf8');
-    
+        pk = fs.readFileSync('keys/fa.key', 'utf8');
+
     } catch (err) {
         console.error(err);
     }
@@ -186,18 +191,18 @@ async function sign_v2(normalize_str, pem) {
     const crypto = require('crypto');
 
     const fs = require('fs');
-    var pk='';
+    var pk = '';
     try {
-          pk = fs.readFileSync('keys/fa.key', 'utf8');
-    
+        pk = fs.readFileSync('keys/fa.key', 'utf8');
+
     } catch (err) {
         console.error(err);
     }
     var signature = crypto.createSign("SHA256", {
         name: 'RSASSA-PKCS1-v1_5',
-        modulusLength:"2048",
-        publicExponent:new Uint8Array([1, 0, 1]),
-        hash:"SHA-256",
+        modulusLength: "2048",
+        publicExponent: new Uint8Array([1, 0, 1]),
+        hash: "SHA-256",
     }).update(normalize_str).sign(pk);
 
 

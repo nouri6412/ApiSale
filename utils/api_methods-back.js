@@ -217,42 +217,50 @@ middlewareObj.send_invoice = async function (token, data, client_id, callback, e
 
     var timest = Date.now();
     var GUID = crypto.randomUUID();
-    var GUID_uid = crypto.randomUUID();
 
-    var invoice_str = await signatory.signatory_v4({ private_key: pem },  data);
 
-    var str = await signatory.signatory_v3({ private_key: pem }, {
-        packet: {
+    var pakets = [];
+    var pakets_main = [];
+
+    for (var x = 0; x < data.length; x++) {
+        var GUID_uid = crypto.randomUUID();
+        var invoice_str = await signatory.signatory_v4({ private_key: pem }, data[x]);
+        pakets[pakets.length] = {
             uid: GUID_uid,
             packetType: "INVOICE.V01",
             retry: false,
-            data: data,
+            data: data[x],
+            encryptionKeyId: null,
+            symmetricKey: null,
+            iv: null,
+            fiscalId: client_id,
+            dataSignature: invoice_str
+        };
+        pakets_main[pakets_main.length] = {
+            uid: GUID_uid,
+            packetType: "INVOICE.V01",
+            retry: false,
+            data: data[x],
             encryptionKeyId: null,
             symmetricKey: null,
             iv: null,
             fiscalId: client_id,
             dataSignature: invoice_str,
-            requestTraceId: GUID,
-            timestamp: timest,
-            Authorization: `${token}`
-        }
+            signatureKeyId: null
+        };
+    }
+
+    var str = await signatory.signatory_v3({ private_key: pem }, {
+        packets: pakets,
+        requestTraceId: GUID,
+        timestamp: timest,
+        Authorization: `${token}`
     });
     let signed = str;
 
     axios.post('https://tp.tax.gov.ir/req/api/self-tsp/async/normal-enqueue',
         {
-            packets: [{
-                uid: GUID_uid,
-                packetType: "INVOICE.V01",
-                retry: false,
-                data: data,
-                encryptionKeyId: null,
-                symmetricKey: null,
-                iv: null,
-                fiscalId: client_id,
-                dataSignature: invoice_str,
-                signatureKeyId: null
-            }],
+            packets: pakets_main,
             signatureKeyId: null,
             signature: signed
         }, {
