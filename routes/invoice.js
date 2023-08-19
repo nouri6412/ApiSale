@@ -1,20 +1,12 @@
 var express = require('express');
-const axios = require('axios');
-const config = require('../config');
 
 var router = express.Router({ mergeParams: true });
 
 var middleware = require("../middleware");
 var validation = require("../validation/invoice");
 
+var _api = require("../utils/api_methods");
 
-var aes256gcm = require("../utils/aes-gcm");
-
-var pubk = require("../utils/pubk");
-
-var api = require("../utils/api_methods");
-
-var signatory = require("../utils/signatory");
 
 router.get("/", middleware.action, async (req, res) => {
     return res.json({
@@ -28,46 +20,105 @@ router.get("/", middleware.action, async (req, res) => {
     });
 });
 
+router.post("/get_server_information", middleware.action, async (req, res) => {
+    try {
+        _api.get_serveer_information(function (response) {
+            return res.json({ status: true, code: 0, data: response, message: 'success' });
+        }, function (error) {
+            return res.json({ status: false, code: 1, data: error, message: 'faided' });
+        });
+    }
+    catch (err) {
+        console.log(err);
+        return res.json({ status: false, data: {}, code: 500, message: err });
+    }
+});
+
+router.post("/get_token", middleware.action, async (req, res) => {
+    try {
+
+        const {
+            client_id } = req.body;
+
+        var token_validation = validation.get_token(client_id);
+        if (!token_validation.status) {
+            return res.json(token_validation);
+        }
+
+        _api.get_token(client_id, function (response) {
+            return res.json({ status: true, code: 0, data: {token:response}, message: 'get token success' });
+        }, function (error) {
+            return res.json({ status: false, code: 1, data: error, message: 'get token faided' });
+        });
+
+    }
+    catch (err) {
+        console.log(err);
+        return res.json({ status: false, data: {}, code: 500, message: err });
+    }
+});
+
 router.post("/send_invoice", middleware.action, async (req, res) => {
     try {
 
         const {
-            init_params, invoice } = req.body;
+            inputs, invoices} = req.body;
 
-        var init_validation = validation.init(init_params, invoice);
-        // if (!init_validation.status) {
-        //     return res.json(init_validation);
-        // }
+        var init_validation = validation.send_invoice(inputs, invoices);
+        if (!init_validation.status) {
+            init_validation["code"]=1;
+            init_validation["date"]={};
+            return res.json(init_validation);
+        }
 
-        var str = await signatory.signatory(init_params, invoice);
-
-        var da = await aes256gcm.aes256gcm().init(str);
-        //console.log(da);
-        let encd = '';
-       await api.enc(async response => {
-            if (response.data.result) {
-                if (response.data.result.data) {
-                    if (response.data.result.data.publicKeys) {
-                        try {
-
-                            encd = await pubk.pubk().publicEncrypt(response.data.result.data.publicKeys[0].key, da.key);
-
-                        } catch (error) {
-                            console.error(error);
-                        }
-
-                    }
-                }
+        _api.get_token(inputs.client_id, function (token) {
+            _api.send_invoice(token, invoices, inputs.client_id, function (response) {
+                return res.json({ status: true, code: 0, data: response, message: 'send invoice success' });
+            }, function (error) {
+                return res.json({ status: false, code: 1, data: error, message: 'send invoice faided' });
+            });
+        },
+            function (error) {
+                return res.json({ status: false, code: 1, data: error, message: 'token faided' });
             }
-        });
+        );
 
-        console.log(encd.toString('base64'));
-
-        return res.json({ status: true, data: { init_params: init_params, invoice: invoice } });
     }
     catch (err) {
         console.log(err);
-        return res.json({ status: false, message: 'error in compile' });
+        return res.json({ status: false, data: {}, code: 500, message: err });
+    }
+});
+
+router.post("/inquiry_by_uid", middleware.action, async (req, res) => {
+    try {
+
+        const {
+            inputs, invoices } = req.body;
+
+            var init_validation = validation.inquiry_by_uid(inputs, invoices);
+        if (!init_validation.status) {
+            init_validation["code"]=1;
+            init_validation["date"]={};
+            return res.json(init_validation);
+        }
+
+        _api.get_token(inputs.client_id, function (token) {
+            _api.inquiry_by_uid(token, invoices, inputs.client_id, function (response) {
+                return res.json({ status: true, code: 0, data: response, message: 'inquiry invoice success' });
+            }, function (error) {
+                return res.json({ status: false, code: 1, data: error, message: 'inquiry invoice faided' });
+            });
+        },
+            function (error) {
+                return res.json({ status: false, code: 1, data: error, message: 'token faided' });
+            }
+        );
+
+    }
+    catch (err) {
+        console.log(err);
+        return res.json({ status: false, data: {}, code: 500, message: err });
     }
 });
 

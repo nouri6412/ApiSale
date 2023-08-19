@@ -1,4 +1,12 @@
-var _api = require("./utils/api_methods-back");
+var _api = require("./utils/api_methods");
+
+_api.get_serveer_information(function (response) {
+  console.log(response);
+}, function (error) {
+  console.log(error);
+});
+return;
+
 var invoice_data = [{
   "Header": {
     "Taxid": "A14P7E04C84002B681C064",
