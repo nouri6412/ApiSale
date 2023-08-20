@@ -572,6 +572,17 @@
                     </tr>
                 </tbody>
             </table>
+            <h4 style="color: red;">
+                نکات مهم ارسال صورت حساب
+            </h4>
+            <p style="color: red;">
+                توجه داشته باشید فیلد هایی که نوع داده decimal باشند را بصورت string به api فرستاده شوند بصورت زیر:
+            </p>
+            <p>صحیح : "10.0" , "10.05"</p>
+            <p> اشتباه : 10.5 , 10 </p>
+
+            <p style="color: red;">برای استفاده از api بایستی فایل کلید خصوصی بصورت زیر در مسیر مورد نظر ذخیره گردد</p>
+            <p>keys/A14P7E.key</p>
         </div>
     </div>
 
@@ -608,13 +619,13 @@
                         </td>
                         <td>
                             {
-                                client_id: '...', invoices: [{
-                                    "fiscalId": "...",
-                                    "uid": ".."
-                                }, {
-                                    "fiscalId": "...",
-                                    "uid": ".."
-                                }]
+                            client_id: '...', invoices: [{
+                            "fiscalId": "...",
+                            "uid": ".."
+                            }, {
+                            "fiscalId": "...",
+                            "uid": ".."
+                            }]
                             }
                         </td>
                     </tr>
@@ -653,12 +664,14 @@
                     <tr>
                         <td>invoices[x].fiscalId (x=ردیف)</td>
                         <td>خالی</td>
-                        <td>{ status: false, code: 2, message: [ { index: x, key: 'invoices[x].fiscalId', message:  ' حافظه مالیاتی معتبر نیست' }], data: {} }</td>
+                        <td>{ status: false, code: 2, message: [ { index: x, key: 'invoices[x].fiscalId', message: '
+                            حافظه مالیاتی معتبر نیست' }], data: {} }</td>
                     </tr>
                     <tr>
                         <td>invoices[x].uid (x=ردیف)</td>
                         <td>خالی</td>
-                        <td>{ status: false, code: 2, message: [ { index: x, key: 'invoices[x].uiu', message: ' شناسه صورت حساب معتبر نیست' }], data: {} }</td>
+                        <td>{ status: false, code: 2, message: [ { index: x, key: 'invoices[x].uiu', message: ' شناسه
+                            صورت حساب معتبر نیست' }], data: {} }</td>
                     </tr>
                 </tbody>
             </table>
