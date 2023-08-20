@@ -54,7 +54,8 @@
             padding: 5px;
             border: 1px solid #dbdbdb;
         }
-        h4{
+
+        h4 {
             margin-top: 55px;
         }
     </style>
@@ -79,24 +80,50 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="#part-3">
                         دریافت اطلاعات حافظه مالیاتی
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="#part-4">
                         استعلام کد اقتصادی
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="#part-5">
                         ارسال صورتحساب
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="#part-6">
                         استعلام صورتحساب
                     </a>
+                </li>
+            </ul>
+
+            <h4>نکات عمومی</h4>
+            <ul>
+                <li>
+                    در تمامی پاسخ های دریافتی پارامتر status نشان دهنده وضعیت پاسخ می باشد اگر true باشد موفق و اگر
+                    false نتیجه ناموفق است
+                </li>
+                <li>
+                    در تمامی پاسخ های دریافتی پارامتر code نشان دهنده نوع خطا می باشد
+                    <ul>
+                        <li>اگر 0 باشد یعنی خطایی وجود ندارد</li>
+                        <li>
+                            اگر 1 باشد خطای سازمان
+                        </li>
+                        <li>
+                            اگر 2 باشد خطای api خودمان
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    در تمامی پاسخ های دریافتی اگر اطلاعاتی از طرف سازمان دریاف گردد در فیلد data قرار می گیرد
+                </li>
+                <li>
+                    در تمامی پاسخ های دریافتی فیلد message پیامی از طرف api خودمان هست
                 </li>
             </ul>
 
@@ -232,6 +259,167 @@
                     <tr>
                         <td>{ status: true, code: 0, data: { token: response }, message: 'get token success' }</td>
                         <td>{ status: false, code: 1, data: error, message: 'get token faided' }</td>
+                    </tr>
+                    <tr>
+                        <td>response : دیتای دریافتی از طرف سازمان</td>
+                        <td>error : خطای دریافتی از طرف سازمان</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="seprator">
+
+    </div>
+
+    <div id="part-3" class="container">
+        <h3>
+            دریافت اطلاعات حافظه مالیاتی
+        </h3>
+        <div>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>
+                            url
+                        </th>
+                        <th>
+                            method
+                        </th>
+                        <th>
+                            inputs
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            /helper/get_fiscal_information
+                        </td>
+                        <td>
+                            post
+                        </td>
+                        <td>
+                            client_id
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>
+                validation
+            </h4>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>پارامتر</th>
+                        <th>وضعیت</th>
+                        <th>پاسخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>client_id</td>
+                        <td>خالی</td>
+                        <td>{ status: false, code: 2, message: ' حافظه مالیاتی معتبر نیست', data: {}, help: { client_id:
+                            '...' } }</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>
+                خروجی تابع
+            </h4>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>موفق</th>
+                        <th>ناموفق</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{ status: true, code: 0, data: response, message: ' GET_FISCAL_INFORMATION success' }</td>
+                        <td>{ status: false, code: 1, data: error, message: 'GET_FISCAL_INFORMATION faided' }</td>
+                    </tr>
+                    <tr>
+                        <td>response : دیتای دریافتی از طرف سازمان</td>
+                        <td>error : خطای دریافتی از طرف سازمان</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="seprator">
+
+    </div>
+
+    <div id="part-4" class="container">
+        <h3>
+            استعلام کد اقتصادی
+        </h3>
+        <div>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>
+                            url
+                        </th>
+                        <th>
+                            method
+                        </th>
+                        <th>
+                            inputs
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            /helper/get_fiscal_information
+                        </td>
+                        <td>
+                            post
+                        </td>
+                        <td>
+                            client_id
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>
+                validation
+            </h4>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>پارامتر</th>
+                        <th>وضعیت</th>
+                        <th>پاسخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>client_id</td>
+                        <td>خالی</td>
+                        <td>{ status: false, code: 2, message: ' حافظه مالیاتی معتبر نیست', data: {}, help: { client_id:
+                            '...' } }</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>
+                خروجی تابع
+            </h4>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>موفق</th>
+                        <th>ناموفق</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{ status: true, code: 0, data: response, message: ' GET_FISCAL_INFORMATION success' }</td>
+                        <td>{ status: false, code: 1, data: error, message: 'GET_FISCAL_INFORMATION faided' }</td>
                     </tr>
                     <tr>
                         <td>response : دیتای دریافتی از طرف سازمان</td>

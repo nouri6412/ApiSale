@@ -59,9 +59,9 @@ router.post("/get_fiscal_information", middleware.action, async (req, res) => {
         }
 
         _api.GET_FISCAL_INFORMATION(client_id, function (response) {
-            return res.json({ status: true, code: 0, data: { token: response }, message: ' GET_FISCAL_INFORMATION success' });
+            return res.json({ status: true, code: 0, data: response, message: ' get_fiscal_information success' });
         }, function (error) {
-            return res.json({ status: false, code: 1, data: error, message: 'GET_FISCAL_INFORMATION faided' });
+            return res.json({ status: false, code: 1, data: error, message: 'get_fiscal_information faided' });
         });
 
     }
@@ -71,7 +71,7 @@ router.post("/get_fiscal_information", middleware.action, async (req, res) => {
     }
 });
 
-router.post("/GET_ECONOMIC_CODE_INFORMATION", middleware.action, async (req, res) => {
+router.post("/get_economic_code_information", middleware.action, async (req, res) => {
     try {
 
         const {
@@ -83,9 +83,9 @@ router.post("/GET_ECONOMIC_CODE_INFORMATION", middleware.action, async (req, res
         }
 
         _api.GET_ECONOMIC_CODE_INFORMATION(economicCode, function (response) {
-            return res.json({ status: true, code: 0, data: { token: response }, message: ' GET_ECONOMIC_CODE_INFORMATION success' });
+            return res.json({ status: true, code: 0, data: { token: response }, message: ' get_economic_code_information success' });
         }, function (error) {
-            return res.json({ status: false, code: 1, data: error, message: 'GET_ECONOMIC_CODE_INFORMATION faided' });
+            return res.json({ status: false, code: 1, data: error, message: 'get_economic_code_information faided' });
         });
 
     }
