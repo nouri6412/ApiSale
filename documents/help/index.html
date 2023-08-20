@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            direction: rtl;
+            text-align: right;
+            line-height: 1rem;
+            font-family: Tahoma;
+        }
+
+        .dir-left {
+            direction: ltr;
+            text-align: left;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .container {
+            padding: 15px;
+        }
+
+        ul {}
+
+        ul li {
+            margin: 5px;
+        }
+
+        ul li a {
+            text-decoration: none;
+        }
+
+        .seprator {
+            margin-bottom: 50px;
+        }
+
+        table {
+            width: 100%;
+            border: 1px solid #bdbdbd;
+        }
+
+        table th {}
+
+        table td {}
+
+        table th,
+        table td {
+            padding: 5px;
+            border: 1px solid #dbdbdb;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <p class="text-center">
+            بسمه تعالی
+        </p>
+        <h2 class="text-center">مستند فراخوانی api واسط ارسال صورتحساب</h1>
+
+            <ul>
+                <li>
+                    <a href="#part-1">
+                        دریافت اطلاعات سرور
+                    </a>
+                </li>
+                <li>
+                    <a href="#part-2">
+                        دریافت توکن
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        دریافت اطلاعات حافظه مالیاتی
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        استعلام کد اقتصادی
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        ارسال صورتحساب
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        استعلام صورتحساب
+                    </a>
+                </li>
+            </ul>
+
+    </div>
+    <div class="seprator">
+
+    </div>
+
+    <div id="part-1" class="container">
+        <h3>
+            دریافت اطلاعات سرور
+        </h3>
+        <div>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>
+                            url
+                        </th>
+                        <th>
+                            method
+                        </th>
+                        <th>
+                            inputs
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            /helper/get_server_information
+                        </td>
+                        <td>
+                            post
+                        </td>
+                        <td>
+                            ندارد
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>
+                خروجی تابع
+            </h4>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>موفق</th>
+                        <th>ناموفق</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{ status: true, code: 0, data: response, message: 'success' }</td>
+                        <td>{ status: false, code: 1, data: error, message: 'faided' }</td>
+                    </tr>
+                    <tr>
+                        <td>response : دیتای دریافتی از طرف سازمان</td>
+                        <td>error : خطای دریافتی از طرف سازمان</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="seprator">
+
+    </div>
+
+    <div id="part-2" class="container">
+        <h3>
+            دریافت توکن
+        </h3>
+        <div>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>
+                            url
+                        </th>
+                        <th>
+                            method
+                        </th>
+                        <th>
+                            inputs
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            /helper/get_token
+                        </td>
+                        <td>
+                            post
+                        </td>
+                        <td>
+                            client_id
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>
+                validation
+            </h4>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>پارامتر</th>
+                        <th>پاسخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>client_id</td>
+                        <td>{ status: false, code: 2, message: ' حافظه مالیاتی معتبر نیست', data: {}, help: { client_id: '...' } }</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>
+                خروجی تابع 
+            </h4>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>موفق</th>
+                        <th>ناموفق</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{ status: true, code: 0, data: { token: response }, message: 'get token success' }</td>
+                        <td>{ status: false, code: 1, data: error, message: 'get token faided' }</td>
+                    </tr>
+                    <tr>
+                        <td>response : دیتای دریافتی از طرف سازمان</td>
+                        <td>error : خطای دریافتی از طرف سازمان</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

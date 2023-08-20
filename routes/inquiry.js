@@ -3,82 +3,39 @@ var express = require('express');
 var router = express.Router({ mergeParams: true });
 
 var middleware = require("../middleware");
+var validation = require("../validation/invoice");
 
-router.get("/", middleware.action, async (req, res) => {
-    return res.json({ state: true, message: "this is inquiry controller" });
-});
+var _api = require("../utils/api_methods");
 
-//
-// استعلام  نتیجه  با  Uid
-//
-router.post("/inquiry_by_uid_and_fiscalId", middleware.action, async (req, res) => {
-
-    const dbConnect = dbo.getDb();
+router.post("/inquiry_by_uid", middleware.action, async (req, res) => {
     try {
-        const {
-            id } = req.body;
 
-        return res.json({ state: true, message: "data is valid" });
+        const {
+            inputs, invoices } = req.body;
+
+        var init_validation = validation.inquiry_by_uid(inputs, invoices);
+        if (!init_validation.status) {
+            init_validation["code"] = 1;
+            init_validation["date"] = {};
+            return res.json(init_validation);
+        }
+
+        _api.get_token(inputs.client_id, function (token) {
+            _api.inquiry_by_uid(token, invoices, inputs.client_id, function (response) {
+                return res.json({ status: true, code: 0, data: response, message: 'inquiry invoice success' });
+            }, function (error) {
+                return res.json({ status: false, code: 1, data: error, message: 'inquiry invoice faided' });
+            });
+        },
+            function (error) {
+                return res.json({ status: false, code: 1, data: error, message: 'token faided' });
+            }
+        );
+
     }
     catch (err) {
         console.log(err);
-        return res.json({ state: false, message: 'error in data' });
-    }
-});
-
-//
-// استعلام نتیجه با Refrence Number
-//
-router.post("/inquiry_by_reference_id", middleware.action, async (req, res) => {
-
-    const dbConnect = dbo.getDb();
-    try {
-        const {
-            id } = req.body;
-
-        return res.json({ state: true, message: "data is valid" });
-    }
-    catch (err) {
-        console.log(err);
-        return res.json({ state: false, message: 'error in data' });
-    }
-});
-
-
-//
-// استعلام نتیجه براساس زمان 
-//
-router.post("/inquiry_by_time", middleware.action, async (req, res) => {
-
-    const dbConnect = dbo.getDb();
-    try {
-        const {
-            id } = req.body;
-
-        return res.json({ state: true, message: "data is valid" });
-    }
-    catch (err) {
-        console.log(err);
-        return res.json({ state: false, message: 'error in data' });
-    }
-});
-
-
-//
-// استعلام نتیجه بر اساس بازه زمان 
-//
-router.post("/inquiry_by_time_range", middleware.action, async (req, res) => {
-
-    const dbConnect = dbo.getDb();
-    try {
-        const {
-            id } = req.body;
-
-        return res.json({ state: true, message: "data is valid" });
-    }
-    catch (err) {
-        console.log(err);
-        return res.json({ state: false, message: 'error in data' });
+        return res.json({ status: false, data: {}, code: 500, message: err });
     }
 });
 
