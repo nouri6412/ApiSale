@@ -83,7 +83,7 @@ router.post("/get_economic_code_information", middleware.action, async (req, res
         }
 
         _api.GET_ECONOMIC_CODE_INFORMATION(economicCode, function (response) {
-            return res.json({ status: true, code: 0, data: { token: response }, message: ' get_economic_code_information success' });
+            return res.json({ status: true, code: 0, data: response, message: ' get_economic_code_information success' });
         }, function (error) {
             return res.json({ status: false, code: 1, data: error, message: 'get_economic_code_information faided' });
         });

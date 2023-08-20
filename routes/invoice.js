@@ -41,7 +41,7 @@ router.post("/send_invoice", middleware.action, async (req, res) => {
             });
         },
             function (error) {
-                return res.json({ status: false, code: 1, data: error, message: 'token faided' });
+                return res.json({ status: false, code: 1, data: error, message: 'send invoice faided' });
             }
         );
 

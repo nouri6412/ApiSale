@@ -23,7 +23,7 @@ middlewareObj.GET_ECONOMIC_CODE_INFORMATION = function (economicCode) {
         return { status: true };
     }
     else {
-        return { status: false, code: 2, message: '  شماره اقتصادی معتبر نیست', data: {}, help: { client_id: '...' } };
+        return { status: false, code: 2, message: '  شماره اقتصادی معتبر نیست', data: {}, help: { economicCode: '...' } };
     }
 };
 
@@ -54,7 +54,7 @@ middlewareObj.send_invoice = function (inputs, invoices) {
             }
             else {
                 status = false;
-                message[message.length] = { index: x, key: 'invoice.header', message: 'سربرگ صورتحساب معتبر نیست' };
+                message[message.length] = { index: x, key: 'invoices[x].header', message: 'سربرگ صورتحساب معتبر نیست' };
             }
 
             if (invoice.body) {
@@ -62,7 +62,7 @@ middlewareObj.send_invoice = function (inputs, invoices) {
             }
             else {
                 status = false;
-                message[message.length] = { index: x, key: 'invoice.body', message: 'بدنه صورتحساب معتبر نیست' };
+                message[message.length] = { index: x, key: 'invoices[x].body', message: 'بدنه صورتحساب معتبر نیست' };
             }
 
             if (invoice.payments) {
@@ -70,7 +70,7 @@ middlewareObj.send_invoice = function (inputs, invoices) {
             }
             else {
                 status = false;
-                message[message.length] = { index: x, key: 'invoice.payments', message: 'پرداخت صورتحساب معتبر نیست' };
+                message[message.length] = { index: x, key: 'invoices[x].payments', message: 'پرداخت صورتحساب معتبر نیست' };
             }
 
             if (invoice.extension) {
@@ -78,7 +78,7 @@ middlewareObj.send_invoice = function (inputs, invoices) {
             }
             else {
                 status = false;
-                message[message.length] = { index: x, key: 'invoice.extension', message: ' صورتحساب معتبر نیست' };
+                message[message.length] = { index: x, key: 'invoices[x].extension', message: 'extension صورتحساب معتبر نیست'  };
             }
         }
     }
@@ -116,7 +116,7 @@ middlewareObj.inquiry_by_uid = function (inputs, invoices) {
             }
             else {
                 status = false;
-                message[message.length] = { index: x, key: 'fiscalId', message: ' حافظه مالیاتی معتبر نیست' };
+                message[message.length] = { index: x, key: 'invoices[x].fiscalId', message: ' حافظه مالیاتی معتبر نیست' };
             }
 
             if (invoice.uid) {
@@ -124,7 +124,7 @@ middlewareObj.inquiry_by_uid = function (inputs, invoices) {
             }
             else {
                 status = false;
-                message[message.length] = { index: x, key: 'uid', message: ' شناسه صورت حساب معتبر نیست' };
+                message[message.length] = { index: x, key: 'invoices[x].uid', message: ' شناسه صورت حساب معتبر نیست' };
             }
 
         }

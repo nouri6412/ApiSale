@@ -115,7 +115,10 @@
                             اگر 1 باشد خطای سازمان
                         </li>
                         <li>
-                            اگر 2 باشد خطای api خودمان
+                            اگر 2 باشد خطای validation api خودمان
+                        </li>
+                        <li>
+                            اگر 2 باشد خطای کامپایل api خودمان
                         </li>
                     </ul>
                 </li>
@@ -173,16 +176,20 @@
                     <tr>
                         <th>موفق</th>
                         <th>ناموفق</th>
+                        <th>خطا</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>{ status: true, code: 0, data: response, message: 'success' }</td>
                         <td>{ status: false, code: 1, data: error, message: 'faided' }</td>
+                        <td>{ status: false, data: {}, code: 500, message: err }
+                        </td>
                     </tr>
                     <tr>
                         <td>response : دیتای دریافتی از طرف سازمان</td>
                         <td>error : خطای دریافتی از طرف سازمان</td>
+                        <td>err : خطای کامپایل در سرور خودمان</td>
                     </tr>
                 </tbody>
             </table>
@@ -253,16 +260,20 @@
                     <tr>
                         <th>موفق</th>
                         <th>ناموفق</th>
+                        <th>خطا</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>{ status: true, code: 0, data: { token: response }, message: 'get token success' }</td>
                         <td>{ status: false, code: 1, data: error, message: 'get token faided' }</td>
+                        <td>{ status: false, data: {}, code: 500, message: err }
+                        </td>
                     </tr>
                     <tr>
                         <td>response : دیتای دریافتی از طرف سازمان</td>
                         <td>error : خطای دریافتی از طرف سازمان</td>
+                        <td>err : خطای کامپایل در سرور خودمان</td>
                     </tr>
                 </tbody>
             </table>
@@ -333,16 +344,20 @@
                     <tr>
                         <th>موفق</th>
                         <th>ناموفق</th>
+                        <th>خطا</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>{ status: true, code: 0, data: response, message: ' GET_FISCAL_INFORMATION success' }</td>
                         <td>{ status: false, code: 1, data: error, message: 'GET_FISCAL_INFORMATION faided' }</td>
+                        <td>{ status: false, data: {}, code: 500, message: err }
+                        </td>
                     </tr>
                     <tr>
                         <td>response : دیتای دریافتی از طرف سازمان</td>
                         <td>error : خطای دریافتی از طرف سازمان</td>
+                        <td>err : خطای کامپایل در سرور خودمان</td>
                     </tr>
                 </tbody>
             </table>
@@ -375,7 +390,7 @@
                 <tbody>
                     <tr>
                         <td>
-                            /helper/get_fiscal_information
+                            /helper/get_economic_code_information
                         </td>
                         <td>
                             post
@@ -399,10 +414,10 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>client_id</td>
+                        <td>economicCode</td>
                         <td>خالی</td>
-                        <td>{ status: false, code: 2, message: ' حافظه مالیاتی معتبر نیست', data: {}, help: { client_id:
-                            '...' } }</td>
+                        <td>{ status: false, code: 2, message: ' شماره اقتصادی معتبر نیست', data: {}, help: {
+                            economicCode: '...' } }</td>
                     </tr>
                 </tbody>
             </table>
@@ -414,16 +429,263 @@
                     <tr>
                         <th>موفق</th>
                         <th>ناموفق</th>
+                        <th>خطا</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{ status: true, code: 0, data: response, message: ' GET_FISCAL_INFORMATION success' }</td>
-                        <td>{ status: false, code: 1, data: error, message: 'GET_FISCAL_INFORMATION faided' }</td>
+                        <td>{ status: true, code: 0, data: response, message: ' get_economic_code_information success' }
+                        </td>
+                        <td>{ status: false, code: 1, data: error, message: 'get_economic_code_information faided' }
+                        </td>
+                        <td>{ status: false, data: {}, code: 500, message: err }
+                        </td>
                     </tr>
                     <tr>
                         <td>response : دیتای دریافتی از طرف سازمان</td>
                         <td>error : خطای دریافتی از طرف سازمان</td>
+                        <td>err : خطای کامپایل در سرور خودمان</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="seprator">
+
+    </div>
+
+    <div id="part-5" class="container">
+        <h3>
+            ارسال صورتحساب
+        </h3>
+        <div>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>
+                            url
+                        </th>
+                        <th>
+                            method
+                        </th>
+                        <th>
+                            inputs
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            /invoice/send_invoice
+                        </td>
+                        <td>
+                            post
+                        </td>
+                        <td>
+                            { client_id: '...', invoices: [{ header: {}, body: [{}, {}], payments: [{}, {}], extension:
+                            null }] }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>
+                validation
+            </h4>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>پارامتر</th>
+                        <th>وضعیت</th>
+                        <th>پاسخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>inputs</td>
+                        <td>خالی</td>
+                        <td>{ status: false, code: 2, message:[{ key: 'inputs', message: 'پارامترهای ورودی معتبر نیست'
+                            }] , data: {} }</td>
+                    </tr>
+                    <tr>
+                        <td>inputs.client_id</td>
+                        <td>خالی</td>
+                        <td>{ status: false, code: 2, message:[{ key: 'inputs.client_id', message: ' حافظه مالیاتی معتبر
+                            نیست' }], data: {} }</td>
+                    </tr>
+                    <tr>
+                        <td>invoices</td>
+                        <td>خالی</td>
+                        <td>{ status: false, code: 2, message:[{ key: 'invoices', message: ' صورتحساب معتبر نیست' }],
+                            data: {} }</td>
+                    </tr>
+                    <tr>
+                        <td>invoices[x].header (x=ردیف)</td>
+                        <td>خالی</td>
+                        <td>{ status: false, code: 2, message: [ { index: x, key: 'invoices[x].header', message: 'سربرگ
+                            صورتحساب معتبر نیست' }], data: {} }</td>
+                    </tr>
+                    <tr>
+                        <td>invoices[x].body (x=ردیف)</td>
+                        <td>خالی</td>
+                        <td>{ status: false, code: 2, message: [ { index: x, key: 'invoices[x].body', message: 'بدنه
+                            صورتحساب معتبر نیست' }], data: {} }</td>
+                    </tr>
+                    <tr>
+                        <td>invoices[x].payments (x=ردیف)</td>
+                        <td>خالی</td>
+                        <td>{ status: false, code: 2, message: [ { index: x, key: 'invoices[x].payments', message:
+                            'پرداخت صورتحساب معتبر نیست' }], data: {} }</td>
+                    </tr>
+                    <tr>
+                        <td>invoices[x].extension (x=ردیف)</td>
+                        <td>خالی</td>
+                        <td>{ status: false, code: 2, message: [ { index: x, key: 'invoices[x].extension', message:
+                            'extension صورتحساب معتبر نیست' }], data: {} }</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>
+                خروجی تابع
+            </h4>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>موفق</th>
+                        <th>ناموفق</th>
+                        <th>خطا</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{ status: true, code: 0, data: response, message: ' send invoice success' }
+                        </td>
+                        <td>{ status: false, code: 1, data: error, message: 'send invoice faided' }
+                        </td>
+                        <td>{ status: false, data: {}, code: 500, message: err }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>response : دیتای دریافتی از طرف سازمان</td>
+                        <td>error : خطای دریافتی از طرف سازمان</td>
+                        <td>err : خطای کامپایل در سرور خودمان</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="seprator">
+
+    </div>
+
+    <div id="part-6" class="container">
+        <h3>
+            استعلام صورتحساب
+        </h3>
+        <div>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>
+                            url
+                        </th>
+                        <th>
+                            method
+                        </th>
+                        <th>
+                            inputs
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            /inquiry/inquiry_by_uid
+                        </td>
+                        <td>
+                            post
+                        </td>
+                        <td>
+                            {
+                                client_id: '...', invoices: [{
+                                    "fiscalId": "...",
+                                    "uid": ".."
+                                }, {
+                                    "fiscalId": "...",
+                                    "uid": ".."
+                                }]
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>
+                validation
+            </h4>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>پارامتر</th>
+                        <th>وضعیت</th>
+                        <th>پاسخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>inputs</td>
+                        <td>خالی</td>
+                        <td>{ status: false, code: 2, message:[{ key: 'inputs', message: 'پارامترهای ورودی معتبر نیست'
+                            }] , data: {} }</td>
+                    </tr>
+                    <tr>
+                        <td>inputs.client_id</td>
+                        <td>خالی</td>
+                        <td>{ status: false, code: 2, message:[{ key: 'inputs.client_id', message: ' حافظه مالیاتی معتبر
+                            نیست' }], data: {} }</td>
+                    </tr>
+                    <tr>
+                        <td>invoices</td>
+                        <td>خالی</td>
+                        <td>{ status: false, code: 2, message:[{ key: 'invoices', message: ' صورتحساب معتبر نیست' }],
+                            data: {} }</td>
+                    </tr>
+                    <tr>
+                        <td>invoices[x].fiscalId (x=ردیف)</td>
+                        <td>خالی</td>
+                        <td>{ status: false, code: 2, message: [ { index: x, key: 'invoices[x].fiscalId', message:  ' حافظه مالیاتی معتبر نیست' }], data: {} }</td>
+                    </tr>
+                    <tr>
+                        <td>invoices[x].uid (x=ردیف)</td>
+                        <td>خالی</td>
+                        <td>{ status: false, code: 2, message: [ { index: x, key: 'invoices[x].uiu', message: ' شناسه صورت حساب معتبر نیست' }], data: {} }</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>
+                خروجی تابع
+            </h4>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>موفق</th>
+                        <th>ناموفق</th>
+                        <th>خطا</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{ status: true, code: 0, data: response, message: ' inquiry success' }
+                        </td>
+                        <td>{ status: false, code: 1, data: error, message: 'inquiry faided' }
+                        </td>
+                        <td>{ status: false, data: {}, code: 500, message: err }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>response : دیتای دریافتی از طرف سازمان</td>
+                        <td>error : خطای دریافتی از طرف سازمان</td>
+                        <td>err : خطای کامپایل در سرور خودمان</td>
                     </tr>
                 </tbody>
             </table>
