@@ -50,14 +50,14 @@ middlewareObj.get_serveer_information = async function (callback, error_callbak)
             }
         })
         .catch(error => {
-            error_callbak(error);
+            error_callbak(error.message);
         })
         .finally(() => {
 
         });
 };
 
-middlewareObj.GET_ECONOMIC_CODE_INFORMATION = async function ( economicCode, callback, error_callbak) {
+middlewareObj.GET_ECONOMIC_CODE_INFORMATION = async function (economicCode, callback, error_callbak) {
 
     var timest = Date.now();
     var GUID = await crypto.randomUUID();
@@ -69,7 +69,7 @@ middlewareObj.GET_ECONOMIC_CODE_INFORMATION = async function ( economicCode, cal
             uid: GUID_uid,
             packetType: "GET_ECONOMIC_CODE_INFORMATION",
             retry: false,
-            data: {economicCode:economicCode},
+            data: { economicCode: economicCode },
             encryptionKeyId: null,
             symmetricKey: null,
             iv: null,
@@ -110,7 +110,7 @@ middlewareObj.GET_ECONOMIC_CODE_INFORMATION = async function ( economicCode, cal
             }
             else {
 
-                error_callbak(error);
+                error_callbak(error.message);
             }
         })
         .finally(() => {
@@ -192,7 +192,7 @@ middlewareObj.GET_FISCAL_INFORMATION = async function (token, client_id, callbac
             }
             else {
 
-                error_callbak(error);
+                error_callbak(error.message);
             }
         })
         .finally(() => {
@@ -247,7 +247,7 @@ middlewareObj.get_token = async function (client_id, callback, error_callbak) {
         headers: {
             requestTraceId: GUID,
             timestamp: timest,
-            // 'Content-Type': 'application/json; charset=utf-8'
+            'Content-Type': 'application/json; charset=utf-8'
         },
         withCredentials: true
         // httpsAgent: agent,
@@ -282,7 +282,7 @@ middlewareObj.get_token = async function (client_id, callback, error_callbak) {
             }
             else {
 
-                error_callbak(error);
+                error_callbak(error.message);
             }
         })
         .finally(() => {
@@ -295,7 +295,7 @@ middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback,
     var timest = Date.now();
     var GUID = await crypto.randomUUID();
     var GUID_uid = await crypto.randomUUID();
-
+    console.log(data);
 
     var str = await signatory.signatory_v3({ client_id: client_id }, {
         packet: {
@@ -340,7 +340,7 @@ middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback,
         withCredentials: true
     })
         .then(response => {
-            callback(response);
+            callback(response.data.result);
         })
         .catch(error => {
             if (error.response) {
@@ -354,7 +354,7 @@ middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback,
             }
             else {
 
-                error_callbak(error);
+                error_callbak(error.message);
             }
         })
         .finally(() => {
@@ -436,7 +436,7 @@ middlewareObj.send_invoice = async function (token, data, client_id, callback, e
             }
             else {
 
-                error_callbak(error);
+                error_callbak(error.message);
             }
         })
         .finally(() => {

@@ -12,6 +12,7 @@ router.post("/inquiry_by_uid", middleware.action, async (req, res) => {
 
         const {
             inputs, invoices } = req.body;
+            // console.log('len : '+invoices.length);
 
         var init_validation = validation.inquiry_by_uid(inputs, invoices);
         if (!init_validation.status) {
@@ -20,10 +21,11 @@ router.post("/inquiry_by_uid", middleware.action, async (req, res) => {
             return res.json(init_validation);
         }
 
-        _api.get_token(inputs.client_id, function (token) {
+        _api.get_token(inputs.client_id, function (token, cookie) {
             _api.inquiry_by_uid(token, invoices, inputs.client_id, function (response) {
                 return res.json({ status: true, code: 0, data: response, message: 'inquiry invoice success' });
             }, function (error) {
+                console.log(error);
                 return res.json({ status: false, code: 1, data: error, message: 'inquiry invoice faided' });
             });
         },

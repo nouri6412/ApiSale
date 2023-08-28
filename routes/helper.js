@@ -3,6 +3,9 @@ var express = require('express');
 var router = express.Router({ mergeParams: true });
 
 var middleware = require("../middleware");
+var validation = require("../validation/invoice");
+
+var _api = require("../utils/api_methods");
 
 router.get("/", middleware.action, async (req, res) => {
     return res.json({ state: true, message: "this is helper controller" });
@@ -58,11 +61,18 @@ router.post("/get_fiscal_information", middleware.action, async (req, res) => {
             return res.json(GET_FISCAL_INFORMATION);
         }
 
-        _api.GET_FISCAL_INFORMATION(client_id, function (response) {
-            return res.json({ status: true, code: 0, data: response, message: ' get_fiscal_information success' });
-        }, function (error) {
-            return res.json({ status: false, code: 1, data: error, message: 'get_fiscal_information faided' });
-        });
+        _api.get_token(client_id, function (token) {
+            _api.GET_FISCAL_INFORMATION(token, client_id, function (response) {
+                return res.json({ status: true, code: 0, data: response, message: ' get_fiscal_information success' });
+            }, function (error) {
+                return res.json({ status: false, code: 1, data: error, message: 'get_fiscal_information faided' });
+            });
+        },
+            function (error) {
+                return res.json({ status: false, code: 1, data: error, message: 'get_fiscal_information faided' });
+            }
+        );
+
 
     }
     catch (err) {

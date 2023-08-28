@@ -1,6 +1,31 @@
 var _api = require("./utils/api_methods");
 
-_api.GET_ECONOMIC_CODE_INFORMATION( "10200338770", function (response) {
+var invoice_inquiry = [
+  {
+    "fiscalId": "A14P7E",
+    "uid": "9d6b38b6-d584-4838-a9b8-e32110832148"
+  }
+];
+_api.get_token("A14P7E", function (token, cookie) {
+  //console.log('token is '+ token);
+  _api.inquiry_by_uid(token, invoice_inquiry, "A14P7E", function (response) {
+    console.log(response.data.result.data);
+  }, function (error) {
+    console.log(error);
+  });
+
+  // _api.send_invoice(token, invoice_data, "A14P7E", function (response) {
+  //   console.log(response);
+  // }, function (error) {
+  //   console.log(error);
+  // });
+},
+  function (error) {
+    console.log(error);
+  }
+);
+return;
+_api.GET_ECONOMIC_CODE_INFORMATION("10200338770", function (response) {
   console.log(response);
 }, function (error) {
   console.log(error);
@@ -162,12 +187,7 @@ var invoice_data = [{
   "Extension": null
 }];
 
-var invoice_inquiry = [
-  {
-    "fiscalId": "A14P7E",
-    "uid": "9d6b38b6-d584-4838-a9b8-e32110832148"
-  }
-];
+
 
 // _api.inquiry_by_uid("", invoice_inquiry, "A14P7E", function (response) {
 //   console.log(response);
@@ -189,24 +209,7 @@ var invoice_inquiry = [
 // });
 // return;
 
-_api.get_token("A14P7E", function (token, cookie) {
-  //console.log('token is '+ token);
-  // _api.inquiry_by_uid(token, invoice_inquiry, "A14P7E", function (response) {
-  //   console.log(response.data.result.data);
-  // }, function (error) {
-  //   console.log(error);
-  // });
 
-  _api.send_invoice(token, invoice_data, "A14P7E", function (response) {
-    console.log(response);
-  }, function (error) {
-    console.log(error);
-  });
-},
-  function (error) {
-    console.log(error);
-  }
-);
 
 // "500.0#1.0###0#####0.0#IRR#0.0#1.0#500.0#1627###0.0#0.0###0.0#0.0###500.0#######123#####500.0#0.0#0.0#0.0#####1###1###500.0#####0###1692420004224#1692420004000#12345604#1#1###1###1###0#1#500.0#0.0#A14P7E04C84002B681C064#500.0#0.0#1###1###0.0#####500.0#0.0#0.0#"
 // "500.0#1.0###0#####0.0#IRR#0.0#1.0#500.0#1627###0.0#0.0###0.0#0.0###500.0#######123#####500.0#0.0#0.0#0.0#####1###1###500.0#####0###1692420004224#1692420004000#12345604#1#1###1###1###0#1#500.0#0.0#A14P7E04C84002B681C064#500.0#0.0#1###1###0.0#####500.0#0.0#0.0"

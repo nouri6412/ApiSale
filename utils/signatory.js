@@ -102,17 +102,17 @@ function normalize(json) {
 
     normalize_str = '';
     sep = '';
-//     var text = JSON.stringify(json);
-//     console.log(json);
-//     text= text.replaceAll('.0,', ".010101,");
-// console.log(text);
-//     var json_1 = JSON.parse(text);
+    //     var text = JSON.stringify(json);
+    //     console.log(json);
+    //     text= text.replaceAll('.0,', ".010101,");
+    // console.log(text);
+    //     var json_1 = JSON.parse(text);
     //console.log(json_1);
     sub_normalize(json);
-    console.log('---');
-    // var normalize_str_1 = normalize_str.replaceAll('.010101', ".0");
-    console.log(normalize_str);
-    console.log('---');
+    // console.log('---');
+    // // var normalize_str_1 = normalize_str.replaceAll('.010101', ".0");
+    // console.log(normalize_str);
+    // console.log('---');
     return normalize_str;
 }
 
@@ -174,17 +174,23 @@ async function sign_v1(normalize_str, client_id) {
 
     const fs = require('fs');
     var pk = '';
-   
+
     try {
         pk = fs.readFileSync(`keys/${client_id}.key`, 'utf8');
 
     } catch (err) {
         console.error(err);
     }
-    var signature = crypto.createSign("SHA256").update(normalize_str).sign(pk);
+    var signature = '';
+    try {
+        signature = crypto.createSign("SHA256").update(normalize_str).sign(pk).toString('base64');
+
+    } catch (err) {
+        signature = '';
+    }
 
 
-    return signature.toString('base64');
+    return signature;
 }
 
 async function sign_v2(normalize_str, client_id) {
@@ -199,15 +205,22 @@ async function sign_v2(normalize_str, client_id) {
     } catch (err) {
         console.error(err);
     }
-    var signature = crypto.createSign("SHA256", {
-        name: 'RSASSA-PKCS1-v1_5',
-        modulusLength: "2048",
-        publicExponent: new Uint8Array([1, 0, 1]),
-        hash: "SHA-256",
-    }).update(normalize_str).sign(pk);
 
 
-    return signature.toString('base64');
+    var signature = '';
+    try {
+        signature = crypto.createSign("SHA256", {
+            name: 'RSASSA-PKCS1-v1_5',
+            modulusLength: "2048",
+            publicExponent: new Uint8Array([1, 0, 1]),
+            hash: "SHA-256",
+        }).update(normalize_str).sign(pk).toString('base64');
+    } catch (err) {
+        signature = '';
+    }
+
+
+    return signature;
 }
 
 middlewareObj.sign = function (data, key) {

@@ -59,6 +59,19 @@
         h4 {
             margin-top: 55px;
         }
+
+        div {}
+
+        p {
+            word-wrap: break-word;
+        }
+
+        .code {
+            font-size: 12px;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 7px;
+        }
     </style>
 </head>
 
@@ -278,6 +291,66 @@
                     </tr>
                 </tbody>
             </table>
+            <h4>
+                مثال
+            </h4>
+            <div class="dir-left">
+                <p>
+                    درخواست curl
+                </p>
+                <p class="code">
+                    curl -X POST "http://localhost:8182/helper/get_token" -H "Accept:application/json, text/plain, */*"
+                    -H
+                    "Content-Type:application/json; charset=utf-8" --data '{"client_id":"A14P7E"}'
+                </p>
+                <hr>
+                <p>
+                    پاسخ موفق
+                </p>
+                <p class="code">
+                    {
+                    "status": true,
+                    "code": 0,
+                    "data": {
+                    "token":
+                    "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJBMTRQN0UiLCJ0b2tlbklkIjoiNzRhZTJmY2MtM2QyYi00YTkxLWExNTQtMjY4ZDg1OGQxOTkyIiwiY3JlYXRlRGF0ZSI6MTY5MzE5NzgwMDIzOCwiY2xpZW50VHlwZSI6Ik1FTU9SWSIsInRheHBheWVySWQiOiIxMDIwMDMzODc3MCIsInN1YiI6IkExNFA3RSIsImV4cCI6MTY5MzIxMjIwMCwiaXNzIjoiVEFYIE9yZ2FuaXphdGlvbiJ9.cQCDJ9l-SmDcS-MYvZqqMvSUTro9ZwnCLMYj8zAbfpi_MQPkWNVA4Mvso4IrEZNdpEICYq7c46se8nV22yEsVA"
+                    },
+                    "message": "get token success"
+                    }
+                </p>
+                <hr>
+                <p>پاسخ ناموفق خودمان</p>
+                <p class="code">
+                    {
+                    "status": false,
+                    "code": 2,
+                    "message": " حافظه مالیاتی معتبر نیست",
+                    "data": {},
+                    "help": {
+                    "client_id": "..."
+                    }
+                    }
+                </p>
+                <p>پاسخ ناموفق سازمان</p>
+                <p class="code">
+                    {
+                    "status": false,
+                    "code": 1,
+                    "data": {
+                    "signature": null,
+                    "signatureKeyId": null,
+                    "timestamp": 1693199762604,
+                    "errors": [
+                    {
+                    "detail": "برای این نوع بسته، ارسال امضا الزامی می باشد",
+                    "errorCode": "4007"
+                    }
+                    ]
+                    },
+                    "message": "get token faided"
+                    }
+                </p>
+            </div>
         </div>
     </div>
     <div class="seprator">
@@ -362,6 +435,67 @@
                     </tr>
                 </tbody>
             </table>
+            <h4>
+                مثال
+            </h4>
+            <div class="dir-left">
+                <p>
+                    درخواست curl
+                </p>
+                <p class="code">
+                    url -X POST "http://localhost:8182/helper/get_fiscal_information" -H "Accept:application/json,
+                    text/plain, */*" -H "Content-Type:application/json; charset=utf-8" --data '{"client_id":"A14P7E"}'
+                </p>
+                <hr>
+                <p>
+                    پاسخ موفق
+                </p>
+                <p class="code">
+                    {
+                    "status": true,
+                    "code": 0,
+                    "data": {
+                    "nameTrade": "A14P7E",
+                    "fiscalStatus": "ACTIVE",
+                    "saleThreshold": null,
+                    "economicCode": "10200338770"
+                    },
+                    "message": " get_fiscal_information success"
+                    }
+                </p>
+                <hr>
+                <p>پاسخ ناموفق خودمان</p>
+                <p class="code">
+                    {
+                    "status": false,
+                    "code": 2,
+                    "message": " حافظه مالیاتی معتبر نیست",
+                    "data": {},
+                    "help": {
+                    "client_id": "..."
+                    }
+                    }
+                </p>
+                <p>پاسخ ناموفق سازمان</p>
+                <p class="code">
+                    {
+                    "status": false,
+                    "code": 1,
+                    "data": {
+                    "signature": null,
+                    "signatureKeyId": null,
+                    "timestamp": 1693199600574,
+                    "errors": [
+                    {
+                    "detail": "برای این نوع بسته، ارسال امضا الزامی می باشد",
+                    "errorCode": "4007"
+                    }
+                    ]
+                    },
+                    "message": "get_fiscal_information faided"
+                    }
+                </p>
+            </div>
         </div>
     </div>
 
@@ -449,6 +583,65 @@
                     </tr>
                 </tbody>
             </table>
+            <h4>
+                مثال
+            </h4>
+            <div class="dir-left">
+                <p>
+                    درخواست curl
+                </p>
+                <p class="code">
+                    curl -X POST "http://localhost:8182/helper/get_economic_code_information" -H
+                    "Accept:application/json, text/plain, */*" -H "Content-Type:application/json; charset=utf-8" --data
+                    '{"economicCode":"10200338770"}'
+                </p>
+                <hr>
+                <p>
+                    پاسخ موفق
+                </p>
+                <p class="code">
+                    {
+                    "status": true,
+                    "code": 0,
+                    "data": {
+                    "nameTrade": "آذر آباد اجرا",
+                    "taxpayerStatus": "ENABLED",
+                    "taxpayerType": "LEGAL",
+                    "postalcodeTaxpayer": "5157686431",
+                    "addressTaxpayer": "مرکزی ولیعصر بلوار شریعتی کوچه 12 متری اورژانس پلاک 20 طبقه منفی 1"
+                    },
+                    "message": " get_economic_code_information success"
+                    }
+                </p>
+                <hr>
+                <p>پاسخ ناموفق خودمان</p>
+                <p class="code">
+                    {
+                    "status": false,
+                    "code": 2,
+                    "message": " شماره اقتصادی معتبر نیست",
+                    "data": {},
+                    "help": {
+                    "economicCode": "..."
+                    }
+                    }
+                </p>
+                <p>پاسخ ناموفق سازمان</p>
+                <p class="code">
+                    {
+                    "status": true,
+                    "code": 0,
+                    "data": [
+                    {
+                    "code": "400 BAD_REQUEST \"5207\"",
+                    "message": "400 BAD_REQUEST \"5207\"",
+                    "errorType": "ERROR"
+                    }
+                    ],
+                    "message": " get_economic_code_information success"
+                    }
+                </p>
+            </div>
         </div>
     </div>
 
@@ -704,6 +897,149 @@
                     </tr>
                 </tbody>
             </table>
+            <h4>
+                مثال
+            </h4>
+            <div class="dir-left">
+                <p>
+                    درخواست curl
+                </p>
+                <p class="code">
+                    curl -X POST "http://localhost:8182/inquiry/inquiry_by_uid" -H "Accept:application/json, text/plain,
+                    */*" -H "Content-Type:application/json; charset=utf-8" --data
+                    '{"inputs":{"client_id":"A14P7E"},"invoices":[{"fiscalId":"A14P7E","uid":"9d6b38b6-d584-4838-a9b8-e32110832148"}]}'
+
+                </p>
+                <hr>
+                <p>
+                    پاسخ موفق
+                </p>
+                <p class="code">
+                    {
+                    "status": true,
+                    "code": 0,
+                    "data": {
+                    "uid": null,
+                    "packetType": "INQUIRY_RESULT",
+                    "data": [
+                    {
+                    "referenceNumber": "08561508-a814-40c4-ad2b-aea56904ae00",
+                    "uid": "9d6b38b6-d584-4838-a9b8-e32110832148",
+                    "status": "FAILED",
+                    "data": {
+                    "confirmationReferenceId": null,
+                    "error": [
+                    {
+                    "code": "011408",
+                    "message": "طول مقدار وارد شده در فیلد «کد پستی خریدار» کوچکتر از حداقل طول مجاز است. (طول مقدار
+                    وارد شده باید حداقل 10 باشد)",
+                    "errorType": "ERROR"
+                    },
+                    {
+                    "code": "010508",
+                    "message": "طول مقدار وارد شده در فیلد «سریال صورتحساب» کوچکتر از حداقل طول مجاز است. (طول مقدار
+                    وارد شده باید حداقل 10 باشد)",
+                    "errorType": "ERROR"
+                    },
+                    {
+                    "code": "010504",
+                    "message": "در مقدار وارد شده در فیلد «سریال صورتحساب» الگو(^[a-fA-F0-9]{10}$) رعایت نشده است.",
+                    "errorType": "ERROR"
+                    },
+                    {
+                    "code": "010908",
+                    "message": "طول مقدار وارد شده در فیلد «شماره اقتصادی فروشنده» کوچکتر از حداقل طول مجاز است. (طول
+                    مقدار وارد شده باید حداقل 11 باشد)",
+                    "errorType": "ERROR"
+                    },
+                    {
+                    "code": "010908",
+                    "message": "طول مقدار وارد شده در فیلد «شماره اقتصادی فروشنده» کوچکتر از حداقل طول مجاز است. (طول
+                    مقدار وارد شده باید حداقل 14 باشد)",
+                    "errorType": "ERROR"
+                    },
+                    {
+                    "code": "011108",
+                    "message": "طول مقدار وارد شده در فیلد «شماره/شناسه ملی/شناسه مشارکت مدنی/کد فراگیر خریدار» کوچکتر
+                    از حداقل طول مجاز است. (طول مقدار وارد شده باید حداقل 10 باشد)",
+                    "errorType": "ERROR"
+                    },
+                    {
+                    "code": "011208",
+                    "message": "طول مقدار وارد شده در فیلد «شماره اقتصادی خریدار» کوچکتر از حداقل طول مجاز است. (طول
+                    مقدار وارد شده باید حداقل 14 باشد)",
+                    "errorType": "ERROR"
+                    }
+                    ],
+                    "warning": [],
+                    "success": false
+                    },
+                    "packetType": "receive_invoice_confirm",
+                    "fiscalId": "A14P7E"
+                    }
+                    ],
+                    "encryptionKeyId": null,
+                    "symmetricKey": null,
+                    "iv": null
+                    },
+                    "message": "inquiry invoice success"
+                    }
+                </p>
+                <hr>
+                <p>پاسخ ناموفق خودمان</p>
+                <p class="code">
+                    {
+                        "status": false,
+                        "message": [
+                            {
+                                "index": 0,
+                                "key": "invoices[x].uid",
+                                "message": " شناسه صورت حساب معتبر نیست"
+                            }
+                        ],
+                        "help": {
+                            "client_id": "...",
+                            "invoices": [
+                                {
+                                    "fiscalId": "...",
+                                    "uid": ".."
+                                },
+                                {
+                                    "fiscalId": "...",
+                                    "uid": ".."
+                                }
+                            ]
+                        },
+                        "code": 1,
+                        "date": {}
+                    }
+                </p>
+                <p>پاسخ ناموفق سازمان</p>
+                <p class="code">
+                    {
+                        "status": true,
+                        "code": 0,
+                        "data": {
+                            "uid": null,
+                            "packetType": "INQUIRY_RESULT",
+                            "data": [
+                                {
+                                    "referenceNumber": null,
+                                    "uid": "9d6b38b6-d584-4838-a9b8-e32110832148",
+                                    "status": "NOT_FOUND",
+                                    "data": null,
+                                    "packetType": null,
+                                    "fiscalId": "A14P7t"
+                                }
+                            ],
+                            "encryptionKeyId": null,
+                            "symmetricKey": null,
+                            "iv": null
+                        },
+                        "message": "inquiry invoice success"
+                    }
+                </p>
+            </div>
         </div>
     </div>
 </body>

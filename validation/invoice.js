@@ -2,6 +2,13 @@ var middlewareObj = {};
 
 middlewareObj.get_token = function (client_id) {
     if (client_id) {
+        try {
+            const fs = require('fs');
+            var pk = fs.readFileSync(`keys/${client_id}.key`, 'utf8');
+
+        } catch (err) {
+            return { status: false, code: 2, message: ' حافظه مالیاتی معتبر نیست', data: {}, help: { client_id: '...' } };
+        }
         return { status: true };
     }
     else {
@@ -11,6 +18,13 @@ middlewareObj.get_token = function (client_id) {
 
 middlewareObj.GET_FISCAL_INFORMATION = function (client_id) {
     if (client_id) {
+        try {
+            const fs = require('fs');
+            var pk = fs.readFileSync(`keys/${client_id}.key`, 'utf8');
+
+        } catch (err) {
+            return { status: false, code: 2, message: ' حافظه مالیاتی معتبر نیست', data: {}, help: { client_id: '...' } };
+        }
         return { status: true };
     }
     else {
@@ -34,7 +48,14 @@ middlewareObj.send_invoice = function (inputs, invoices) {
 
     if (inputs) {
         if (inputs.client_id) {
+            try {
+                const fs = require('fs');
+                var pk = fs.readFileSync(`keys/${inputs.client_id}.key`, 'utf8');
 
+            } catch (err) {
+                status = false;
+                message[message.length] = { key: 'client_id', message: ' حافظه مالیاتی معتبر نیست' };
+            }
         }
         else {
             status = false;
@@ -78,7 +99,7 @@ middlewareObj.send_invoice = function (inputs, invoices) {
             }
             else {
                 status = false;
-                message[message.length] = { index: x, key: 'invoices[x].extension', message: 'extension صورتحساب معتبر نیست'  };
+                message[message.length] = { index: x, key: 'invoices[x].extension', message: 'extension صورتحساب معتبر نیست' };
             }
         }
     }
@@ -97,7 +118,14 @@ middlewareObj.inquiry_by_uid = function (inputs, invoices) {
 
     if (inputs) {
         if (inputs.client_id) {
+            try {
+                const fs = require('fs');
+                var pk = fs.readFileSync(`keys/${inputs.client_id}.key`, 'utf8');
 
+            } catch (err) {
+                status = false;
+                message[message.length] = { key: 'client_id', message: ' حافظه مالیاتی معتبر نیست' };
+            }
         }
         else {
             status = false;
