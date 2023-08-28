@@ -778,6 +778,94 @@
             <p style="color: red;">برای استفاده از api بایستی فایل کلید خصوصی بصورت زیر در مسیر مورد نظر ذخیره گردد</p>
             <p>keys/A14P7E.key</p>
             <span>A14P7E همان حافظه مالیاتی هست که اسم نام فایل خواهد بود که داخلش کلید خصوصی قرار دارد</span>
+            <hr>
+            <h4>
+                مثال
+            </h4>
+            <div class="dir-left">
+                <p>
+                    درخواست curl
+                </p>
+                <p class="code">
+                    curl -X POST "http://localhost:8182/invoice/send_invoice" -H "Accept:application/json, text/plain,
+                    */*" -H "Content-Type:application/json; charset=utf-8" --data
+                    '{"inputs":{"client_id":"A14P7E"},"invoices":[{"Header":{"Taxid":"A14P7E04C84002B681C064","Indatim":"1692420004000","Indati2m":"1692420004224","Inty":"1","Inno":"12345608","Irtaxid":null,"Inp":"1","Ins":"1","Tins":"","Tob":"1","Bid":"1","Tinb":"1","Sbc":"1","Bpc":"1","Bbc":null,"Ft":null,"Bpn":null,"Scln":"0","Scc":null,"Crn":"0","Billid":null,"Tprdis":"500.0","Tdis":"0.0","Tadis":"500.0","Tvam":"0.0","Todam":"0.0","Tbill":"500.0","Setm":"1","Cap":"500.0","Insp":null,"Tvop":"0.0","Tax17":"0.0","Cdcn":null,"Cdcd":null,"Tonw":null,"Torv":null,"Tocv":null},"Body":[{"Sstid":"123","Sstt":null,"Mu":"1627","Am":"1.0","Fee":"500.0","Cfee":null,"Cut":"IRR","Exr":"1.0","Prdis":"500.0","Dis":"0.0","Adis":"500.0","Vra":"0.0","Vam":"0.0","Odt":"","Odr":"0.0","Odam":"0.0","Olt":"","Olr":"0.0","Olam":"0.0","Consfee":null,"Spro":null,"Bros":null,"Tcpbs":null,"Cop":"0.0","Vop":"0.0","Bsrn":"0","Tsstam":"500.0","Nw":null,"Ssrv":null,"Sscv":null}],"Payments":[],"Extension":null}]}'
+                </p>
+                <hr>
+                <p>
+                    پاسخ موفق
+                </p>
+                <p class="code">
+                    {
+                    "status": true,
+                    "code": 0,
+                    "data": {
+                    "signature": null,
+                    "signatureKeyId": null,
+                    "timestamp": 1693205381,
+                    "result": [
+                    {
+                    "uid": "373892a5-f143-4d4f-8122-d42de749b507",
+                    "referenceNumber": null,
+                    "errorCode": "4007",
+                    "errorDetail": "برای این نوع بسته، ارسال امضا الزامی می باشد"
+                    }
+                    ]
+                    },
+                    "message": "send invoice success"
+                    }
+                </p>
+                <hr>
+                <p>پاسخ ناموفق خودمان</p>
+                <p class="code">
+                    {
+                    "status": false,
+                    "message": [
+                    {
+                    "index": 0,
+                    "key": "invoices[x].uid",
+                    "message": " شناسه صورت حساب معتبر نیست"
+                    }
+                    ],
+                    "help": {
+                    "client_id": "...",
+                    "invoices": [
+                    {
+                    "fiscalId": "...",
+                    "uid": ".."
+                    },
+                    {
+                    "fiscalId": "...",
+                    "uid": ".."
+                    }
+                    ]
+                    },
+                    "code": 1,
+                    "data": {}
+                    }
+                </p>
+                <p>پاسخ ناموفق سازمان</p>
+                <p class="code">
+                    {
+                    "status": true,
+                    "code": 0,
+                    "data": {
+                    "signature": null,
+                    "signatureKeyId": null,
+                    "timestamp": 1693205381,
+                    "result": [
+                    {
+                    "uid": "373892a5-f143-4d4f-8122-d42de749b507",
+                    "referenceNumber": null,
+                    "errorCode": "4007",
+                    "errorDetail": "برای این نوع بسته، ارسال امضا الزامی می باشد"
+                    }
+                    ]
+                    },
+                    "message": "send invoice success"
+                    }
+                </p>
+            </div>
         </div>
     </div>
 
@@ -989,54 +1077,54 @@
                 <p>پاسخ ناموفق خودمان</p>
                 <p class="code">
                     {
-                        "status": false,
-                        "message": [
-                            {
-                                "index": 0,
-                                "key": "invoices[x].uid",
-                                "message": " شناسه صورت حساب معتبر نیست"
-                            }
-                        ],
-                        "help": {
-                            "client_id": "...",
-                            "invoices": [
-                                {
-                                    "fiscalId": "...",
-                                    "uid": ".."
-                                },
-                                {
-                                    "fiscalId": "...",
-                                    "uid": ".."
-                                }
-                            ]
-                        },
-                        "code": 1,
-                        "date": {}
+                    "status": false,
+                    "message": [
+                    {
+                    "index": 0,
+                    "key": "invoices[x].uid",
+                    "message": " شناسه صورت حساب معتبر نیست"
+                    }
+                    ],
+                    "help": {
+                    "client_id": "...",
+                    "invoices": [
+                    {
+                    "fiscalId": "...",
+                    "uid": ".."
+                    },
+                    {
+                    "fiscalId": "...",
+                    "uid": ".."
+                    }
+                    ]
+                    },
+                    "code": 1,
+                    "data": {}
                     }
                 </p>
                 <p>پاسخ ناموفق سازمان</p>
                 <p class="code">
                     {
-                        "status": true,
-                        "code": 0,
-                        "data": {
-                            "uid": null,
-                            "packetType": "INQUIRY_RESULT",
-                            "data": [
-                                {
-                                    "referenceNumber": null,
-                                    "uid": "9d6b38b6-d584-4838-a9b8-e32110832148",
-                                    "status": "NOT_FOUND",
-                                    "data": null,
-                                    "packetType": null,
-                                    "fiscalId": "A14P7t"
-                                }
-                            ],
-                            "encryptionKeyId": null,
-                            "symmetricKey": null,
-                            "iv": null
-                        },
-                        "message": "inquiry invoice success"
+                    "status": true,
+                    "code": 0,
+                    "data": {
+                    "uid": null,
+                    "packetType": "INQUIRY_RESULT",
+                    "data": [
+                    {
+                    "referenceNumber": null,
+                    "uid": "9d6b38b6-d584-4838-a9b8-e32110832148",
+                    "status": "NOT_FOUND",
+                    "data": null,
+                    "packetType": null,
+                    "fiscalId": "A14P7t"
+                    }
+                    ],
+                    "encryptionKeyId": null,
+                    "symmetricKey": null,
+                    "iv": null
+                    },
+                    "message": "inquiry invoice success"
                     }
                 </p>
             </div>

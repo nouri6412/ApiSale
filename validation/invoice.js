@@ -70,36 +70,36 @@ middlewareObj.send_invoice = function (inputs, invoices) {
     if (invoices) {
         for (var x = 0; x < invoices.length; x++) {
             var invoice = invoices[x];
-            if (invoice.header) {
+            if (invoice.Header) {
 
             }
             else {
                 status = false;
-                message[message.length] = { index: x, key: 'invoices[x].header', message: 'سربرگ صورتحساب معتبر نیست' };
+                message[message.length] = { index: x, key: 'invoices[x].Header', message: 'سربرگ صورتحساب معتبر نیست' };
             }
 
-            if (invoice.body) {
-
-            }
-            else {
-                status = false;
-                message[message.length] = { index: x, key: 'invoices[x].body', message: 'بدنه صورتحساب معتبر نیست' };
-            }
-
-            if (invoice.payments) {
+            if (invoice.Body) {
 
             }
             else {
                 status = false;
-                message[message.length] = { index: x, key: 'invoices[x].payments', message: 'پرداخت صورتحساب معتبر نیست' };
+                message[message.length] = { index: x, key: 'invoices[x].Body', message: 'بدنه صورتحساب معتبر نیست' };
             }
 
-            if (invoice.extension) {
+            if (invoice.Payments) {
 
             }
             else {
                 status = false;
-                message[message.length] = { index: x, key: 'invoices[x].extension', message: 'extension صورتحساب معتبر نیست' };
+                message[message.length] = { index: x, key: 'invoices[x].Payments', message: 'پرداخت صورتحساب معتبر نیست' };
+            }
+
+            if (invoice.Extension || invoice.Extension==null) {
+
+            }
+            else {
+                status = false;
+                message[message.length] = { index: x, key: 'invoices[x].Extension', message: 'Extension صورتحساب معتبر نیست' };
             }
         }
     }
@@ -108,7 +108,7 @@ middlewareObj.send_invoice = function (inputs, invoices) {
         message[message.length] = { key: 'invoices', message: '  صورتحساب معتبر نیست' };
     }
 
-    return { status: status, message: message, help: { client_id: '...', invoices: [{ header: {}, body: [{}, {}], payments: [{}, {}], extension: null }, { header: {}, body: [{}, {}], payments: [{}, {}], extension: null }] } };
+    return { status: status, message: message, help: { client_id: '...', invoices: [{ Header: {}, Body: [{}, {}], Payments: [{}, {}], Extension: null }, { Header: {}, Body: [{}, {}], Payments: [{}, {}], Extension: null }] } };
 };
 
 middlewareObj.inquiry_by_uid = function (inputs, invoices) {

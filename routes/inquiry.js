@@ -17,7 +17,7 @@ router.post("/inquiry_by_uid", middleware.action, async (req, res) => {
         var init_validation = validation.inquiry_by_uid(inputs, invoices);
         if (!init_validation.status) {
             init_validation["code"] = 1;
-            init_validation["date"] = {};
+            init_validation["data"] = {};
             return res.json(init_validation);
         }
 

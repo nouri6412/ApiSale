@@ -29,7 +29,7 @@ router.post("/send_invoice", middleware.action, async (req, res) => {
         var init_validation = validation.send_invoice(inputs, invoices);
         if (!init_validation.status) {
             init_validation["code"] = 1;
-            init_validation["date"] = {};
+            init_validation["data"] = {};
             return res.json(init_validation);
         }
 
