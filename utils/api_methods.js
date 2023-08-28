@@ -416,7 +416,6 @@ middlewareObj.send_invoice = async function (token, data, client_id, callback, e
             signatureKeyId: null
         }, {
         headers: {
-            Accept: "application/json",
             requestTraceId: GUID,
             timestamp: timest,
             Authorization: `Bearer ${token}`
