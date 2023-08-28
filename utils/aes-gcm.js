@@ -51,7 +51,7 @@ middlewareObj.aes256gcm = () => {
     }
     return result.toUpperCase();
   }
-  const aoep = (publicKey) => {
+  const aoep = (data,publicKey) => {
     const encryptedData = crypto.publicEncrypt(
       {
         key: publicKey,
@@ -96,7 +96,7 @@ middlewareObj.aes256gcm = () => {
     encrypt,
     decrypt,
     xor,
-    init
+    init,aoep
   };
 };
 
