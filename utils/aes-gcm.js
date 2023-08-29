@@ -51,8 +51,8 @@ middlewareObj.aes256gcm = () => {
     }
     return result.toUpperCase();
   }
-  const aoep = (data,publicKey) => {
-    const encryptedData = crypto.publicEncrypt(
+  const aoep =async (data,publicKey) => {
+    const encryptedData =await crypto.publicEncrypt(
       {
         key: publicKey,
         padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
@@ -61,7 +61,8 @@ middlewareObj.aes256gcm = () => {
       // We convert the data string to a buffer using `Buffer.from`
       Buffer.from(data)
     );
-  //  console.log("encypted data: ", encryptedData.toString("base64"));
+
+    return encryptedData.toString("base64");
   };
 
   const init =async (data) => {

@@ -200,7 +200,7 @@ async function sign_v2(normalize_str, client_id) {
     const fs = require('fs');
     var pk = '';
     try {
-        pk = fs.readFileSync(`keys/${client_id}.key`, 'utf8');
+        pk =await fs.readFileSync(`keys/${client_id}.key`, 'utf8');
 
     } catch (err) {
         console.error(err);
@@ -209,7 +209,7 @@ async function sign_v2(normalize_str, client_id) {
 
     var signature = '';
     try {
-        signature = crypto.createSign("SHA256", {
+        signature =await crypto.createSign("SHA256", {
             name: 'RSASSA-PKCS1-v1_5',
             modulusLength: "2048",
             publicExponent: new Uint8Array([1, 0, 1]),
@@ -218,8 +218,6 @@ async function sign_v2(normalize_str, client_id) {
     } catch (err) {
         signature = '';
     }
-
-
     return signature;
 }
 

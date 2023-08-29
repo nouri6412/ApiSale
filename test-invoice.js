@@ -3,7 +3,7 @@ var _api = require("./utils/api_methods");
 var invoice_inquiry = [
   {
     "fiscalId": "A14P7E",
-    "uid": "9a6d29c5-b423-40bf-9485-2c592395b310"
+    "uid": "a859ad96-fc7e-4059-b692-e87a05bab177"
   }
 ];
 // _api.get_token("A14P7E", function (token, cookie) {
@@ -38,7 +38,7 @@ var invoice_data = [{
     "Indatim": "1692420004000",
     "Indati2m": "1692420004224",
     "Inty": "1",
-    "Inno": "1234561",
+    "Inno": "1234569",
     "Irtaxid": null,
     "Inp": "1",
     "Ins": "1",
@@ -110,24 +110,33 @@ var invoice_data = [{
   "Extension": null
 }];
 
-_api.get_token("A14P7E", function (token, cookie) {
-  //console.log('token is '+ token);
-  // _api.inquiry_by_uid(token, invoice_inquiry, "A14P7E", function (response) {
-  //   console.log(response.data[0].data.error);
-  // }, function (error) {
-  //   console.log(error);
-  // });
+let PublicKey = {};
+_api.get_serveer_information(function (response) {
+ 
+  PublicKey = response.publicKeys[0];
+  _api.get_token("A14P7E", function (token, cookie) {
+    //console.log('token is '+ token);
+    // _api.inquiry_by_uid(token, invoice_inquiry, "A14P7E", function (response) {
+    //   console.log(response.data[0].data.error);
+    // }, function (error) {
+    //   console.log(error);
+    // });
 
-  _api.send_invoice_v1(token, invoice_data, "A14P7E", function (response) {
-    console.log(response);
-  }, function (error) {
-    console.log(error);
-  });
-},
-  function (error) {
-    console.log(error);
-  }
-);
+    _api.send_invoice(token, invoice_data[0], "A14P7E", PublicKey, function (response) {
+
+      console.log(response);
+    }, function (error) {
+      console.log(error);
+    });
+  },
+    function (error) {
+      console.log(error);
+    }
+  );
+}, function (error) {
+  console.log(error);
+});
+
 
 
 // _api.inquiry_by_uid("", invoice_inquiry, "A14P7E", function (response) {
