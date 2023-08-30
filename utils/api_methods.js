@@ -364,7 +364,7 @@ middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback,
 };
 
 
-middlewareObj.send_invoice = async function (token, data, client_id,PublicKey, callback, error_callbak) {
+middlewareObj.send_invoice = async function (token, data, client_id, PublicKey, callback, error_callbak) {
 
     var timest = Date.now();
     var GUID = crypto.randomUUID();
@@ -409,7 +409,7 @@ middlewareObj.send_invoice = async function (token, data, client_id,PublicKey, c
         Authorization: `${token}`
     });
     var signed = str;
-     
+
     axios.post('https://tp.tax.gov.ir/req/api/self-tsp/async/normal-enqueue',
         {
             packets: pakets_main,
@@ -446,10 +446,16 @@ middlewareObj.send_invoice = async function (token, data, client_id,PublicKey, c
         });
 };
 
-middlewareObj.send_invoice_v1 = async function (token, data, client_id, publicKey, callback, error_callbak) {
+middlewareObj.send_invoice_v1 = async function (token, data_input, client_id, publicKey, callback, error_callbak) {
 
     var timest = Date.now();
     var GUID = crypto.randomUUID();
+
+    var json_str = JSON.stringify(data_input);
+
+    json_str = json_str.replaceAll(".0,", ",");
+
+    var data = JSON.parse(json_str);
 
 
     var pakets = [];
@@ -459,18 +465,18 @@ middlewareObj.send_invoice_v1 = async function (token, data, client_id, publicKe
         var GUID_uid = crypto.randomUUID();
         var invoice_str = await signatory.signatory_v4({ client_id: client_id }, data[x]);
         const { aes256gcm } = require('./aes-gcm');
-        var enc = await aes256gcm().init(Buffer.from(JSON.stringify(data[x])).toString('base64'));
+        var enc = await aes256gcm().init(Buffer.from(JSON.stringify(data[x])).toString('hex'));
 
         var public = "-----BEGIN PUBLIC KEY-----\n" + publicKey.key + "\n" + "-----END PUBLIC KEY-----";
 
-        var aoep =await aes256gcm().aoep(enc.key.toString('base64'), public);
-      //  console.log(aoep);
+        var aoep = await aes256gcm().aoep(enc.key.toString('base64'), public);
+        //  console.log(aoep);
 
-         var str_from_key = aoep;
+        var str_from_key = aoep;
 
-         var encrypted=enc.encrypted;
+        var encrypted = enc.encrypted;
         // encrypted=JSON.stringify(data[x]);
-     //   var str_from_key = '';
+        //   var str_from_key = '';
 
         pakets[pakets.length] = {
             uid: GUID_uid,
@@ -484,7 +490,7 @@ middlewareObj.send_invoice_v1 = async function (token, data, client_id, publicKe
             dataSignature: invoice_str
         };
         pakets_main[pakets_main.length] = {
-            data:encrypted,
+            data: encrypted,
             dataSignature: invoice_str,
             encryptionKeyId: publicKey.id,
             fiscalId: client_id,
@@ -496,7 +502,7 @@ middlewareObj.send_invoice_v1 = async function (token, data, client_id, publicKe
             uid: GUID_uid,
         };
     }
-   // console.log(pakets_main);
+    // console.log(pakets_main);
     var str = await signatory.signatory_v3({ client_id: client_id }, {
         packets: pakets,
         requestTraceId: GUID,

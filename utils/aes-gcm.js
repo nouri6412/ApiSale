@@ -14,13 +14,13 @@ middlewareObj.aes256gcm = () => {
     // demonstration but a poor way to achieve this in practice.
     //
     // See: e.g. https://csrc.nist.gov/publications/detail/sp/800-38d/final
-    const iv = Buffer.from(crypto.randomBytes(32), 'utf8');
+    const iv = crypto.randomBytes(32);
 
     const cipher = crypto.createCipheriv(ALGO, key, iv);
 
     // Hint: Larger inputs (it's GCM, after all!) should use the stream API
-    let enc = cipher.update(str, 'utf8', 'base64');
-    enc += cipher.final('base64');
+    let enc = cipher.update(str, 'utf8', 'hex');
+    enc += cipher.final('hex');
     return [enc, iv, cipher.getAuthTag()];
   };
 
@@ -65,11 +65,11 @@ middlewareObj.aes256gcm = () => {
     return encryptedData.toString("base64");
   };
 
-  const init =async (data) => {
-    var hex_data = base64ToHex(data);
+  const init =async (hex_data) => {
+   // var hex_data = base64ToHex(data);
     // hex_data='0101'+hex_data;
 
-    var key = Buffer.from(crypto.randomBytes(32), 'utf8');
+    var key = crypto.randomBytes(32);
     var v1 = hex_data.length;
     var v2 = 32;
     var v3 = v1 % v2;

@@ -242,7 +242,7 @@ middlewareObj.signatory_v3 = function (init_params, invoice) {
 };
 
 middlewareObj.signatory_v4 = function (init_params, invoice) {
-    return sign_v1(normalize(invoice), init_params.client_id);
+    return sign_v2(normalize(invoice), init_params.client_id);
 };
 
 module.exports = middlewareObj;
