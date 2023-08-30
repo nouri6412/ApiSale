@@ -183,7 +183,7 @@ async function sign_v1(normalize_str, client_id) {
     }
     var signature = '';
     try {
-        signature = crypto.createSign("SHA256").update(normalize_str).sign(pk).toString('base64');
+        signature =await crypto.createSign("SHA256").update(normalize_str).sign(pk).toString('base64');
 
     } catch (err) {
         signature = '';
