@@ -465,11 +465,11 @@ middlewareObj.send_invoice_v1 = async function (token, data_input, client_id, pu
         var GUID_uid = crypto.randomUUID();
         var invoice_str = await signatory.signatory_v4({ client_id: client_id }, data[x]);
         const { aes256gcm } = require('./aes-gcm');
-        var enc = await aes256gcm().init(Buffer.from(JSON.stringify(data[x])).toString('hex'));
+        var enc = await aes256gcm().init(Buffer.from(JSON.stringify(data[x])));
 
         var public = "-----BEGIN PUBLIC KEY-----\n" + publicKey.key + "\n" + "-----END PUBLIC KEY-----";
 
-        var aoep = await aes256gcm().aoep(enc.key.toString('base64'), public);
+        var aoep = await aes256gcm().aoep(enc.key, public);
         //  console.log(aoep);
 
         var str_from_key = aoep;

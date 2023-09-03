@@ -19,8 +19,8 @@ middlewareObj.aes256gcm = () => {
     const cipher = crypto.createCipheriv(ALGO, key, iv);
 
     // Hint: Larger inputs (it's GCM, after all!) should use the stream API
-    let enc = cipher.update(str, 'utf8', 'hex');
-    enc += cipher.final('hex');
+    let enc = cipher.update(str, 'utf8', 'base64');
+    enc += cipher.final('base64');
     return [enc, iv, cipher.getAuthTag()];
   };
 
@@ -33,15 +33,6 @@ middlewareObj.aes256gcm = () => {
     return str;
   };
 
-  const xor = (hex1, hex2) => {
-
-    const buf1 = Buffer.from(hex1.substring(0, hex2.length), 'hex');
-    const buf2 = Buffer.from(hex2, 'hex');
-
-    const bufResult = buf1.map((b, i) => b ^ buf2[i]);
-    return bufResult.toString('hex');
-  };
-
   const base64ToHex = (str) => {
     const raw = atob(str);
     let result = '';
@@ -51,53 +42,46 @@ middlewareObj.aes256gcm = () => {
     }
     return result.toUpperCase();
   }
-  const aoep =async (data,publicKey) => {
-    const encryptedData =await crypto.publicEncrypt(
+  const aoep = async (data, publicKey) => {
+    const encryptedData = await crypto.publicEncrypt(
       {
         key: publicKey,
         padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
         oaepHash: "sha256",
       },
       // We convert the data string to a buffer using `Buffer.from`
-      Buffer.from(data)
+      data
     );
 
     return encryptedData.toString("base64");
   };
 
-  const init =async (hex_data) => {
-   // var hex_data = base64ToHex(data);
-    // hex_data='0101'+hex_data;
+  const init = async (hex_data) => {
 
     var key = crypto.randomBytes(32);
-    var v1 = hex_data.length;
-    var v2 = 32;
-    var v3 = v1 % v2;
-    var v4 = v1 / v2;
 
-    if (v3 > 0) {
-      v1 = v1 - v3;
-      v4 = (v1 / v2) + 1;
+    var xored_data = [];
+
+    var i = 0;
+    for (var x = 0; x < hex_data.length; x++) {
+      if (i == 32) {
+        i = 0;
+      }
+      xored_data[x] = hex_data[x] ^ key[i];
+      //  console.log('hex_data:'+hex_data[x]+' key:'+key[i]+':'+(hex_data[x] ^ key[i])+' => '+xored_data[x]);
+      i++;
     }
-
-    var hex1 = key.toString('hex');
-
-    var hex2 = hex_data;
-    var xored_data = '';
-    for (var x = 0; x < v4; x++) {
-      xored_data = xored_data + xor(hex1, hex2.substring(x * 32, (x * 32) + 32));
-    }
-
-    const [encrypted, iv, authTag] = encrypt(xored_data, key);
-    return { encrypted, iv, authTag,key };
+    var byte_xored_data = Buffer.from(xored_data);
+    const [encrypted, iv, authTag] = encrypt(byte_xored_data.toString('base64'), key);
+    return { encrypted, iv, authTag, key };
 
   };
 
   return {
     encrypt,
     decrypt,
-    xor,
-    init,aoep
+    init,
+    aoep
   };
 };
 
