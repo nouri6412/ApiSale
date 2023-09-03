@@ -33,17 +33,24 @@ router.post("/send_invoice", middleware.action, async (req, res) => {
             return res.json(init_validation);
         }
 
-        _api.get_token(inputs.client_id, function (token) {
-            _api.send_invoice(token, invoices, inputs.client_id, function (response) {
-                return res.json({ status: true, code: 0, data: response, message: 'send invoice success' });
-            }, function (error) {
-                return res.json({ status: false, code: 1, data: error, message: 'send invoice faided' });
-            });
-        },
-            function (error) {
-                return res.json({ status: false, code: 1, data: error, message: 'send invoice faided' });
-            }
-        );
+        let PublicKey = {};
+        _api.get_serveer_information(function (response) {
+
+            PublicKey = response.publicKeys[0];
+            _api.get_token(inputs.client_id, function (token, cookie) {
+                _api.send_invoice_v1(token, invoices, inputs.client_id, PublicKey, function (response) {
+                    return res.json({ status: true, code: 0, data: response, message: 'send invoice success' });
+                }, function (error) {
+                    return res.json({ status: false, code: 1, data: error, message: 'send invoice faided' });
+                });
+            },
+                function (error) {
+                    return res.json({ status: false, code: 1, data: error, message: 'send invoice faided' });
+                }
+            );
+        }, function (error) {
+            console.log(error);
+        });
 
     }
     catch (err) {
