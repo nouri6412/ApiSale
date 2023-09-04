@@ -363,7 +363,7 @@ middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback,
         });
 };
 
-middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback, error_callbak) {
+middlewareObj.INQUIRY_BY_REFERENCE_NUMBER = async function (token, data, client_id, callback, error_callbak) {
 
     var timest = Date.now();
     var GUID = await crypto.randomUUID();
@@ -435,6 +435,148 @@ middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback,
         });
 };
 
+middlewareObj.INQUIRY_BY_TIME = async function (token, data, client_id, callback, error_callbak) {
+
+    var timest = Date.now();
+    var GUID = await crypto.randomUUID();
+    var GUID_uid = await crypto.randomUUID();
+    console.log(data);
+
+    var str = await signatory.signatory_v3({ client_id: client_id }, {
+        packet: {
+            uid: GUID_uid,
+            packetType: "INQUIRY_BY_TIME",
+            retry: false,
+            data: data,
+            encryptionKeyId: null,
+            symmetricKey: null,
+            iv: null,
+            fiscalId: client_id,
+            dataSignature: null,
+            requestTraceId: GUID,
+            timestamp: timest,
+            Authorization: `${token}`
+        }
+    });
+    var signed = str;
+
+    axios.post('https://tp.tax.gov.ir/req/api/self-tsp/sync/INQUIRY_BY_TIME', {
+        packet: {
+            uid: GUID_uid,
+            packetType: "INQUIRY_BY_TIME",
+            retry: false,
+            data: data,
+            encryptionKeyId: null,
+            symmetricKey: null,
+            iv: null,
+            fiscalId: client_id,
+            dataSignature: null,
+            signatureKeyId: null
+        },
+        signatureKeyId: null,
+        signature: signed
+    }, {
+        headers: {
+            Accept: "application/json",
+            requestTraceId: GUID,
+            timestamp: timest,
+            Authorization: `Bearer ${token}`
+        },
+        withCredentials: true
+    })
+        .then(response => {
+            callback(response.data.result);
+        })
+        .catch(error => {
+            if (error.response) {
+                if (error.response.data) {
+                    error_callbak(error.response.data);
+                }
+                else {
+                    error_callbak(error.response);
+                }
+
+            }
+            else {
+
+                error_callbak(error.message);
+            }
+        })
+        .finally(() => {
+
+        });
+};
+middlewareObj.INQUIRY_BY_TIME_RANGE = async function (token, data, client_id, callback, error_callbak) {
+
+    var timest = Date.now();
+    var GUID = await crypto.randomUUID();
+    var GUID_uid = await crypto.randomUUID();
+    console.log(data);
+
+    var str = await signatory.signatory_v3({ client_id: client_id }, {
+        packet: {
+            uid: GUID_uid,
+            packetType: "INQUIRY_BY_TIME_RANGE",
+            retry: false,
+            data: data,
+            encryptionKeyId: null,
+            symmetricKey: null,
+            iv: null,
+            fiscalId: client_id,
+            dataSignature: null,
+            requestTraceId: GUID,
+            timestamp: timest,
+            Authorization: `${token}`
+        }
+    });
+    var signed = str;
+
+    axios.post('https://tp.tax.gov.ir/req/api/self-tsp/sync/INQUIRY_BY_TIME_RANGE', {
+        packet: {
+            uid: GUID_uid,
+            packetType: "INQUIRY_BY_TIME_RANGE",
+            retry: false,
+            data: data,
+            encryptionKeyId: null,
+            symmetricKey: null,
+            iv: null,
+            fiscalId: client_id,
+            dataSignature: null,
+            signatureKeyId: null
+        },
+        signatureKeyId: null,
+        signature: signed
+    }, {
+        headers: {
+            Accept: "application/json",
+            requestTraceId: GUID,
+            timestamp: timest,
+            Authorization: `Bearer ${token}`
+        },
+        withCredentials: true
+    })
+        .then(response => {
+            callback(response.data.result);
+        })
+        .catch(error => {
+            if (error.response) {
+                if (error.response.data) {
+                    error_callbak(error.response.data);
+                }
+                else {
+                    error_callbak(error.response);
+                }
+
+            }
+            else {
+
+                error_callbak(error.message);
+            }
+        })
+        .finally(() => {
+
+        });
+};
 
 middlewareObj.send_invoice = async function (token, data, client_id, PublicKey, callback, error_callbak) {
 

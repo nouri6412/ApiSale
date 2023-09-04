@@ -110,27 +110,27 @@
                 </li>
                 <li>
                     <a href="#part-6">
-                        استعلام صورتحساب 1
+                        با uid استعلام صورتحساب
                     </a>
                 </li>
                 <li>
                     <a href="#part-7">
-                        استعلام صورتحساب 2
+                        استعلام صورتحساب با رسید یکتا
                     </a>
                 </li>
                 <li>
                     <a href="#part-8">
-                        استعلام صورتحساب 3
+                        استعلام صورتحساب با زمان
                     </a>
                 </li>
                 <li>
                     <a href="#part-9">
-                        استعلام صورتحساب 4
+                        استعلام صورتحساب با بازه زمانی
                     </a>
                 </li>
             </ul>
 
-            <h4>نکات عمومی</h4>
+            <h4 style="color: red;">نکات مهم</h4>
             <ul>
                 <li>
                     در تمامی پاسخ های دریافتی پارامتر status نشان دهنده وضعیت پاسخ می باشد اگر true باشد موفق و اگر
@@ -158,6 +158,10 @@
                     در تمامی پاسخ های دریافتی فیلد message پیامی از طرف api خودمان هست
                 </li>
             </ul>
+            <hr>
+            <p style="color: red;">برای استفاده از api بایستی فایل کلید خصوصی بصورت زیر در مسیر مورد نظر ذخیره گردد</p>
+            <p>keys/AAAAAA.key</p>
+            <span>AAAAAA همان حافظه مالیاتی هست که اسم نام فایل خواهد بود که داخلش کلید خصوصی قرار دارد</span>
 
     </div>
     <div class="seprator">
@@ -316,7 +320,7 @@
                 <p class="code">
                     curl -X POST "http://localhost:8182/helper/get_token" -H "Accept:application/json, text/plain, */*"
                     -H
-                    "Content-Type:application/json; charset=utf-8" --data '{"client_id":"A14P7E"}'
+                    "Content-Type:application/json; charset=utf-8" --data '{"client_id":"AAAAAA"}'
                 </p>
                 <hr>
                 <p>
@@ -459,7 +463,7 @@
                 </p>
                 <p class="code">
                     url -X POST "http://localhost:8182/helper/get_fiscal_information" -H "Accept:application/json,
-                    text/plain, */*" -H "Content-Type:application/json; charset=utf-8" --data '{"client_id":"A14P7E"}'
+                    text/plain, */*" -H "Content-Type:application/json; charset=utf-8" --data '{"client_id":"AAAAAA"}'
                 </p>
                 <hr>
                 <p>
@@ -470,7 +474,7 @@
                     "status": true,
                     "code": 0,
                     "data": {
-                    "nameTrade": "A14P7E",
+                    "nameTrade": "AAAAAA",
                     "fiscalStatus": "ACTIVE",
                     "saleThreshold": null,
                     "economicCode": "10200338770"
@@ -781,14 +785,6 @@
                     </tr>
                 </tbody>
             </table>
-            <h4 style="color: red;">
-                نکات مهم ارسال صورت حساب
-            </h4>
-
-            <p style="color: red;">برای استفاده از api بایستی فایل کلید خصوصی بصورت زیر در مسیر مورد نظر ذخیره گردد</p>
-            <p>keys/A14P7E.key</p>
-            <span>A14P7E همان حافظه مالیاتی هست که اسم نام فایل خواهد بود که داخلش کلید خصوصی قرار دارد</span>
-            <hr>
             <h4>
                 مثال
             </h4>
@@ -799,7 +795,7 @@
                 <p class="code">
                     curl -X POST "http://localhost:8182/invoice/send_invoice" -H "Accept:application/json, text/plain,
                     */*" -H "Content-Type:application/json; charset=utf-8" --data
-                    '{"inputs":{"client_id":"A14P7E"},"invoices":[{"Header":{"Taxid":"A14P7E04C84002B681C064","Indatim":1692420004000,"Indati2m":1692420004224,"Inty":1,"Inno":"100000000001","Irtaxid":null,"Inp":1,"Ins":1,"Tins":"","Tob":1,"Bid":"1","Tinb":"1","Sbc":"1","Bpc":"1","Bbc":null,"Ft":null,"Bpn":null,"Scln":"1","Scc":null,"Crn":"1","Billid":null,"Tprdis":500,"Tdis":0,"Tadis":500,"Tvam":0,"Todam":0,"Tbill":0,"Setm":1,"Cap":500,"Insp":null,"Tvop":0,"Tax17":0,"Cdcn":null,"Cdcd":null,"Tonw":null,"Torv":null,"Tocv":null},"Body":[{"Sstid":"123","Sstt":null,"Mu":"1627","Am":1,"Fee":500,"Cfee":null,"Cut":"IRR","Exr":1,"Prdis":500,"Dis":0,"Adis":500,"Vra":0,"Vam":0,"Odt":"","Odr":0,"Odam":0,"Olt":"","Olr":0,"Olam":0,"Consfee":null,"Spro":null,"Bros":null,"Tcpbs":null,"Cop":0,"Vop":0,"Bsrn":"0","Tsstam":500,"Nw":null,"Ssrv":null,"Sscv":null}],"Payments":[],"Extension":null}]}'
+                    '{"inputs":{"client_id":"AAAAAA"},"invoices":[{"Header":{"Taxid":"AAAAAA04C84002B681C064","Indatim":1692420004000,"Indati2m":1692420004224,"Inty":1,"Inno":"100000000001","Irtaxid":null,"Inp":1,"Ins":1,"Tins":"","Tob":1,"Bid":"1","Tinb":"1","Sbc":"1","Bpc":"1","Bbc":null,"Ft":null,"Bpn":null,"Scln":"1","Scc":null,"Crn":"1","Billid":null,"Tprdis":500,"Tdis":0,"Tadis":500,"Tvam":0,"Todam":0,"Tbill":0,"Setm":1,"Cap":500,"Insp":null,"Tvop":0,"Tax17":0,"Cdcn":null,"Cdcd":null,"Tonw":null,"Torv":null,"Tocv":null},"Body":[{"Sstid":"123","Sstt":null,"Mu":"1627","Am":1,"Fee":500,"Cfee":null,"Cut":"IRR","Exr":1,"Prdis":500,"Dis":0,"Adis":500,"Vra":0,"Vam":0,"Odt":"","Odr":0,"Odam":0,"Olt":"","Olr":0,"Olam":0,"Consfee":null,"Spro":null,"Bros":null,"Tcpbs":null,"Cop":0,"Vop":0,"Bsrn":"0","Tsstam":500,"Nw":null,"Ssrv":null,"Sscv":null}],"Payments":[],"Extension":null}]}'
                 </p>
                 <hr>
                 <p>
@@ -901,7 +897,7 @@
 
     <div id="part-6" class="container">
         <h3>
-           1 استعلام صورتحساب
+            با uid استعلام صورتحساب
         </h3>
         <div>
             <table class="dir-left">
@@ -1021,7 +1017,7 @@
                 <p class="code">
                     curl -X POST "http://localhost:8182/inquiry/inquiry_by_uid" -H "Accept:application/json, text/plain,
                     */*" -H "Content-Type:application/json; charset=utf-8" --data
-                    '{"inputs":{"client_id":"A14P7E"},"invoices":[{"fiscalId":"A14P7E","uid":"9d6b38b6-d584-4838-a9b8-e32110832148"}]}'
+                    '{"inputs":{"client_id":"AAAAAA"},"invoices":[{"fiscalId":"AAAAAA","uid":"9d6b38b6-d584-4838-a9b8-e32110832148"}]}'
 
                 </p>
                 <hr>
@@ -1089,7 +1085,7 @@
                     "success": false
                     },
                     "packetType": "receive_invoice_confirm",
-                    "fiscalId": "A14P7E"
+                    "fiscalId": "AAAAAA"
                     }
                     ],
                     "encryptionKeyId": null,
@@ -1158,7 +1154,7 @@
     </div>
     <div id="part-7" class="container">
         <h3>
-           2 استعلام صورتحساب
+            استعلام صورتحساب با رسید یکتا
         </h3>
         <div>
             <table class="dir-left">
@@ -1185,13 +1181,7 @@
                         </td>
                         <td>
                             {
-                            client_id: '...', invoices: [{
-                            "fiscalId": "...",
-                            "uid": ".."
-                            }, {
-                            "fiscalId": "...",
-                            "uid": ".."
-                            }]
+                            client_id: '...', invoices: {referenceNumber:[]}
                             }
                         </td>
                     </tr>
@@ -1226,18 +1216,6 @@
                         <td>خالی</td>
                         <td>{ status: false, code: 2, message:[{ key: 'invoices', message: ' صورتحساب معتبر نیست' }],
                             data: {} }</td>
-                    </tr>
-                    <tr>
-                        <td>invoices[x].fiscalId (x=ردیف)</td>
-                        <td>خالی</td>
-                        <td>{ status: false, code: 2, message: [ { index: x, key: 'invoices[x].fiscalId', message: '
-                            حافظه مالیاتی معتبر نیست' }], data: {} }</td>
-                    </tr>
-                    <tr>
-                        <td>invoices[x].uid (x=ردیف)</td>
-                        <td>خالی</td>
-                        <td>{ status: false, code: 2, message: [ { index: x, key: 'invoices[x].uiu', message: ' شناسه
-                            صورت حساب معتبر نیست' }], data: {} }</td>
                     </tr>
                 </tbody>
             </table>
@@ -1276,10 +1254,10 @@
                     درخواست curl
                 </p>
                 <p class="code">
-                    curl -X POST "http://localhost:8182/inquiry/inquiry_by_uid" -H "Accept:application/json, text/plain,
-                    */*" -H "Content-Type:application/json; charset=utf-8" --data
-                    '{"inputs":{"client_id":"A14P7E"},"invoices":[{"fiscalId":"A14P7E","uid":"9d6b38b6-d584-4838-a9b8-e32110832148"}]}'
-
+                    curl -X POST "http://localhost:8182/inquiry/inquiry_by_reference_number" -H
+                    "Accept:application/json, text/plain, */*" -H "Content-Type:application/json; charset=utf-8"
+                    --data
+                    '{"inputs":{"client_id":"AAAAAA"},"referenceNumber":{"referenceNumber":["262c885e-8a11-4c76-ac57-166fdebeed5c"]}}'
                 </p>
                 <hr>
                 <p>
@@ -1294,8 +1272,8 @@
                     "packetType": "INQUIRY_RESULT",
                     "data": [
                     {
-                    "referenceNumber": "08561508-a814-40c4-ad2b-aea56904ae00",
-                    "uid": "9d6b38b6-d584-4838-a9b8-e32110832148",
+                    "referenceNumber": "262c885e-8a11-4c76-ac57-166fdebeed5c",
+                    "uid": "daae7209-39af-4357-a4be-7d691417915a",
                     "status": "FAILED",
                     "data": {
                     "confirmationReferenceId": null,
@@ -1346,7 +1324,7 @@
                     "success": false
                     },
                     "packetType": "receive_invoice_confirm",
-                    "fiscalId": "A14P7E"
+                    "fiscalId": "AAAAAA"
                     }
                     ],
                     "encryptionKeyId": null,
@@ -1363,23 +1341,16 @@
                     "status": false,
                     "message": [
                     {
-                    "index": 0,
-                    "key": "invoices[x].uid",
-                    "message": " شناسه صورت حساب معتبر نیست"
+                    "key": "invoices",
+                    "message": " اطلاعات صورتحساب ها معتبر نیست"
                     }
                     ],
                     "help": {
                     "client_id": "...",
-                    "invoices": [
-                    {
-                    "fiscalId": "...",
-                    "uid": ".."
-                    },
-                    {
-                    "fiscalId": "...",
-                    "uid": ".."
-                    }
-                    ]
+                    invoices:{"referenceNumber": [
+                    "#######",
+                    "#######"
+                    ]}
                     },
                     "code": 1,
                     "data": {}
@@ -1395,12 +1366,12 @@
                     "packetType": "INQUIRY_RESULT",
                     "data": [
                     {
-                    "referenceNumber": null,
-                    "uid": "9d6b38b6-d584-4838-a9b8-e32110832148",
+                    "referenceNumber": "262c885e-8a11-4c76-ac57-166fdebeed3c",
+                    "uid": null,
                     "status": "NOT_FOUND",
                     "data": null,
                     "packetType": null,
-                    "fiscalId": "A14P7t"
+                    "fiscalId": null
                     }
                     ],
                     "encryptionKeyId": null,
@@ -1408,6 +1379,463 @@
                     "iv": null
                     },
                     "message": "inquiry invoice success"
+                    }
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="part-8" class="container">
+        <h3>
+            استعلام صورتحساب با زمان
+        </h3>
+        <div>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>
+                            url
+                        </th>
+                        <th>
+                            method
+                        </th>
+                        <th>
+                            inputs
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            /inquiry/inquiry_by_time
+                        </td>
+                        <td>
+                            post
+                        </td>
+                        <td>
+                            {
+                            client_id: '...', data: {time:14010321}
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>
+                validation
+            </h4>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>پارامتر</th>
+                        <th>وضعیت</th>
+                        <th>پاسخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>inputs</td>
+                        <td>خالی</td>
+                        <td>{ status: false, code: 2, message:[{ key: 'inputs', message: 'پارامترهای ورودی معتبر نیست'
+                            }] , data: {} }</td>
+                    </tr>
+                    <tr>
+                        <td>inputs.client_id</td>
+                        <td>خالی</td>
+                        <td>{ status: false, code: 2, message:[{ key: 'inputs.client_id', message: ' حافظه مالیاتی معتبر
+                            نیست' }], data: {} }</td>
+                    </tr>
+                    <tr>
+                        <td>data</td>
+                        <td>خالی</td>
+                        <td>{ status: false, code: 2, message:[{ key: 'data', message: ' صورتحساب معتبر نیست' }],
+                            data: {} }</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>
+                خروجی تابع
+            </h4>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>موفق</th>
+                        <th>ناموفق</th>
+                        <th>خطا</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{ status: true, code: 0, data: response, message: ' inquiry success' }
+                        </td>
+                        <td>{ status: false, code: 1, data: error, message: 'inquiry faided' }
+                        </td>
+                        <td>{ status: false, data: {}, code: 500, message: err }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>response : دیتای دریافتی از طرف سازمان</td>
+                        <td>error : خطای دریافتی از طرف سازمان</td>
+                        <td>err : خطای کامپایل در سرور خودمان</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>
+                مثال
+            </h4>
+            <div class="dir-left">
+                <p>
+                    درخواست curl
+                </p>
+                <p class="code">
+                    curl -X POST "http://localhost:8182/inquiry/inquiry_by_time" -H "Accept:application/json,
+                    text/plain, */*" -H "Content-Type:application/json; charset=utf-8" --data
+                    '{"inputs":{"client_id":"AAAAAA"},"data":{"time":14020525}}'
+                </p>
+                <hr>
+                <p>
+                    پاسخ موفق
+                </p>
+                <p class="code">
+                    {
+                    "status": true,
+                    "code": 0,
+                    "data": {
+                    "uid": null,
+                    "packetType": "INQUIRY_RESULT",
+                    "data": [
+                    {
+                    "referenceNumber": "043b9f4a-b669-42ee-a214-9aa99308b9cf",
+                    "uid": "03584901-5c6a-4081-84fe-43b10b9ecf9c",
+                    "status": "FAILED",
+                    "data": {
+                    "confirmationReferenceId": null,
+                    "error": [
+                    {
+                    "code": "011408",
+                    "message": "طول مقدار وارد شده در فیلد «کد پستی خریدار» کوچکتر از حداقل طول مجاز است. (طول مقدار
+                    وارد شده باید حداقل 10 باشد)",
+                    "errorType": "ERROR"
+                    },
+                    {
+                    "code": "010508",
+                    "message": "طول مقدار وارد شده در فیلد «سریال صورتحساب» کوچکتر از حداقل طول مجاز است. (طول مقدار
+                    وارد شده باید حداقل 10 باشد)",
+                    "errorType": "ERROR"
+                    },
+                    {
+                    "code": "010504",
+                    "message": "در مقدار وارد شده در فیلد «سریال صورتحساب» الگو(^[a-fA-F0-9]{10}$) رعایت نشده است.",
+                    "errorType": "ERROR"
+                    },
+                    {
+                    "code": "010908",
+                    "message": "طول مقدار وارد شده در فیلد «شماره اقتصادی فروشنده» کوچکتر از حداقل طول مجاز است. (طول
+                    مقدار وارد شده باید حداقل 11 باشد)",
+                    "errorType": "ERROR"
+                    },
+                    {
+                    "code": "010908",
+                    "message": "طول مقدار وارد شده در فیلد «شماره اقتصادی فروشنده» کوچکتر از حداقل طول مجاز است. (طول
+                    مقدار وارد شده باید حداقل 14 باشد)",
+                    "errorType": "ERROR"
+                    },
+                    {
+                    "code": "011108",
+                    "message": "طول مقدار وارد شده در فیلد «شماره/شناسه ملی/شناسه مشارکت مدنی/کد فراگیر خریدار» کوچکتر
+                    از حداقل طول مجاز است. (طول مقدار وارد شده باید حداقل 10 باشد)",
+                    "errorType": "ERROR"
+                    },
+                    {
+                    "code": "011208",
+                    "message": "طول مقدار وارد شده در فیلد «شماره اقتصادی خریدار» کوچکتر از حداقل طول مجاز است. (طول
+                    مقدار وارد شده باید حداقل 14 باشد)",
+                    "errorType": "ERROR"
+                    }
+                    ],
+                    "warning": [],
+                    "success": false
+                    },
+                    "packetType": "receive_invoice_confirm",
+                    "fiscalId": "AAAAAA"
+                    },
+                    {
+                    "referenceNumber": "3ba43aef-b634-4ffb-bce0-04a5346e1e80",
+                    "uid": "fddbfdcc-9ca3-4e9f-b2c1-152cc3992f7a",
+                    "status": "FAILED",
+                    "data": {
+                    "confirmationReferenceId": null,
+                    "error": [
+                    {
+                    "code": "011408",
+                    "message": "طول مقدار وارد شده در فیلد «کد پستی خریدار» کوچکتر از حداقل طول مجاز است. (طول مقدار
+                    وارد شده باید حداقل 10 باشد)",
+                    "errorType": "ERROR"
+                    },
+                    {
+                    "code": "010508",
+                    "message": "طول مقدار وارد شده در فیلد «سریال صورتحساب» کوچکتر از حداقل طول مجاز است. (طول مقدار
+                    وارد شده باید حداقل 10 باشد)",
+                    "errorType": "ERROR"
+                    },
+                    {
+                    "code": "010504",
+                    "message": "در مقدار وارد شده در فیلد «سریال صورتحساب» الگو(^[a-fA-F0-9]{10}$) رعایت نشده است.",
+                    "errorType": "ERROR"
+                    },
+                    {
+                    "code": "010908",
+                    "message": "طول مقدار وارد شده در فیلد «شماره اقتصادی فروشنده» کوچکتر از حداقل طول مجاز است. (طول
+                    مقدار وارد شده باید حداقل 11 باشد)",
+                    "errorType": "ERROR"
+                    },
+                    {
+                    "code": "010908",
+                    "message": "طول مقدار وارد شده در فیلد «شماره اقتصادی فروشنده» کوچکتر از حداقل طول مجاز است. (طول
+                    مقدار وارد شده باید حداقل 14 باشد)",
+                    "errorType": "ERROR"
+                    },
+                    {
+                    "code": "011108",
+                    "message": "طول مقدار وارد شده در فیلد «شماره/شناسه ملی/شناسه مشارکت مدنی/کد فراگیر خریدار» کوچکتر
+                    از حداقل طول مجاز است. (طول مقدار وارد شده باید حداقل 10 باشد)",
+                    "errorType": "ERROR"
+                    },
+                    {
+                    "code": "011208",
+                    "message": "طول مقدار وارد شده در فیلد «شماره اقتصادی خریدار» کوچکتر از حداقل طول مجاز است. (طول
+                    مقدار وارد شده باید حداقل 14 باشد)",
+                    "errorType": "ERROR"
+                    }
+                    ],
+                    "warning": [],
+                    "success": false
+                    },
+                    "packetType": "receive_invoice_confirm",
+                    "fiscalId": "AAAAAA"
+                    }
+                    ],
+                    "encryptionKeyId": null,
+                    "symmetricKey": null,
+                    "iv": null
+                    },
+                    "message": "inquiry invoice success"
+                    }
+                </p>
+                <hr>
+                <p>پاسخ ناموفق خودمان</p>
+                <p class="code">
+                    {
+                    "status": false,
+                    "message": [
+                    {
+                    "key": "data",
+                    "message": " اطلاعات صورتحساب ها معتبر نیست"
+                    }
+                    ],
+                    "help": {
+                    "client_id": "...",
+                    data:{"time": 14020525}
+                    },
+                    "code": 1,
+                    "data": {}
+                    }
+                </p>
+                <p>پاسخ ناموفق سازمان</p>
+                <p class="code">
+                    {
+                    "status": true,
+                    "code": 0,
+                    "data": {
+                    "signature": null,
+                    "signatureKeyId": null,
+                    "timestamp": 1693205381,
+                    "result": [
+                    {
+                    "uid": "373892a5-f143-4d4f-8122-d42de749b507",
+                    "referenceNumber": null,
+                    "errorCode": "4007",
+                    "errorDetail": "برای این نوع بسته، ارسال امضا الزامی می باشد"
+                    }
+                    ]
+                    },
+                    "message": "send invoice success"
+                    }
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="part-9" class="container">
+        <h3>
+            استعلام صورتحساب با بازه زمانی
+        </h3>
+        <div>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>
+                            url
+                        </th>
+                        <th>
+                            method
+                        </th>
+                        <th>
+                            inputs
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            /inquiry/inquiry_by_time_range
+                        </td>
+                        <td>
+                            post
+                        </td>
+                        <td>
+                            {
+                            client_id: '...', data: {
+                            startDate:
+                            14010321,
+                            endDate:
+                            14010324
+                            }
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>
+                validation
+            </h4>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>پارامتر</th>
+                        <th>وضعیت</th>
+                        <th>پاسخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>inputs</td>
+                        <td>خالی</td>
+                        <td>{ status: false, code: 2, message:[{ key: 'inputs', message: 'پارامترهای ورودی معتبر نیست'
+                            }] , data: {} }</td>
+                    </tr>
+                    <tr>
+                        <td>inputs.client_id</td>
+                        <td>خالی</td>
+                        <td>{ status: false, code: 2, message:[{ key: 'inputs.client_id', message: ' حافظه مالیاتی معتبر
+                            نیست' }], data: {} }</td>
+                    </tr>
+                    <tr>
+                        <td>data</td>
+                        <td>خالی</td>
+                        <td>{ status: false, code: 2, message:[{ key: 'data', message: ' صورتحساب معتبر نیست' }],
+                            data: {} }</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>
+                خروجی تابع
+            </h4>
+            <table class="dir-left">
+                <thead>
+                    <tr>
+                        <th>موفق</th>
+                        <th>ناموفق</th>
+                        <th>خطا</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{ status: true, code: 0, data: response, message: ' inquiry success' }
+                        </td>
+                        <td>{ status: false, code: 1, data: error, message: 'inquiry faided' }
+                        </td>
+                        <td>{ status: false, data: {}, code: 500, message: err }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>response : دیتای دریافتی از طرف سازمان</td>
+                        <td>error : خطای دریافتی از طرف سازمان</td>
+                        <td>err : خطای کامپایل در سرور خودمان</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>
+                مثال
+            </h4>
+            <div class="dir-left">
+                <p>
+                    درخواست curl
+                </p>
+                <p class="code">
+                    curl -X POST "http://localhost:8182/inquiry/inquiry_by_time_range" -H "Accept:application/json,
+                    text/plain, */*" -H "Content-Type:application/json; charset=utf-8" --data
+                    '{"inputs":{"client_id":"AAAAAA"},"data":{"startDate":14010321,"endDate":14010324}}'
+                </p>
+                <hr>
+                <p>
+                    پاسخ موفق
+                </p>
+                <p class="code">
+                    {
+                    "status": true,
+                    "code": 0,
+                    "data": {
+                    "uid": null,
+                    "packetType": "INQUIRY_RESULT",
+                    "data": [],
+                    "encryptionKeyId": null,
+                    "symmetricKey": null,
+                    "iv": null
+                    },
+                    "message": "inquiry invoice success"
+                    }
+                </p>
+                <hr>
+                <p>پاسخ ناموفق خودمان</p>
+                <p class="code">
+                    {
+                    "status": false,
+                    "message": [
+                    {
+                    "key": "data",
+                    "message": " اطلاعات صورتحساب ها معتبر نیست"
+                    }
+                    ],
+                    "help": {
+                    "client_id": "...",
+                    data:{
+                    startDate:
+                    14010321,
+                    endDate:
+                    14010324
+                    }
+                    },
+                    "code": 1,
+                    "data": {}
+                    }
+                </p>
+                <p>پاسخ ناموفق سازمان</p>
+                <p class="code">
+                    {
+                    "status": true,
+                    "code": 0,
+                    "data": {
+                    "signature": null,
+                    "signatureKeyId": null,
+                    "timestamp": 1693205381,
+                    "result": [
+                    {
+                    "uid": "373892a5-f143-4d4f-8122-d42de749b507",
+                    "referenceNumber": null,
+                    "errorCode": "4007",
+                    "errorDetail": "برای این نوع بسته، ارسال امضا الزامی می باشد"
+                    }
+                    ]
+                    },
+                    "message": "send invoice success"
                     }
                 </p>
             </div>
