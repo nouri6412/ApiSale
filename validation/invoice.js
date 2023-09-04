@@ -61,7 +61,7 @@ middlewareObj.send_invoice = function (inputs, invoices) {
             status = false;
             message[message.length] = { key: 'client_id', message: ' حافظه مالیاتی معتبر نیست' };
         }
-    }
+    } 
     else {
         status = false;
         message[message.length] = { key: 'inputs', message: 'پارامترهای ورودی معتبر نیست' };
