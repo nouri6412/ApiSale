@@ -715,8 +715,9 @@ middlewareObj.send_invoice_v1 = async function (token, data_input, client_id, pu
             symmetricKey: str_from_key,
             uid: GUID_uid,
         };
+        
     }
-    // console.log(pakets_main);
+         console.log(pakets_main);
     var str = await signatory.signatory_v3({ client_id: client_id }, {
         packets: pakets,
         requestTraceId: GUID,

@@ -21,6 +21,7 @@ middlewareObj.aes256gcm = () => {
     // Hint: Larger inputs (it's GCM, after all!) should use the stream API
     let enc = cipher.update(str, 'utf8', 'base64');
     enc += cipher.final('base64');
+
     return [enc, iv, cipher.getAuthTag()];
   };
 
@@ -73,6 +74,7 @@ middlewareObj.aes256gcm = () => {
     }
     var byte_xored_data = Buffer.from(xored_data);
     const [encrypted, iv, authTag] = encrypt(byte_xored_data.toString('base64'), key);
+
     return { encrypted, iv, authTag, key };
 
   };
