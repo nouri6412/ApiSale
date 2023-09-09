@@ -25,6 +25,7 @@ middlewareObj.aes256gcm = () => {
     return [enc, iv, cipher.getAuthTag()];
   };
 
+  
   // decrypt decodes base64-encoded ciphertext into a utf8-encoded string
   const decrypt = (key, enc, iv, authTag) => {
     const decipher = crypto.createDecipheriv(ALGO, key, iv);
