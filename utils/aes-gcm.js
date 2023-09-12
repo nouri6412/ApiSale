@@ -18,13 +18,16 @@ var static_iv=[151,188,113,213,37,60,8,123,192,18,40,181,140,43,190,125];
     var iv = crypto.randomBytes(16);
     iv=Buffer.from(static_iv);
 
+    // Defining key
+
     const cipher = crypto.createCipheriv(ALGO, key, iv);
 
     // Hint: Larger inputs (it's GCM, after all!) should use the stream API
-    let enc = cipher.update(str, 'utf8', 'base64');
-    enc += cipher.final('base64');
+    // let enc = cipher.update(str, 'utf8', 'base64');
+    // enc += cipher.final('base64');
+    var enc = Buffer.concat([cipher.update(str, 'utf8'), cipher.final()]);
 
-    return [enc, iv, cipher.getAuthTag()];
+    return [enc.toString('base64'), iv, cipher.getAuthTag()];
   };
 
   
