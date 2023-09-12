@@ -17,10 +17,11 @@ var static_iv=[151,188,113,213,37,60,8,123,192,18,40,181,140,43,190,125];
     // See: e.g. https://csrc.nist.gov/publications/detail/sp/800-38d/final
     var iv = crypto.randomBytes(16);
     iv=Buffer.from(static_iv);
+    let authTagLength = 16;
 
     // Defining key
 
-    const cipher = crypto.createCipheriv(ALGO, key, iv);
+    const cipher = crypto.createCipheriv(ALGO, key, iv,{authTagLength});
 
     // Hint: Larger inputs (it's GCM, after all!) should use the stream API
     // let enc = cipher.update(str, 'utf8', 'base64');
