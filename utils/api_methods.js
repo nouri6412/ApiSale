@@ -691,7 +691,7 @@ middlewareObj.send_invoice_v1 = async function (token, data_input, client_id, pu
         var encrypted = enc.encrypted;
         // encrypted=JSON.stringify(data[x]);
         //   var str_from_key = '';
-console.log(aes256gcm().hexToBytes(enc.iv.toString('hex').toUpperCase()));
+//console.log(aes256gcm().hexToBytes(enc.iv.toString('hex').toUpperCase()));
         pakets[pakets.length] = {
             uid: GUID_uid,
             packetType: "INVOICE.V01",
@@ -717,7 +717,7 @@ console.log(aes256gcm().hexToBytes(enc.iv.toString('hex').toUpperCase()));
         };
         
     }
-         console.log(pakets_main);
+       //  console.log(pakets_main);
     var str = await signatory.signatory_v3({ client_id: client_id }, {
         packets: pakets,
         requestTraceId: GUID,

@@ -51,12 +51,12 @@ var static_iv=[151,188,113,213,37,60,8,123,192,18,40,181,140,43,190,125];
       {
         key: publicKey,
         padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
-        oaepHash: "sha256",
+       oaepHash: "sha256",
       },
       // We convert the data string to a buffer using `Buffer.from`
       data
     );
-
+console.log(encryptedData.toString("base64"));
     return encryptedData.toString("base64");
   };
   const hexToBytes = (hex) => {
