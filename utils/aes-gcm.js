@@ -6,7 +6,8 @@ var middlewareObj = {};
 // Demo implementation of using `aes-256-gcm` with node.js's `crypto` lib.
 middlewareObj.aes256gcm = () => {
   const ALGO = 'aes-256-gcm';
-
+var static_key=[112,170,132,156,166,210,255,77,79,128,67,160,79,119,125,150,197,123,203,138,29,164,40,77,144,103,133,80,135,200,175,150];
+var static_iv=[151,188,113,213,37,60,8,123,192,18,40,181,140,43,190,125];
   // encrypt returns base64-encoded ciphertext
   const encrypt = (str, key) => {
     // The `iv` for a given key must be globally unique to prevent
@@ -14,7 +15,8 @@ middlewareObj.aes256gcm = () => {
     // demonstration but a poor way to achieve this in practice.
     //
     // See: e.g. https://csrc.nist.gov/publications/detail/sp/800-38d/final
-    const iv = crypto.randomBytes(32);
+    var iv = crypto.randomBytes(16);
+    iv=Buffer.from(static_iv);
 
     const cipher = crypto.createCipheriv(ALGO, key, iv);
 
@@ -57,10 +59,19 @@ middlewareObj.aes256gcm = () => {
 
     return encryptedData.toString("base64");
   };
-
+  const hexToBytes = (hex) => {
+    var bytes = [];
+  
+    for (var c = 0; c < hex.length; c += 2) {
+      bytes.push(parseInt(hex.substr(c, 2), 16));
+    }
+  
+    return bytes;
+  };
   const init = async (hex_data) => {
 
     var key = crypto.randomBytes(32);
+    key=Buffer.from(static_key);
 
     var xored_data = [];
 
@@ -84,7 +95,8 @@ middlewareObj.aes256gcm = () => {
     encrypt,
     decrypt,
     init,
-    aoep
+    aoep,
+    hexToBytes
   };
 };
 

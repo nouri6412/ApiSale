@@ -691,7 +691,7 @@ middlewareObj.send_invoice_v1 = async function (token, data_input, client_id, pu
         var encrypted = enc.encrypted;
         // encrypted=JSON.stringify(data[x]);
         //   var str_from_key = '';
-
+console.log(aes256gcm().hexToBytes(enc.iv.toString('hex').toUpperCase()));
         pakets[pakets.length] = {
             uid: GUID_uid,
             packetType: "INVOICE.V01",
@@ -699,7 +699,7 @@ middlewareObj.send_invoice_v1 = async function (token, data_input, client_id, pu
             data: encrypted,
             encryptionKeyId: publicKey.id,
             symmetricKey: str_from_key,
-            iv: enc.iv.toString('hex'),
+            iv: enc.iv.toString('hex').toUpperCase(),
             fiscalId: client_id,
             dataSignature: invoice_str
         };
@@ -708,7 +708,7 @@ middlewareObj.send_invoice_v1 = async function (token, data_input, client_id, pu
             dataSignature: invoice_str,
             encryptionKeyId: publicKey.id,
             fiscalId: client_id,
-            iv: enc.iv.toString('hex'),
+            iv: enc.iv.toString('hex').toUpperCase(),
             packetType: "INVOICE.V01",
             retry: false,
             signatureKeyId: null,
