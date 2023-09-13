@@ -32,84 +32,8 @@ var invoice_inquiry = [
 // });
 // return;
 
-var invoice_data = [{
-  "Header": {
-    "Taxid": "A14P7E04C84002B681C064",
-    "Indatim": 1692420004000,
-    "Indati2m": 1692420004224,
-    "Inty": 1,
-    "Inno": "100000000001",
-    "Irtaxid": null,
-    "Inp": 1,
-    "Ins": 1,
-    "Tins": "",
-    "Tob": 1,
-    "Bid": "1",
-    "Tinb": "1",
-    "Sbc": "1",
-    "Bpc": "1",
-    "Bbc": null,
-    "Ft": null,
-    "Bpn": null,
-    "Scln": "1",
-    "Scc": null,
-    "Crn": "1",
-    "Billid": null,
-    "Tprdis": 500,
-    "Tdis": 0,
-    "Tadis": 500,
-    "Tvam": 0,
-    "Todam": 0,
-    "Tbill": 0,
-    "Setm": 1,
-    "Cap": 500,
-    "Insp": null,
-    "Tvop": 0,
-    "Tax17": 0,
-    "Cdcn": null,
-    "Cdcd": null,
-    "Tonw": null,
-    "Torv": null,
-    "Tocv": null
-  },
-  "Body": [
-    {
-      "Sstid": "123",
-      "Sstt": null,
-      "Mu": "1627",
-      "Am": 1,
-      "Fee": 500.0,
-      "Cfee": null,
-      "Cut": "IRR",
-      "Exr": 1,
-      "Prdis": 500.0,
-      "Dis": 0,
-      "Adis": 500,
-      "Vra": 0,
-      "Vam": 0,
-      "Odt": "",
-      "Odr": 0,
-      "Odam": 0,
-      "Olt": "",
-      "Olr": 0,
-      "Olam": 0,
-      "Consfee": null,
-      "Spro": null,
-      "Bros": null,
-      "Tcpbs": null,
-      "Cop": 0,
-      "Vop": 0,
-      "Bsrn": "0",
-      "Tsstam": 500,
-      "Nw": null,
-      "Ssrv": null,
-      "Sscv": null
-    }
-  ],
-  "Payments": [],
-  "Extension": null
-}];
-
+var invoice_data = [{ "Body": [{ "Sstid": "123", "Sstt": null, "Mu": "1627", "Am": 1.0, "Fee": 500.0, "Cfee": null, "Cut": "IRR", "Exr": 1.0, "Prdis": 500.0, "Dis": 0.0, "Adis": 500.0, "Vra": 0.0, "Vam": 0.0, "Odt": "", "Odr": 0.0, "Odam": 0.0, "Olt": "", "Olr": 0.0, "Olam": 0.0, "Consfee": null, "Spro": null, "Bros": null, "Tcpbs": null, "Cop": 0.0, "Vop": 0.0, "Bsrn": "0", "Tsstam": 500.0, "Nw": null, "Ssrv": null, "Sscv": null }], "Header": { "Taxid": "A14P7E04C9D0016B101A60", "Indatim": 1694579034000, "Indati2m": 1694579034206, "Inty": 1, "Inno": "100000000001", "Irtaxid": null, "Inp": 1, "Ins": 1, "Tins": "", "Tob": 1, "Bid": "1", "Tinb": "1", "Sbc": "1", "Bpc": "1", "Bbc": null, "Ft": null, "Bpn": null, "Scln": "0", "Scc": null, "Crn": "0", "Billid": null, "Tprdis": 500.0, "Tdis": 0.0, "Tadis": 500.0, "Tvam": 0.0, "Todam": 0.0, "Tbill": 500.0, "Setm": 1, "Cap": 500.0, "Insp": null, "Tvop": 0.0, "Tax17": 0.0, "Cdcn": null, "Cdcd": null, "Tonw": null, "Torv": null, "Tocv": null }, "Payments": [], "Extension": null }];
+// invoice_data[invoice_data.length]={ "Body": [{ "Sstid": "123", "Sstt": null, "Mu": "1627", "Am": 1.0, "Fee": 500.0, "Cfee": null, "Cut": "IRR", "Exr": 1.0, "Prdis": 500.0, "Dis": 0.0, "Adis": 500.0, "Vra": 0.0, "Vam": 0.0, "Odt": "", "Odr": 0.0, "Odam": 0.0, "Olt": "", "Olr": 0.0, "Olam": 0.0, "Consfee": null, "Spro": null, "Bros": null, "Tcpbs": null, "Cop": 0.0, "Vop": 0.0, "Bsrn": "0", "Tsstam": 500.0, "Nw": null, "Ssrv": null, "Sscv": null }], "Header": { "Taxid": "A14P7E04C9D0016B101A61", "Indatim": 1694579034000, "Indati2m": 1694579034206, "Inty": 1, "Inno": "100000000002", "Irtaxid": null, "Inp": 1, "Ins": 1, "Tins": "", "Tob": 1, "Bid": "1", "Tinb": "1", "Sbc": "1", "Bpc": "1", "Bbc": null, "Ft": null, "Bpn": null, "Scln": "0", "Scc": null, "Crn": "0", "Billid": null, "Tprdis": 500.0, "Tdis": 0.0, "Tadis": 500.0, "Tvam": 0.0, "Todam": 0.0, "Tbill": 500.0, "Setm": 1, "Cap": 500.0, "Insp": null, "Tvop": 0.0, "Tax17": 0.0, "Cdcn": null, "Cdcd": null, "Tonw": null, "Torv": null, "Tocv": null }, "Payments": [], "Extension": null };
 let PublicKey = {};
 _api.get_serveer_information(function (response) {
   //console.log(response);
@@ -121,7 +45,6 @@ _api.get_serveer_information(function (response) {
     // }, function (error) {
     //   console.log(error);
     // });
-
     _api.send_invoice_v1(token, invoice_data, "A14P7E", PublicKey, function (response) {
 
       console.log(response);

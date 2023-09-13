@@ -6,8 +6,10 @@ var middlewareObj = {};
 // Demo implementation of using `aes-256-gcm` with node.js's `crypto` lib.
 middlewareObj.aes256gcm = () => {
   const ALGO = 'aes-256-gcm';
-var static_key=[112,170,132,156,166,210,255,77,79,128,67,160,79,119,125,150,197,123,203,138,29,164,40,77,144,103,133,80,135,200,175,150];
-var static_iv=[151,188,113,213,37,60,8,123,192,18,40,181,140,43,190,125];
+  var static_key = [19, 33, 18, 222, 211, 205, 228, 205, 230, 15, 73, 163, 26, 69, 203, 143, 62, 95, 133, 222, 127, 91, 222, 227, 84, 10, 123, 133, 46, 106, 104, 112
+  ];
+  var static_iv = [, 236, 42, 56, 193, 154, 202, 120, 14, 153, 56, 209, 251, 90, 143, 36, 126
+  ];
   // encrypt returns base64-encoded ciphertext
   const encrypt = (str, key) => {
     // The `iv` for a given key must be globally unique to prevent
@@ -16,12 +18,12 @@ var static_iv=[151,188,113,213,37,60,8,123,192,18,40,181,140,43,190,125];
     //
     // See: e.g. https://csrc.nist.gov/publications/detail/sp/800-38d/final
     var iv = crypto.randomBytes(16);
-    iv=Buffer.from(static_iv);
+    iv = Buffer.from(static_iv);
     let authTagLength = 16;
 
     // Defining key
 
-    const cipher = crypto.createCipheriv(ALGO, key, iv,{authTagLength});
+    const cipher = crypto.createCipheriv(ALGO, key, iv, { authTagLength });
 
     // Hint: Larger inputs (it's GCM, after all!) should use the stream API
     // let enc = cipher.update(str, 'utf8', 'base64');
@@ -31,7 +33,7 @@ var static_iv=[151,188,113,213,37,60,8,123,192,18,40,181,140,43,190,125];
     return [enc.toString('base64'), iv, cipher.getAuthTag()];
   };
 
-  
+
   // decrypt decodes base64-encoded ciphertext into a utf8-encoded string
   const decrypt = (key, enc, iv, authTag) => {
     const decipher = crypto.createDecipheriv(ALGO, key, iv);
@@ -55,27 +57,27 @@ var static_iv=[151,188,113,213,37,60,8,123,192,18,40,181,140,43,190,125];
       {
         key: publicKey,
         padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
-       oaepHash: "sha256",
+        oaepHash: "sha256",
       },
       // We convert the data string to a buffer using `Buffer.from`
       data
     );
-console.log(encryptedData.toString("base64"));
+    console.log(encryptedData.toString("base64"));
     return encryptedData.toString("base64");
   };
   const hexToBytes = (hex) => {
     var bytes = [];
-  
+
     for (var c = 0; c < hex.length; c += 2) {
       bytes.push(parseInt(hex.substr(c, 2), 16));
     }
-  
+
     return bytes;
   };
   const init = async (hex_data) => {
 
     var key = crypto.randomBytes(32);
-    key=Buffer.from(static_key);
+    key = Buffer.from(static_key);
 
     var xored_data = [];
 

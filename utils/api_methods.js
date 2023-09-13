@@ -661,9 +661,17 @@ middlewareObj.send_invoice = async function (token, data, client_id, PublicKey, 
 };
 
 middlewareObj.send_invoice_v1 = async function (token, data_input, client_id, publicKey, callback, error_callbak) {
-
+    var _token = token;
     var timest = Date.now();
     var GUID = crypto.randomUUID();
+
+    //test
+    _token == `eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJBMTRQN0UiLCJ0b2tlbklkIjoiMDlhY2E3ZWItMGQ0OS00MDExLWE1ZGUtMGIxODFhMmNkMWQyIiwiY3JlYXRlRGF0ZSI6MTY5NDU3OTAzNjAwNiwiY2xpZW50VHlwZSI6Ik1FTU9SWSIsInRheHBheWVySWQiOiIxMDIwMDMzODc3MCIsInN1YiI6IkExNFA3RSIsImV4cCI6MTY5NDU5MzQzNiwiaXNzIjoiVEFYIE9yZ2FuaXphdGlvbiJ9.XvJfw471dIDf0Vrvm8yiE9jFSbI9g2wC9HpDIVfZNs2st_ITsC4wK2PjbUdwwHgMQfa07HOvLK0LQYWLsS8R5Q`;
+   // GUID = '8523f89b-31f8-4be0-bf2b-cf3c2b888ade';
+   //timest = 1694579065671;
+    publicKey.id='6a2bcd88-a871-4245-a393-2843eafe6e02';
+    publicKey.key=`MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAxdzREOEfk3vBQogDPGTMqdDQ7t0oDhuKMZkA+Wm1lhzjjhAGfSUOuDvOKRoUEQwP8oUcXRmYzcvCUgcfoRT5iz7HbovqH+bIeJwT4rmLmFcbfPke+E3DLUxOtIZifEXrKXWgSVPkRnhMgym6UiAtnzwA1rmKstJoWpk9Nv34CYgTk8DKQN5jQJqb9L/Ng0zOEEtI3zA424tsd9zv/kP4/SaSnbbnj0evqsZ29X6aBypvnTnwH9t3gbWM4I9eAVQhPYClawHTqvdaz/O/feqfm06QBFnCgL+CBdjLs30xQSLsPICjnlV1jMzoTZnAabWP6FRzzj6C2sxw9a/WwlXrKn3gldZ7Ctv6Jso72cEeCeUI1tzHMDJPU3Qy12RQzaXujpMhCz1DVa47RvqiumpTNyK9HfFIdhgoupFkxT14XLDl65S55MF6HuQvo/RHSbBJ93FQ+2/x/Q2MNGB3BXOjNwM2pj3ojbDv3pj9CHzvaYQUYM1yOcFmIJqJ72uvVf9Jx9iTObaNNF6pl52ADmh85GTAH1hz+4pR/E9IAXUIl/YiUneYu0G4tiDY4ZXykYNknNfhSgxmn/gPHT+7kL31nyxgjiEEhK0B0vagWvdRCNJSNGWpLtlq4FlCWTAnPI5ctiFgq925e+sySjNaORCoHraBXNEwyiHT2hu5ZipIW2cCAwEAAQ==`;
+    //test
 
     var json_str = JSON.stringify(data_input);
 
@@ -677,6 +685,11 @@ middlewareObj.send_invoice_v1 = async function (token, data_input, client_id, pu
 
     for (var x = 0; x < data.length; x++) {
         var GUID_uid = crypto.randomUUID();
+
+        //test
+      //  GUID_uid = '5c77534f-58c8-4d22-9539-76f6b0da241c';
+        //test
+
         var invoice_str = await signatory.signatory_v4({ client_id: client_id }, data[x]);
         const { aes256gcm } = require('./aes-gcm');
         var enc = await aes256gcm().init(Buffer.from(JSON.stringify(data[x])));
@@ -688,10 +701,15 @@ middlewareObj.send_invoice_v1 = async function (token, data_input, client_id, pu
 
         var str_from_key = aoep;
 
+        str_from_key="rBhZEwzSfR3h5Bm1k3+L7LJexzY0ORYfzehyT2/QggfNRuIHCMHVCJjRlRrMESaFNI3BtZthpxnUk7kMPe0DI4zIiyWSv/g/7SOoJrKB5GSMElnsIUQIQmtc2NCjATDS4V6Eot1bwNu/arX43ZAaA/uL4j79K6+YbpcJQH8hGfVtP6YIEkPj0Gw8a6Q3TmdwdBQ9nPTkGyZvDguLaAnzCN1Jj5UD7Xra9bnsctn9pzLEFUzls/ozise8iRESCD+EuCd2fSotqRjUBxGb3qYp8wweEiyWCxuGoM1NG7FSYGxENSJ9q1spVU7BKrpWT8j62TYniHmD8gxgarpVv009nI+NRxv+JHyKYTnlHqTnCJ8rMqfWyalC7iqGlFEIXGOPadZmVFLUomgJOT6Q7031abwM/gat6vTtDvJoATrnuSk+BvReCbFEx8HeIP/mNAFyMiyXhyHW3hTrRXsandTVDC5RdGV3cPSko3J0ehIWEen7lw6VsaoSlkbMVxHY12qgp52Ldk+qpP/PfqVldI0uWBLz9p9LBlsbG6QJKD7NS/YiWFynYJJLprOzcm2p/EgxMnbQhdL6BSyKph057uVpXFt/KvQmM0rzwKMdfuKc3c6xpnh91uUV3mgnJG14yUF7OZRiBlRI1lOfLgq0/1ZcUKsgnKOpnIsosfD0AiDwTMY=";
+
         var encrypted = enc.encrypted;
+
+        encrypted="hX2px3PfNvtinkgz7ncn53VHemhSdTIHX6xh//ps2jBLPDUgVd9aGe92z8NgGcCHumuSvd9IwWyQoaLValXYjGSh034eX1Ny0lEkJmUZrDget1SK9wCurNvk1DVlP54+F6Xq6Lbcd/FA6ckmzOuWyjYgi5aQcDdYagzs0yECi/Bg0cWRzx98OaWFCKi8kAMkhVbsq95Py2rBUffpNgoCxhIjjXU44jz+tdkyq7DK1iTOLyVlYIF53Kdr4Q/gBWpTvLfzikQD88Ks5dVgh3dgYCu7gwPEq1zrrXb4XeDxeJSSgQOGxg04oPXNYD05M5/xK1w0yUV4Ia/O3SXsbAMyZ4dywembMf83LI0rd6yePkI/0LmU55j9BYcHaLsbX5rNKSRnQm7/EXiGo5UHbMBG4jMaiTjRo6AUftBfC81mg0jw7w9MTSO23/A8iQtwO5UqcbX7BQlFjvBHoe5PaLaJhDgnWwkkT5gnnULnpB18ZdYMr2bmvOWpIqtJxpnXOi8VcxG4urAwYuBLdl8FpLpozafqEgADIaoPGVic/JsFymz0P19A6mV+T4jHfnxqCk7IOLi99CpQFvI8qCN2RIwjLUgDNljq+LWdkEjt6DNKdmokBoDpLDaw/SoAU1yrkTxIh5Swrl40ufY2H5N4ZyN1kT5n5zyC45LgAs5R8cnpJ1ng+4sacg1e8v0L81QHdrsz4WsezG6Q7Szb1czD5QdkmiEOrwReyQYo13vEvcneaCA5ZAA6IzVdP0wjks2RXY0KEOIJk92hvyQjz/+/VV9esAIhuO6vm1XFQepoaHB3IKGRu6l+oOrA+jhQtUJ1eypk7yg/shvtHXgw2u+NMKBBupJ7HxpEUJ0jYbbbCjeQ565Q15lPx6Ywr1p/f2sxP5vVAyONo2HC1dTxor90SDyJQwGRDk3TsC9RaUxxN49F5gBRvhU5EgRgJ9lzVOUkplAaawu6lqlVt8smBgbsBJ5PWm4uJnpnWSOUb2SXcNoG5jd4Hytr1KB7yuIIsM+q/uGMxhmL4ZXYxxWuOmGnVY51WVT6RYFzxne3M3iENMQjFRV8kKATHv1HhF8ezrpjxXT0KssHrCer6H1Q5UNVmrU7g5L8kWzyWhTtQ53/anh8nEIv90PGD4cqCXmclIlYoVquI9HGb3zy8qfHQaHkaUTYe0Ghb924RA==";
+        invoice_str= "MMNiDnzey3AC/y3qWps497myXh1AeToRVB3pSHE6KEs0eiWs2VbulI1M79x4/hBIR5hqZozgxPkAvF84GSgLI+0NxsZk4tx9RPuJ/sWEq4Yx6Nos3sa0HpKNB6dETpqbyMMuEeO+e4HP6tMkcFfPPXSPXYZr/NDaCq9RAc80VMeUJUs4/VTvDX4tikRCuQ+eAN/dz+EtTupan75z9r8zgtcNSMByQluVdi5k4vpo9heB9WNi4deR1Zd/l7ENgpNn7khboIgTvroDYMJtm9b2CLbdViuQNNBSkOz5JtheImxBImlLugOSFtzPWtdgqK/efjgs+TPuMLEJQCDKx6Yh8Q==";
         // encrypted=JSON.stringify(data[x]);
         //   var str_from_key = '';
-//console.log(aes256gcm().hexToBytes(enc.iv.toString('hex').toUpperCase()));
+        //console.log(aes256gcm().hexToBytes(enc.iv.toString('hex').toUpperCase()));
         pakets[pakets.length] = {
             uid: GUID_uid,
             packetType: "INVOICE.V01",
@@ -715,14 +733,14 @@ middlewareObj.send_invoice_v1 = async function (token, data_input, client_id, pu
             symmetricKey: str_from_key,
             uid: GUID_uid,
         };
-        
+
     }
-       //  console.log(pakets_main);
+    //  console.log(pakets_main);
     var str = await signatory.signatory_v3({ client_id: client_id }, {
         packets: pakets,
         requestTraceId: GUID,
         timestamp: timest,
-        Authorization: `${token}`
+        Authorization: `${_token}`
     });
     var signed = str;
 
@@ -732,12 +750,14 @@ middlewareObj.send_invoice_v1 = async function (token, data_input, client_id, pu
         signatureKeyId: null
     };
 
+    console.log(request_send);
+
     axios.post('https://tp.tax.gov.ir/req/api/self-tsp/async/normal-enqueue',
         request_send, {
         headers: {
             requestTraceId: GUID,
             timestamp: timest,
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${_token}`
         },
         withCredentials: true
     })
