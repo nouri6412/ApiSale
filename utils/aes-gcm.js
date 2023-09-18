@@ -6,9 +6,9 @@ var middlewareObj = {};
 // Demo implementation of using `aes-256-gcm` with node.js's `crypto` lib.
 middlewareObj.aes256gcm = () => {
   const ALGO = 'aes-256-gcm';
-  var static_key = [19, 33, 18, 222, 211, 205, 228, 205, 230, 15, 73, 163, 26, 69, 203, 143, 62, 95, 133, 222, 127, 91, 222, 227, 84, 10, 123, 133, 46, 106, 104, 112
+  var static_key = [147,10,122,68,130,219,191,56,104,81,3,187,236,30,76,168,145,213,47,123,112,94,239,136,44,144,237,213,50,188,55,130
   ];
-  var static_iv = [, 236, 42, 56, 193, 154, 202, 120, 14, 153, 56, 209, 251, 90, 143, 36, 126
+  var static_iv = [182,78,10,16,80,203,2,69,218,140,69,76,60,115,137,150
   ];
   // encrypt returns base64-encoded ciphertext
   const encrypt = (str, key) => {
