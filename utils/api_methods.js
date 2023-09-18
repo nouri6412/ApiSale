@@ -36,7 +36,7 @@ middlewareObj.get_serveer_information = async function (callback, error_callbak)
             'timestamp': timest,
             'Content-Type': 'application/json'
         },
-        httpsAgent: agent,
+        // httpsAgent: agent,
     })
         .then(response => {
             if (response.data.result) {
@@ -251,8 +251,8 @@ middlewareObj.get_token = async function (client_id, callback, error_callbak) {
             timestamp: timest,
             'Content-Type': 'application/json; charset=utf-8'
         },
-        // withCredentials: true
-        httpsAgent: agent,
+        withCredentials: true
+        // httpsAgent: agent,
     })
         .then(response => {
             if (response.data.result) {
@@ -339,8 +339,8 @@ middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback,
             timestamp: timest,
             Authorization: `Bearer ${token}`
         },
-        httpsAgent: agent,
-        // withCredentials: true
+        // httpsAgent: agent,
+         withCredentials: true
     })
         .then(response => {
             callback(response.data.result);
@@ -761,8 +761,8 @@ middlewareObj.send_invoice_v1 = async function (token, data_input, client_id, pu
             timestamp: timest,
             Authorization: `Bearer ${_token}`
         },
-        httpsAgent: agent,
-        // withCredentials: true
+        // httpsAgent: agent,
+         withCredentials: true
     })
         .then(response => {
             callback(response.data);
