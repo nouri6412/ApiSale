@@ -13,7 +13,7 @@ var invoice_inquiry = [
 //   }, function (error) {
 //     console.log(error);
 //   });
-
+// return;
 //   // _api.send_invoice(token, invoice_data, "A14P7E", function (response) {
 //   //   console.log(response);
 //   // }, function (error) {
@@ -55,7 +55,7 @@ _api.get_serveer_information(function (response) {
         }
       ];
       _api.inquiry_by_uid(token, invoice_inquiry, "A14P7E", function (response) {
-        console.log(response.data[0].data.error);
+        console.log(response.data[0]);
       }, function (error) {
         console.log(error);
       });

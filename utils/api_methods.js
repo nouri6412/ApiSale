@@ -346,6 +346,7 @@ middlewareObj.inquiry_by_uid = async function (token, data, client_id, callback,
             callback(response.data.result);
         })
         .catch(error => {
+            console.log(error);
             if (error.response) {
                 if (error.response.data) {
                     error_callbak(error.response.data);
