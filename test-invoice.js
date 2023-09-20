@@ -3,7 +3,7 @@ var _api = require("./utils/api_methods");
 var invoice_inquiry = [
   {
     "fiscalId": "A14P7E",
-    "uid": "2eaa002d-4c5e-4b9e-a04f-90585315d569"
+    "uid": "66857886-96f1-48be-ab57-60fc0137b561"
   }
 ];
 // _api.get_token("A14P7E", function (token, cookie) {
@@ -41,7 +41,8 @@ _api.get_serveer_information(function (response) {
   _api.get_token("A14P7E", function (token, cookie) {
     //console.log('token is '+ token);
     // _api.inquiry_by_uid(token, invoice_inquiry, "A14P7E", function (response) {
-    //   console.log(response.data[0].data.error);
+    //   console.log(response.data);
+    //   // console.log(response.data[0].data.error);
     // }, function (error) {
     //   console.log(error);
     // });

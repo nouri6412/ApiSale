@@ -62,6 +62,8 @@ middlewareObj.aes256gcm = () => {
       // We convert the data string to a buffer using `Buffer.from`
       data
     );
+
+    console.log('RSA_PKCS1_OAEP_PADDING:');
     console.log(encryptedData.toString("base64"));
     return encryptedData.toString("base64");
   };
