@@ -258,7 +258,7 @@ middlewareObj.get_token = async function (client_id, callback, error_callbak) {
             if (response.data.result) {
                 if (response.data.result.data) {
                     if (response.data.result.data.token) {
-                        callback(response.data.result.data.token);
+                        callback(response.data.result.data);
                     }
                     else {
                         error_callbak(response.data);

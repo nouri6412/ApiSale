@@ -21,8 +21,8 @@ router.post("/inquiry_by_uid", middleware.action, async (req, res) => {
             return res.json(init_validation);
         }
 
-        _api.get_token(inputs.client_id, function (token, cookie) {
-            _api.inquiry_by_uid(token, invoices, inputs.client_id, function (response) {
+        _api.get_token(inputs.client_id, function (token) {
+            _api.inquiry_by_uid(token.token, invoices, inputs.client_id, function (response) {
                 return res.json({ status: true, code: 0, data: response, message: 'inquiry invoice success' });
             }, function (error) {
                 console.log(error);
